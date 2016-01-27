@@ -1,0 +1,27 @@
+{
+  "name": "selenia-framework/interop",
+  "description": "Selenia's Interoperability API",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Impactwave",
+      "email": "impactwave@impactwave.com",
+      "homepage": "http://impactwave.com"
+    },
+    {
+      "name": "Cláudio Silva",
+      "email": "claudio.silva@impactwave.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Selenia\\Exceptions\\": "Exceptions",
+      "Selenia\\Interfaces\\": "Interfaces",
+      "Selenia\\Traits\\": "Traits",
+      "Selenia\\Faults\\": "Faults"
+    }
+  }
+}
