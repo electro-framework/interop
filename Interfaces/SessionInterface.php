@@ -110,6 +110,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Keep the previous URL memorized for an additional request.
+   * > <p>You must have previously called {@see setPreviousUrl()} for this to work.
    */
   function reflashPreviousUrl ();
 

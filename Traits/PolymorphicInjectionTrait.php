@@ -7,13 +7,15 @@ use Selenia\Interfaces\InjectorInterface;
  * Provides a mechanism for a class to allow each subclass to define its own injections (besides the
  * contructor's) without having to repeat all the injections from the respective superclass(es) on its constructor.
  *
- * Subclasses that define an inject() method will have that method called and dependency-injected after instantiation.
+ * <p>Subclasses that define an `inject()` method will have that method called and dependency-injected after instantiation.
  *
- * All redefinitions of inject() troughout the class hierarchy will be called, in sequence, starting from the topmost
+ * All redefinitions of `inject()` troughout the class hierarchy will be called, in sequence, starting from the topmost
  * superclass and going down.
  *
+ * <p>The expected `inject()` signature is: <kbd>void fn ($dependency1, ..., dependencyN)</kbd>
+ *
  * @property InjectorInterface $injector
- * @method callable inject Returns a callable that defines injectable arguments and returns void.
+ * @method callable inject Override to return a callable that defines injectable parameters and returns nothing.
  */
 trait PolymorphicInjectionTrait
 {
@@ -38,7 +40,9 @@ trait PolymorphicInjectionTrait
       $method     = array_pop ($chain);
       $factory    = $method->getClosure ($this);
       $injectable = $factory ();
-      $this->injector->execute ($injectable);
+      if ($injectable)
+        $this->injector->execute ($injectable);
     }
   }
+
 }
