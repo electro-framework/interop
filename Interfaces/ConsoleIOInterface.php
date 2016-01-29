@@ -84,6 +84,12 @@ interface ConsoleIOInterface
   function getOutput ();
 
   /**
+   * @param int $level
+   * @return $this
+   */
+  function indent ($level = 0);
+
+  /**
    * Presents a list to the user, from which he/she must select an item.
    *
    * @param string   $question
