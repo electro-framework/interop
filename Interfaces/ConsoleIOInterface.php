@@ -40,6 +40,12 @@ interface ConsoleIOInterface
   function banner ($text, $width = 0);
 
   /**
+   * Displays an operation cancelation message and aborts execution.
+   * <p>If the input stream is not interactive, no message will be displayed.
+   */
+  function cancel ();
+
+  /**
    * @return $this
    */
   function clear ();
@@ -91,6 +97,9 @@ interface ConsoleIOInterface
 
   /**
    * Presents a list to the user, from which he/she must select an item.
+   *
+   * <p>If the input stream is not interactive, the menu will not be displayed and the default value will be
+   * immediately returned.
    *
    * @param string   $question
    * @param string[] $options
