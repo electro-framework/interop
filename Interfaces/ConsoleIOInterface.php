@@ -90,6 +90,8 @@ interface ConsoleIOInterface
   function getOutput ();
 
   /**
+   * Sets the indentation level for all lines from this point on.
+   *
    * @param int $level
    * @return $this
    */
