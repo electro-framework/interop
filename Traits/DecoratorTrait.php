@@ -1,6 +1,9 @@
 <?php
 namespace Selenia\Traits;
 
+/**
+ * **Warning:** you cannot use `parent::` on a class that uses this trait. Use `$this->decorated->` instead.
+ */
 trait DecoratorTrait
 {
   private $decorated;
@@ -11,9 +14,7 @@ trait DecoratorTrait
    */
   function __call ($n, $args)
   {
-    $r  = new \ReflectionMethod ($this->decorated, $n);
-    $fn = $r->getClosure ($this->decorated)->bindTo ($this, $this);
-    return $fn (...$args);
+    return $this->decorated->$n (...$args);
   }
 
   /**

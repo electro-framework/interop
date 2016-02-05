@@ -58,13 +58,14 @@ interface UserInterface
   function id ($set = null);
 
   /**
-   * Gets the user's "real" name, which may be displayed on the application UI.
+   * Gets or sets the user's "real" name, which may be displayed on the application UI.
    *
    * > This may be the same as the username.
    *
+   * @param string $set A setter value.
    * @return string
    */
-  function realName ();
+  function realName ($set = null);
 
   /**
    * Gets or sets the login username.
