@@ -11,6 +11,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 {
   /**
    * Returns all session data, including flashed data.
+   *
    * @return array
    */
   function all ();
@@ -18,6 +19,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
   /**
    * Saves a flash value that will be available on the next request only.
    * <p>Note: the saved value will ne be readable on the current request.
+   *
    * @param string $key
    * @param mixed  $value
    * @return mixed
@@ -26,6 +28,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Flash an input array to the session.
+   *
    * @param array $value
    * @return mixed
    */
@@ -33,6 +36,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Saves a flash message to be displayed on the next request.
+   *
    * @param string $message
    * @param int    $type
    * @param string $title
@@ -41,6 +45,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Retrieves the memorized flash message (if any).
+   *
    * @return array|null An array with 'type', 'message' and 'title' keys, or <kbd>null</kbd> if no flash message exists.
    */
   function getFlashMessage ();
@@ -49,6 +54,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
    * Retrieves the value for the given key from the flash storage.
    * <p>Use this only if you need to make sure the value really comes from the flashed data, otherwise just read it
    * directly from the session object using array access syntax.
+   *
    * @param string $name
    * @param mixed  $default
    * @return mixed
@@ -56,13 +62,18 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
   function getFlashed ($name, $default = null);
 
   /**
-   * Gets the language code for the currently logged in user.
+   * Gets the language code for the current session.
+   *
+   * > <p>Do not use this to determine the active language for the current URL;
+   * use the {@see Selenia\Localization\Services\Locale} service instead.
+   *
    * @return string|null <kbd>null</kbd> if no language is enabled.
    */
   function getLang ();
 
   /**
    * Get the requested item from the flashed input array, or get all input data.
+   *
    * @param string|null $key     If not specified, an array is returned, otherwise the value of the specified key is
    *                             returned.
    * @param mixed       $default The value to be returned if the given key does not exist, or if no input is available.
@@ -72,6 +83,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Determine if the session contains old input.
+   *
    * @param null|string $key If not specified, the method checks if the session contains any old input.
    *                         Otherwise, it checks if the given key exists on the old input.
    * @return mixed
@@ -80,6 +92,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Determine if the session contains the specified flashed key.
+   *
    * @param string $key
    * @return boolean
    */
@@ -87,6 +100,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Checks if the user is logged in.
+   *
    * @return boolean
    */
   function loggedIn ();
@@ -98,12 +112,14 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Get the previous (intended) URL from the session.
+   *
    * @return string|null
    */
   function previousUrl ();
 
   /**
    * Keep the previous flash data for an additional request.
+   *
    * @param array $keys A list of keys to reflash. If not given, all of the session flash data will be kept.
    */
   function reflash (array $keys = null);
@@ -121,30 +137,35 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
 
   /**
    * Sets the language code for the currently logged in user.
+   *
    * @param string $lang
    */
   function setLang ($lang);
 
   /**
    * Set the "previous" (intended) URL in the session.
+   *
    * @param string|UriInterface $url
    */
   function setPreviousUrl ($url);
 
   /**
    * Sets the logged-in user.
+   *
    * @param UserInterface $user
    */
   function setUser (UserInterface $user);
 
   /**
    * Get the CSRF token value.
+   *
    * @return string
    */
   function token ();
 
   /**
    * Returns the logged-in user or `null` if not logged-in.
+   *
    * @return null|UserInterface
    */
   function user ();
