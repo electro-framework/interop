@@ -1,63 +1,38 @@
 <?php
 namespace Selenia\Interfaces\Views;
 
-use Selenia\Exceptions\FatalException;
-
 /**
- * The View service generates markup for displaying Graphical User Interfaces and web documents on web browsers.
- *
- * <p>It provides view template loading, compiling, caching and dynamic generation (rendering) capabilities.
- * <p>It can handle multiple templating engines via a single unified interface.
+ * A View represents a template that can be interpreted, compiled and rendered to generate markup.
  */
 interface ViewInterface
 {
   /**
-   * Passes a configuration callback to the view instance, which will be called upon instantiation of a specific
-   * rendering engine. The callback receives the engine instance and returns nothing.
+   * Compiles the template.
    *
-   * @param callable $callback
+   * @return $this
    */
-  function configure (callable $callback);
+  function compile ();
 
   /**
-   * Gets the previously compiled view, if any.
+   * Gets the compiled template, if any.
    *
    * @return mixed|null
    */
-  function getCompiledView ();
+  function getCompiled ();
 
   /**
-   * Gets the active view engine instance, if any.
+   * Gets the associated rendering engine instance, if any.
    *
    * @return ViewEngineInterface|null
    */
   function getEngine ();
 
   /**
-   * Loads and compiles the specified template file.
+   * Gets the original source code (the template).
    *
-   * @param string $path
-   * @return $this
+   * @return string
    */
-  function loadFromFile ($path);
-
-  /**
-   * Compiles the given template.
-   * > Don't forget to set a view engine before calling this method.
-   *
-   * @param string $src
-   * @return $this
-   */
-  function loadFromString ($src);
-
-  /**
-   * Registes a view engine to be used for rendering files that match the given regular expression pattern.
-   *
-   * @param string $engineClass
-   * @param string $filePattern A regular expression. Multiple patterns can be specified using the | operator.
-   * @return $this
-   */
-  function register ($engineClass, $filePattern);
+  function getSource ();
 
   /**
    * Renders the previously compiled template.
@@ -68,18 +43,12 @@ interface ViewInterface
   function render ($data = null);
 
   /**
-   * Instantiates the specified engine and sets it as the active engine for the view.
+   * Sets the source code (the template).
+   * <p>This also clears the current compiled template.
    *
-   * @param string $engineClass
+   * @param string $src
    * @return $this
    */
-  function setEngine ($engineClass);
-
-  /**
-   * @param string $fileName
-   * @return ViewEngineInterface
-   * @throws FatalException If no match was found.
-   */
-  function setEngineFromFileName ($fileName);
+  function setSource ($src);
 
 }

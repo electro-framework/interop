@@ -4,7 +4,7 @@ namespace Selenia\Traits;
 use Selenia\Exceptions\FatalException;
 
 /**
- * Exposes selected properties from the object for being displayed by debugging tools.
+ * Exposes selected properties from the object to be displayed by debugging tools.
  *
  * The static `$INSPECTABLE` property, if present on the class, specifies a list of properties (public, private or
  * protected) to be exposed.<br> If not present, all properties are exposed.
