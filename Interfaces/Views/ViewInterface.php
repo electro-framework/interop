@@ -1,20 +1,27 @@
 <?php
 namespace Selenia\Interfaces\Views;
 
+use Selenia\Exceptions\FatalException;
+
 /**
- * A View represents a template that can be interpreted, compiled and rendered to generate markup.
+ * A View represents a template that can be parsed, compiled and rendered to generate markup.
  */
 interface ViewInterface
 {
   /**
    * Compiles the template.
    *
+   * <p>For view engines that do not support template compilation, this method doesn't do anything.
+   *
    * @return $this
+   * @throws FatalException if no source code is set.
    */
   function compile ();
 
   /**
    * Gets the compiled template, if any.
+   *
+   * <p>For view engines that do not support template compilation, this returns null.
    *
    * @return mixed|null
    */
@@ -37,8 +44,11 @@ interface ViewInterface
   /**
    * Renders the previously compiled template.
    *
+   * <p>If the view is not compiled yet, it will be so before being rendered.
+   *
    * @param array|object $data The view model; optional data for use by databinding expressions on the template.
    * @return string The generated output (ex: HTML).
+   * @throws FatalException if no template is set.
    */
   function render ($data = null);
 
