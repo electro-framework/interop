@@ -57,6 +57,13 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
   function currentLink ();
 
   /**
+   * Creates a new navigation divider object, which represents a divider line on a menu.
+   *
+   * @return NavigationLinkInterface
+   */
+  function divider ();
+
+  /**
    * Returns a linear sequence of {@see NavigationLinkInterface} objects that represents the path to the currently
    * displayed page starting from a root (home) link.
    *
