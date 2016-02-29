@@ -79,4 +79,13 @@ interface ViewServiceInterface
    */
   function render ($data = null);
 
+  /**
+   * Searches for the specified view file and returns the absolute path to it.
+   *
+   * @param string $path
+   * @return string An absolute file path.
+   * @throws FileNotFoundException If the file was not found.
+   */
+  public function resolveTemplatePath ($path);
+
 }
