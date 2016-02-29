@@ -72,20 +72,13 @@ interface ViewServiceInterface
   function register ($engineClass, $filePattern);
 
   /**
-   * Renders the previously compiled template.
-   *
-   * @param array|object $data The view model; optional data for use by databinding expressions on the template.
-   * @return string The generated output (ex: HTML).
-   */
-  function render ($data = null);
-
-  /**
    * Searches for the specified view file and returns the absolute path to it.
    *
    * @param string $path
+   * @param string $base [output, optional] It will be set to the base path of the module's views folder.
    * @return string An absolute file path.
    * @throws FileNotFoundException If the file was not found.
    */
-  public function resolveTemplatePath ($path);
+  public function resolveTemplatePath ($path, &$base = null);
 
 }
