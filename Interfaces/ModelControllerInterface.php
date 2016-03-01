@@ -24,7 +24,33 @@ interface ModelControllerInterface
    */
   function getModel ();
 
+  /**
+   * Returns the HTTP request being handled.
+   *
+   * @return ServerRequestInterface
+   */
+  function getRequest ();
+
+  /**
+   * Sets up the model based on information provided on the HTTP request.
+   *
+   * ><p>**Note:** this does not save the model, you must call {@see saveModel()} after this method if you want to do
+   * that.
+   *
+   * @param ServerRequestInterface $request
+   */
   function handleRequest (ServerRequestInterface $request);
+
+  /**
+   * Loads a model from the database using the id specified on the HTTP request URL.
+   *
+   * If the URL route parameter is empty, an empty model is created.
+   * ><p>This only works with ORM models.
+   *
+   * @param string $modelClass The model's class name.
+   * @param string $routeParam [optional] The parameter name. As a convention, it is usually `id`.
+   */
+  function loadRequested ($modelClass, $routeParam = 'id');
 
   /**
    * Merges data into the model.
@@ -34,15 +60,26 @@ interface ModelControllerInterface
    */
   function merge (array $data = null);
 
+  /**
+   * Register an event handler for the controller's after-save event.
+   *
+   * @param callable $task
+   */
   function onAfterSave (callable $task);
 
+  /**
+   * Register an event handler for the controller's before-save event.
+   *
+   * @param callable $task
+   */
   function onBeforeSave (callable $task);
 
   /**
-   * @param callable $plugin
-   * @return mixed
+   * Registers an extension that will be called whenever {@see handleRequest()} is called.
+   *
+   * @param string $extensionClass The name of a class implementing {@see ModelControllerExtensionInterface}.
    */
-  function registerPlugin (callable $plugin);
+  function registerExtension ($extensionClass);
 
   /**
    * Save the model on the database.
