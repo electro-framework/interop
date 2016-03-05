@@ -42,15 +42,32 @@ interface ModelControllerInterface
   function handleRequest (ServerRequestInterface $request);
 
   /**
+   * Loads a model from the database using the specified id.
+   *
+   * <p>If the id is `''` or `null`, an empty model is created.
+   * ><p>This only works with ORM models.
+   *
+   * @param string      $modelClass The model's class name.
+   * @param string      $modelName  A property name under which to save the loaded model on the controller's model.
+   *                                It is a dot-delimited path; if enpty it targets the controller's model itself.
+   * @param string|null $id         The primary key value.
+   * @return mixed The loaded model.
+   */
+  function loadModel ($modelClass, $modelName = '', $id = null);
+
+  /**
    * Loads a model from the database using the id specified on the HTTP request URL.
    *
-   * If the URL route parameter is empty, an empty model is created.
+   * <p>If the URL route parameter is empty, an empty model is created.
    * ><p>This only works with ORM models.
    *
    * @param string $modelClass The model's class name.
+   * @param string $modelName  A property name under which to save the loaded model on the controller's model.
+   *                           It is a dot-delimited path; if enpty it targets the controller's model itself.
    * @param string $routeParam [optional] The parameter name. As a convention, it is usually `id`.
+   * @return mixed The loaded model.
    */
-  function loadRequested ($modelClass, $routeParam = 'id');
+  function loadRequested ($modelClass, $modelName = '', $routeParam = 'id');
 
   /**
    * Merges data into the model.
@@ -86,10 +103,10 @@ interface ModelControllerInterface
    *
    * Override this if you need to customize the saving process.
    *
+   * @param array $options Driver-specific options.
    * @return bool true if the model was saved.
-   * @throws \Exception
    */
-  function saveModel ();
+  function saveModel (array $options = []);
 
   /**
    * Sets the model instance owned by the controller.
