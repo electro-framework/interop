@@ -20,9 +20,11 @@ interface ModelControllerInterface
   /**
    * Returns the model owned by the controller.
    *
+   * @param string $subModelPath [optional] A property name from which to get the sub-model on the controller's model.
+   *                             It is a dot-delimited path; if enpty or ommited, the whole model is returned.
    * @return mixed
    */
-  function getModel ();
+  function getModel ($subModelPath = '');
 
   /**
    * Returns the HTTP request being handled.
@@ -159,11 +161,14 @@ interface ModelControllerInterface
   public function setMainSubModelPath ($path);
 
   /**
-   * Sets the model instance owned by the controller.
+   * Sets the model instance owned by the controller, or a sub-model on it.
    *
-   * @param mixed $data
+   * @param mixed  $data
+   * @param string $subModelPath [optional] A property name under which to set the sub-model on the controller's model.
+   *                             It is a dot-delimited path; if enpty or ommited it targets the controller's model
+   *                             itself.
    */
-  function setModel ($data);
+  function setModel ($data, $subModelPath = '');
 
   /**
    * Sets the HTTP request that will be handled by {@see handleRequest()}.
