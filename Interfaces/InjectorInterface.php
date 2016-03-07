@@ -23,13 +23,6 @@ interface InjectorInterface
   function buildExecutable ($callableOrMethodStr);
 
   /**
-   * Checks if a specific alias, delegate or shared instance has been registered on the injector.
-   * @param string $name A class name.
-   * @return bool True if the class or alias is defined.
-   */
-  function provides ($name);
-
-  /**
    * Define instantiation directives for the specified class
    *
    * @param string $name The class (or alias) whose constructor arguments we wish to define
@@ -79,6 +72,18 @@ interface InjectorInterface
   public function make ($name, array $args = []);
 
   /**
+   * Instantiate/provision a class instance at a later time.
+   *
+   * <p>Returns a closure that will instantiate and return the instance when called, without the caller needing to have an
+   * instance of the injector.
+   *
+   * @param string $name
+   * @param array  $args
+   * @return mixed
+   */
+  public function makeFactory ($name, array $args = []);
+
+  /**
    * Register a prepare callable to modify/prepare objects of type $name after instantiation
    *
    * Any callable or provisionable invokable may be specified. Preparers are passed two
@@ -89,6 +94,14 @@ interface InjectorInterface
    * @return self
    */
   function prepare ($name, $callableOrMethodStr);
+
+  /**
+   * Checks if a specific alias, delegate or shared instance has been registered on the injector.
+   *
+   * @param string $name A class name.
+   * @return bool True if the class or alias is defined.
+   */
+  function provides ($name);
 
   /**
    * Share the specified class/instance across the Injector context
