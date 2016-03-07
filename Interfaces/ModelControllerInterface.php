@@ -32,14 +32,12 @@ interface ModelControllerInterface
   function getRequest ();
 
   /**
-   * Sets up the model based on information provided on the HTTP request.
+   * Sets up the model based on information provided by the HTTP request.
    *
-   * ><p>**Note:** this does not save the model, you must call {@see saveModel()} after this method if you want to do
-   * that.
-   *
-   * @param ServerRequestInterface $request
+   * ><p>**Note:** this does not save the model; you must call {@see saveModel()} at some point after calling this
+   * method when you want to save the model.
    */
-  function handleRequest (ServerRequestInterface $request);
+  function handleRequest ();
 
   /**
    * Loads a model from the database using the specified id.
@@ -48,12 +46,12 @@ interface ModelControllerInterface
    * ><p>This only works with ORM models.
    *
    * @param string      $modelClass The model's class name.
-   * @param string      $modelName  A property name under which to save the loaded model on the controller's model.
+   * @param string      $path       A property name under which to save the loaded model on the controller's model.
    *                                It is a dot-delimited path; if enpty it targets the controller's model itself.
    * @param string|null $id         The primary key value.
    * @return mixed The loaded model.
    */
-  function loadModel ($modelClass, $modelName = '', $id = null);
+  function loadModel ($modelClass, $path = '', $id = null);
 
   /**
    * Loads a model from the database using the id specified on the HTTP request URL.
@@ -78,33 +76,63 @@ interface ModelControllerInterface
   function merge (array $data = null);
 
   /**
-   * Register an event handler for the controller's after-save event.
+   * Register an event handler for performing operations after the model is saved.
+   * At that point, the transaction has alread been commited, so no further database operations should be performed.
+   * You can, though, do other kinds of cleanup operations, like deleting files, for instance.
    *
    * @param callable $task
    */
   function onAfterSave (callable $task);
 
   /**
-   * Register an event handler for the controller's before-save event.
+   * Register an event handler for performing operations before the model is saved.
+   * At that point, the transaction has not yet began, so no database operations should be performed yet.
+   * You can, though, do other kinds of operations, like preparing uploaded files, for instance.
    *
    * @param callable $task
    */
   function onBeforeSave (callable $task);
 
   /**
+   * Register an event handler for saving the model.
+   *
+   * <p>A model may be a complex entity that requires multiple handlers for saving all of its parts.
+   * All handlers registered trough this method run inside the same database transaction and should be responsible for
+   * some part of the saving process, or for saving a part of the model.
+   * <p>The controller provides a built-in default handler, which tries to save the model automatically.
+   * It supports some types of composite models, where they are arrays that contain multiple simple sub-models, or
+   * where
+   * each sub-model has relationships to other sub-models (for instance, a one-tp-many relationship on an ORM model).
+   * <p>Classes implementing this interface will provide varying levels of auto-save functionality, depending on the
+   * ORM they support.
+   *
+   * <p>When `$priority` is positive (+1), the handler will run before previously registered handlers (including the
+   * default one).
+   * <p>When `$priority` is negative (-1), the handler will run after previously registered handlers (including the
+   * default one).
+   * <p>When `$priority` is 0, the handler will replace the default one and, supposedly, it will be the main
+   * responsible for saving the model.
+   *
+   * @param int      $priority -1|0|1
+   * @param callable $task
+   * @return
+   */
+  function onSave ($priority, callable $task);
+
+  /**
    * Registers an extension that will be called whenever {@see handleRequest()} is called.
+   *
+   * <p>Extensions usually register event handlers on the controller, so that they'll be invoked later at the
+   * appropriate times.
    *
    * @param string $extensionClass The name of a class implementing {@see ModelControllerExtensionInterface}.
    */
   function registerExtension ($extensionClass);
 
   /**
-   * Save the model on the database.
+   * Saves the whole model on the database.
    *
-   * Override this if you need to customize the saving process.
-   *
-   * @param array $options Driver-specific options.
-   * @return bool true if the model was saved.
+   * @param array $options [optional] Driver/ORM-specific options for the default save handler.
    */
   function saveModel (array $options = []);
 
@@ -114,5 +142,12 @@ interface ModelControllerInterface
    * @param mixed $data
    */
   function setModel ($data);
+
+  /**
+   * Sets the HTTP request that will be handled by {@see handleRequest()}.
+   *
+   * @param ServerRequestInterface $request
+   */
+  function setRequest (ServerRequestInterface $request);
 
 }
