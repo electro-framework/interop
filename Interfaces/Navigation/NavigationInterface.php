@@ -69,6 +69,10 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
    *
    * > <p>All objects on the path come from the navigation tree; these are not clones.
    *
+   * <p>**Important:** you must call this method before reading state from individual links on the navigation tree, as link state is
+   * not computed until this method is invoked for the first time. Subsequent calls return a cached version.<br>
+   * **Note:** depending on the features you are using, the framework may already have done that for you.
+   *
    * @param int $offset If specified, discards the first N items.
    * @return $this|NavigationLinkInterface[]
    */

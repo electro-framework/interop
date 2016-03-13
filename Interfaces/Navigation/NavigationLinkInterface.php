@@ -92,6 +92,9 @@ interface NavigationLinkInterface extends \IteratorAggregate
    *
    * ><p>A link can be active even when it's not visible.
    *
+   * ><p>**Important:** the returned value is not valid until you call {@see NavigationInterface::getCurrentTrail} at
+   * least once.
+   *
    * @return bool
    */
   function isActive ();
@@ -116,6 +119,9 @@ interface NavigationLinkInterface extends \IteratorAggregate
   /**
    * Indicates if the link matches the current URL totally (i.e. it matches the current page).
    *
+   * ><p>**Important:** the returned value is not valid until you call {@see NavigationInterface::getCurrentTrail} at
+   * least once.
+   *
    * @return bool
    */
   function isCurrent ();
@@ -132,6 +138,9 @@ interface NavigationLinkInterface extends \IteratorAggregate
    *
    * <p>Selected links are usually highlighted on a user interface.
    * <p>They may also be the 'current' link, but they can also be an ancestor if the next active link is not visible.
+   *
+   * ><p>**Important:** the returned value is not valid until you call {@see NavigationInterface::getCurrentTrail} at
+   * least once.
    *
    * @return bool
    */
