@@ -74,11 +74,11 @@ interface InjectorInterface
   /**
    * Instantiate/provision a class instance at a later time.
    *
-   * <p>Returns a closure that will instantiate and return the instance when called, without the caller needing to have an
-   * instance of the injector.
+   * <p>Returns a closure that will instantiate and return the instance when called, without the caller needing to have
+   * an instance of the injector.
    *
    * @param string $name
-   * @param array  $args
+   * @param array  $args The same as {@see make}'s $args.
    * @return mixed
    */
   public function makeFactory ($name, array $args = []);
