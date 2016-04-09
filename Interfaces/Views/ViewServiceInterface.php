@@ -56,13 +56,6 @@ interface ViewServiceInterface
   public function loadViewTemplate ($path);
 
   /**
-   * Creates a new pristine instance of the same class of this view.
-   *
-   * @return static
-   */
-  function newInstance ();
-
-  /**
    * Registes a view engine to be used for rendering files that match the given regular expression pattern.
    *
    * @param string $engineClass
