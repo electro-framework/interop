@@ -147,6 +147,15 @@ interface ConsoleIOInterface
   function table (array $headers, array $data, array $widths, array $align = null);
 
   /**
+   * Gets or sets information about the terminal window dimensions (a list of width and height).
+   *
+   * @param array|null $terminalSize [optiona] If given, saves the terminar dimensions for later retrieval.
+   *                                 If not given, returns the previously set dimensions.
+   * @return array
+   */
+  public function terminalSize (array $terminalSize = null);
+
+  /**
    * @param string $text
    * @return $this
    */
