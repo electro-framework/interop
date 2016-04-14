@@ -18,6 +18,7 @@
   },
   "autoload": {
     "psr-4": {
+      "Selenia\\Classes\\": "Classes",
       "Selenia\\Exceptions\\": "Exceptions",
       "Selenia\\Interfaces\\": "Interfaces",
       "Selenia\\Traits\\": "Traits",
