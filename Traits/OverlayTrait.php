@@ -30,9 +30,7 @@ trait OverlayTrait
 
   function __set ($name, $value)
   {
-    if (is_array ($this->_parent))
-      $this->_parent[$name] = $value;
-    else $this->_parent->$name = $value;
+    $this->$name = $value;
   }
 
   function __isset ($name)

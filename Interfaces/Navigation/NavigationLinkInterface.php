@@ -237,13 +237,14 @@ interface NavigationLinkInterface extends \IteratorAggregate
    *
    * <p>Example: **`'admin/users'`** (which is relative to the app's base path)
    *
+   * > <p>**Note:** route parameters are evaluated, so `@`-prefixed values will be replaced by the correpsonding values.
+   *
    * > <p>**Warning:** unlike other link properties, the value read back from this property after it is explicitly set
    * will frequently differ from the set value.
    *
    * <p>If the `url` property is not explicitly set (defaults to `null`), when read, its value is automatically
-   * computed
-   * from concatenating all URLs (static or dynamic) from all links on the trail that begins on the home/root link and
-   * that ends on this link.
+   * computed from concatenating all URLs (static or dynamic) from all links on the trail that begins on the home/root
+   * link and that ends on this link.
    *
    * <p>The computed value is cached when read for the first time, and subsequent reads will return the cached value
    * (unless the final value is `null`, which is not cached).
