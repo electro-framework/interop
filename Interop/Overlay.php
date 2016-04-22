@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Classes;
+namespace Selenia\Interop;
 
 use Selenia\Traits\OverlayTrait;
 
