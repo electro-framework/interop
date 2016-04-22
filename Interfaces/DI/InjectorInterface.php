@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Selenia\Interfaces\DI;
 
-interface InjectorInterface
+interface InjectorInterface 
 {
   /**
    * Define an alias for all occurrences of a given typehint
@@ -98,7 +98,7 @@ interface InjectorInterface
   /**
    * Checks if a specific alias, delegate or shared instance has been registered on the injector.
    *
-   * @param string $name A class name.
+   * @param string $name A class/interface name.
    * @return bool True if the class or alias is defined.
    */
   function provides ($name);

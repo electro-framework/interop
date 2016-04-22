@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Selenia\Interfaces\DI;
 
 /**
  * Declares that a class is able to perform service registrations.

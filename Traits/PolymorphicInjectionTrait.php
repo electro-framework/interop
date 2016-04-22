@@ -1,7 +1,7 @@
 <?php
 namespace Selenia\Traits;
 
-use Selenia\Interfaces\InjectorInterface;
+use Selenia\Interfaces\DI\InjectorInterface;
 
 /**
  * Provides a mechanism for a class to allow each subclass to define its own injections (besides the
