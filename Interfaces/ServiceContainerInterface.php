@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Core\DependencyInjection;
+namespace Selenia\Interfaces;
 
 /**
  * Allows you to define short service alias names that map to fuly qualified injectable class names.
