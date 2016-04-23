@@ -16,7 +16,7 @@ interface AssignableInterface
    * @param array|AssignableInterface $data
    * @return $this For chaining.
    */
-  function _assign ($data);
+  function import ($data);
 
   /**
    * Loads the given data (object or array) into the object, but only for those properties that are not already set on it.
@@ -25,12 +25,12 @@ interface AssignableInterface
    * @param array|AssignableInterface $data
    * @return $this For chaining.
    */
-  function _defaults ($data);
+  function setDdefaults ($data);
 
   /**
    * Exports all of object's properties, including private and protected ones.
    * @return array
    */
-  function _export ();
+  function export ();
 
 }

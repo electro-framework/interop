@@ -7,7 +7,7 @@ define ('N', false);
 /**
  * Provides the capability of setting class instance properties by using virtual fluent (chainable) setter methods.
  * <p>The actual properties (having the same name as the virtual methods that access them) should, usually, have
- * private/protected visibility, so that they won't show up on IDE autocompletions.
+ * private/protected visibility (which will also prevent them to show up on IDE autocompletions).
  *
  * ### Setting properties
  *

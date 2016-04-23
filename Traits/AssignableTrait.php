@@ -4,6 +4,7 @@ use Selenia\Interfaces\AssignableInterface;
 
 /**
  * Allows a class instance to have its fields (either public or not) be mass-assigned or mass-read.
+ * @implements AssignableInterface
  */
 trait AssignableTrait
 {
@@ -14,7 +15,7 @@ trait AssignableTrait
    */
   static function _from (array $data)
   {
-    return (new static)->_assign ($data);
+    return (new static)->import ($data);
   }
 
   /**
@@ -24,10 +25,10 @@ trait AssignableTrait
    * @param array|AssignableInterface $data
    * @return $this For chaining.
    */
-  function _assign ($data)
+  function import ($data)
   {
     if ($data instanceof AssignableInterface)
-      $data = $data->_export ();
+      $data = $data->export ();
     foreach ($data as $k => $v)
       $this->$k = $v;
     return $this;
@@ -41,10 +42,10 @@ trait AssignableTrait
    * @param array|AssignableInterface $data
    * @return $this For chaining.
    */
-  function _defaults ($data)
+  function setDdefaults ($data)
   {
     if ($data instanceof AssignableInterface)
-      $data = $data->_export ();
+      $data = $data->export ();
     foreach ($data as $k => $v)
       if (!isset($this->$k))
         $this->$k = $v;
@@ -55,7 +56,7 @@ trait AssignableTrait
    * Exports all of object's properties, including private and protected ones.
    * @return array
    */
-  function _export ()
+  function export ()
   {
     return get_object_vars ($this);
   }

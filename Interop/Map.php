@@ -5,7 +5,7 @@ use Selenia\Interfaces\MapInterface;
 
 class Map implements MapInterface
 {
-  private $_data = [];
+  protected $_data = [];
 
   function __debugInfo ()
   {
