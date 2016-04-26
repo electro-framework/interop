@@ -1,7 +1,7 @@
 <?php
 namespace Selenia\Interfaces\DI;
 
-interface InjectorInterface 
+interface InjectorInterface
 {
   /**
    * Define an alias for all occurrences of a given typehint
@@ -10,7 +10,7 @@ interface InjectorInterface
    *
    * @param string $original The typehint to replace
    * @param string $alias    The implementation name
-   * @return self
+   * @return $this
    */
   function alias ($original, $alias);
 
@@ -27,7 +27,7 @@ interface InjectorInterface
    *
    * @param string $name The class (or alias) whose constructor arguments we wish to define
    * @param array  $args An array mapping parameter names to values/instructions
-   * @return self
+   * @return $this
    */
   function define ($name, array $args);
 
@@ -39,7 +39,7 @@ interface InjectorInterface
    *
    * @param string $paramName The parameter name for which this value applies
    * @param mixed  $value     The value to inject for this parameter name
-   * @return self
+   * @return $this
    */
   function defineParam ($paramName, $value);
 
@@ -48,7 +48,7 @@ interface InjectorInterface
    *
    * @param string $name
    * @param mixed  $callableOrMethodStr Any callable or provisionable invokable method
-   * @return self
+   * @return $this
    */
   function delegate ($name, $callableOrMethodStr);
 
@@ -61,6 +61,13 @@ interface InjectorInterface
    * @return mixed Returns the invocation result returned from calling the generated executable
    */
   function execute ($callableOrMethodStr, array $args = []);
+
+  /**
+   * Returns the service container instance associated with the ibjector.
+   *
+   * @return ServiceContainerInterface
+   */
+  function getContainer ();
 
   /**
    * Instantiate/provision a class instance
@@ -89,9 +96,9 @@ interface InjectorInterface
    * Any callable or provisionable invokable may be specified. Preparers are passed two
    * arguments: the instantiated object to be mutated and the current Injector instance.
    *
-   * @param string $name
-   * @param mixed  $callableOrMethodStr Any callable or provisionable invokable method
-   * @return self
+   * @param string $name                A class/interface name.
+   * @param mixed  $callableOrMethodStr Any callable or provisionable invokable method.
+   * @return $this
    */
   function prepare ($name, $callableOrMethodStr);
 
@@ -104,11 +111,21 @@ interface InjectorInterface
   function provides ($name);
 
   /**
+   * @param string $typeName     A class/interface name.
+   * @param string $symbolicName Also registers the class or instance on the service container under the given
+   *                             symbolic name.
+   * @return $this
+   */
+  function register ($typeName, $symbolicName);
+
+  /**
    * Share the specified class/instance across the Injector context
    *
-   * @param mixed $nameOrInstance The class or object to share
-   * @return self
+   * @param mixed       $nameOrInstance The class or object to share.
+   * @param string|null $symbolicName   [optional] Also registers the class or instance on the service container under
+   *                                    the given symbolic name.
+   * @return $this
    */
-  function share ($nameOrInstance);
+  function share ($nameOrInstance, $symbolicName = null);
 
 }
