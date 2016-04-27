@@ -71,47 +71,16 @@ class Map implements MapInterface
     return new \ArrayIterator($this->_data);
   }
 
-  /**
-   * Returns `true` if the map can return an entry for the given key, `false` otherwise.
-   *
-   * <p>This is an alias of the `isset` operator.
-   *
-   * ><p>**Note:** this method provides compatibility with some other interfaces, like for instance, the
-   * {@see \Interop\Container\ContainerInterface}.
-   *
-   * @param string $key Identifier of the entry to look for.
-   * @return boolean
-   */
   public function has ($key)
   {
-    // TODO: Implement has() method.
+    return isset($this->_data[$key]);
   }
 
   public function keys ()
   {
     return array_keys ($this->_data);
   }
-
-  public function offsetExists ($offset)
-  {
-    return isset($this->_data[$offset]);
-  }
-
-  public function offsetGet ($offset)
-  {
-    return isset($this->_data[$offset]) ? $this->_data[$offset] : null;
-  }
-
-  public function offsetSet ($offset, $value)
-  {
-    $this->_data[$offset] = $value;
-  }
-
-  public function offsetUnset ($offset)
-  {
-    unset ($this->_data[$offset]);
-  }
-
+  
   public function serialize ()
   {
     return serialize ($this->_data);

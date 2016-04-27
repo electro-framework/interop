@@ -1,7 +1,9 @@
 <?php
 namespace Selenia\Interfaces\DI;
 
-interface InjectorInterface
+use Interop\Container\ContainerInterface;
+
+interface InjectorInterface extends ContainerInterface
 {
   /**
    * Define an alias for all occurrences of a given typehint
@@ -10,7 +12,7 @@ interface InjectorInterface
    *
    * @param string $original The typehint to replace
    * @param string $alias    The implementation name
-   * @return $this
+   * @return $this For chaining.
    */
   function alias ($original, $alias);
 
@@ -27,7 +29,7 @@ interface InjectorInterface
    *
    * @param string $name The class (or alias) whose constructor arguments we wish to define
    * @param array  $args An array mapping parameter names to values/instructions
-   * @return $this
+   * @return $this For chaining.
    */
   function define ($name, array $args);
 
@@ -39,7 +41,7 @@ interface InjectorInterface
    *
    * @param string $paramName The parameter name for which this value applies
    * @param mixed  $value     The value to inject for this parameter name
-   * @return $this
+   * @return $this For chaining.
    */
   function defineParam ($paramName, $value);
 
@@ -48,7 +50,7 @@ interface InjectorInterface
    *
    * @param string $name
    * @param mixed  $callableOrMethodStr Any callable or provisionable invokable method
-   * @return $this
+   * @return $this For chaining.
    */
   function delegate ($name, $callableOrMethodStr);
 
@@ -63,14 +65,15 @@ interface InjectorInterface
   function execute ($callableOrMethodStr, array $args = []);
 
   /**
-   * Returns the service container instance associated with the ibjector.
+   * Retrieves the mapped class or interface that was set for a given symbolic name.
    *
-   * @return ServiceContainerInterface
+   * @param string $symbolicName A symbolic (short alias) name previously set on the container.
+   * @return string The original mapping to a class or interface.
    */
-  function getContainer ();
+  public function getMapping ($symbolicName);
 
   /**
-   * Instantiate/provision a class instance
+   * Instantiates/provisions a class instance from a class name, interface name or symbolic name.
    *
    * @param string $name
    * @param array  $args
@@ -98,7 +101,7 @@ interface InjectorInterface
    *
    * @param string $name                A class/interface name.
    * @param mixed  $callableOrMethodStr Any callable or provisionable invokable method.
-   * @return $this
+   * @return $this For chaining.
    */
   function prepare ($name, $callableOrMethodStr);
 
@@ -111,20 +114,28 @@ interface InjectorInterface
   function provides ($name);
 
   /**
-   * @param string $typeName     A class/interface name.
-   * @param string $symbolicName Also registers the class or instance on the service container under the given
-   *                             symbolic name.
-   * @return $this
+   * Registers a mapping from a symbolic name to a class or interface, or shares an instance under the given symbolic
+   * name.
+   *
+   * <p>This is the same as using the array access operator `[]` for writing, and it is the counterpart to
+   * {@see InjectorInterface::get()}.
+   *
+   * ><p>**Note:** mapping to a class/interface name will not automatically share instances of it; you have to call
+   * {@see share()} to do so.
+   *
+   * @param string $symbolicName   A symbolic (short alias) name.
+   * @param string $nameOrInstance A class/interface name or an instance to be shared.
+   * @return $this For chaining.
    */
-  function register ($typeName, $symbolicName);
+  function set ($symbolicName, $nameOrInstance);
 
   /**
    * Share the specified class/instance across the Injector context
    *
    * @param mixed       $nameOrInstance The class or object to share.
-   * @param string|null $symbolicName   [optional] Also registers the class or instance on the service container under
-   *                                    the given symbolic name.
-   * @return $this
+   * @param string|null $symbolicName   [optional] When set, the class or instance is also saved on the service
+   *                                    container under the given symbolic name.
+   * @return $this For chaining.
    */
   function share ($nameOrInstance, $symbolicName = null);
 

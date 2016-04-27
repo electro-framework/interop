@@ -1,13 +1,12 @@
 <?php
 namespace Selenia\Interfaces;
 
-use ArrayAccess;
 use Countable;
 use IteratorAggregate;
 use Selenia\Interop\Map;
 use Serializable;
 
-interface MapInterface extends IteratorAggregate, ArrayAccess, Serializable, Countable
+interface MapInterface extends IteratorAggregate, Serializable, Countable
 {
 
   /**
@@ -29,10 +28,7 @@ interface MapInterface extends IteratorAggregate, ArrayAccess, Serializable, Cou
   /**
    * Gets the element associated with the given key.
    *
-   * <p>This is an alias of the `[ ]` indexing operator or the `->` property access operator.
-   *
-   * ><p>**Note:** this method provides compabibility with other interfaces, like for instance, the
-   * {@see \Interop\Container\ContainerInterface}.
+   * <p>This is an alias of the `->` property access operator.
    *
    * @param string $key
    * @return mixed
@@ -43,9 +39,6 @@ interface MapInterface extends IteratorAggregate, ArrayAccess, Serializable, Cou
    * Returns `true` if the map can return an entry for the given key, `false` otherwise.
    *
    * <p>This is an alias of the `isset` operator.
-   *
-   * ><p>**Note:** this method provides compatibility with some other interfaces, like for instance, the
-   * {@see \Interop\Container\ContainerInterface}.
    *
    * @param string $key Identifier of the entry to look for.
    * @return boolean
