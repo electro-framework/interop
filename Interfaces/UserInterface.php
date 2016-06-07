@@ -47,6 +47,14 @@ interface UserInterface
   function activeField ($set = null);
 
   /**
+   * Finds the user record searching by its ID (which may or may not be the username).
+   *
+   * @param string $id
+   * @return bool True if the user was found.
+   */
+  function findById ($id);
+
+  /**
    * Finds the user record searching by the username (which may or may not be the primary key).
    *
    * @param string $username
@@ -55,12 +63,11 @@ interface UserInterface
   function findByName ($username);
 
   /**
-   * Finds the user record searching by its ID (which may or may not be the username).
+   * Returns all fields.
    *
-   * @param string $id
-   * @return bool True if the user was found.
+   * @return array
    */
-  function findById ($id);
+  function getRecord ();
 
   /**
    * Gets or sets the user record's primary key.
@@ -154,5 +161,4 @@ interface UserInterface
    * @return bool True if the passwords match.
    */
   function verifyPassword ($password);
-
 }
