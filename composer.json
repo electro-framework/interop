@@ -1,7 +1,8 @@
 {
-  "name": "selenia/interop",
-  "description": "Selenia's Interoperability API",
+  "name": "electro/interop",
+  "description": "Electro Framework's Interoperability API",
   "license": "MIT",
+  "homepage": "https://github.com/electro/interop",
   "authors": [
     {
       "name": "Impactwave",
