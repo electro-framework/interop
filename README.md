@@ -23,11 +23,11 @@ Besides the common interfaces, this package also provides implementations of som
 
 ### Documentation
 
-For more information about this API, please refer to the [framework's documentation](http://electro.io).
+For more information about this API, please refer to the [framework's documentation](http://electro-framework.github.io).
 
 ## License
 
 The Electro framework is open-source software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-**Electro framework** - Copyright &copy; 2015 Impactwave, Lda.
+**Electro framework** - Copyright &copy; Cláudio Silva and Impactwave, Lda.
 
