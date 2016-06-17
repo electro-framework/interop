@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Traits;
+namespace Electro\Traits;
 
 /**
  * Provides functionality for creating and accessing a single instance of a class.

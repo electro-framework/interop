@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces\Http;
+namespace Electro\Interfaces\Http;
 
 /**
  * A service that assists in routing an HTTP request to one or more request handlers.

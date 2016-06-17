@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Interop;
+namespace Electro\Interop;
 
-use Selenia\Traits\OverlayTrait;
+use Electro\Traits\OverlayTrait;
 
 /**
  * A class whose instances inherit properties at runtime from another object or from an array.

@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces\Http;
+namespace Electro\Interfaces\Http;
 
 /**
  * A pipeline of request handlers.

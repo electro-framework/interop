@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Interfaces\Http\Shared;
+namespace Electro\Interfaces\Http\Shared;
 
-use Selenia\Interfaces\Http\RouterInterface;
+use Electro\Interfaces\Http\RouterInterface;
 
 /**
  * Represents the application's main/root HTTP request router.

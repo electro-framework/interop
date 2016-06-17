@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Electro\Interfaces;
 
 use Psr\Http\Message\UriInterface;
-use Selenia\Exceptions\FlashType;
+use Electro\Exceptions\FlashType;
 
 /**
  * A service that provides access to the current session.
@@ -65,7 +65,7 @@ interface SessionInterface extends \ArrayAccess, AssignableInterface
    * Gets the language code for the current session.
    *
    * > <p>Do not use this to determine the active language for the current URL;
-   * use the {@see Selenia\Localization\Services\Locale} service instead.
+   * use the {@see Electro\Localization\Services\Locale} service instead.
    *
    * @return string|null <kbd>null</kbd> if no language is enabled.
    */

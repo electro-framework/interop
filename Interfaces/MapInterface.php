@@ -1,9 +1,9 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Electro\Interfaces;
 
 use Countable;
 use IteratorAggregate;
-use Selenia\Interop\Map;
+use Electro\Interop\Map;
 use Serializable;
 
 interface MapInterface extends IteratorAggregate, Serializable, Countable

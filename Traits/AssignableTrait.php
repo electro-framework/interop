@@ -1,6 +1,6 @@
 <?php
-namespace Selenia\Traits;
-use Selenia\Interfaces\AssignableInterface;
+namespace Electro\Traits;
+use Electro\Interfaces\AssignableInterface;
 
 /**
  * Allows a class instance to have its fields (either public or not) be mass-assigned or mass-read.

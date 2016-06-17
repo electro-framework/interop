@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Traits;
+namespace Electro\Traits;
 
 define ('Y', true);
 define ('N', false);

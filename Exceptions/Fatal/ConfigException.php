@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Exceptions\Fatal;
+namespace Electro\Exceptions\Fatal;
 
-use Selenia\Exceptions\FatalException;
+use Electro\Exceptions\FatalException;
 
 class ConfigException extends FatalException {
 }

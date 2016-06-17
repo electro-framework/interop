@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Traits;
+namespace Electro\Traits;
 
-use Selenia\Exceptions\FatalException;
+use Electro\Exceptions\FatalException;
 
 /**
  * Exposes selected properties from the object to be displayed by debugging tools.

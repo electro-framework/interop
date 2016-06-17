@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces\Navigation;
+namespace Electro\Interfaces\Navigation;
 
 /**
  * Marks a class as being able to provide navigation information for the application.

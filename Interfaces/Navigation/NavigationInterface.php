@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces\Navigation;
+namespace Electro\Interfaces\Navigation;
 
 use Psr\Http\Message\ServerRequestInterface;
 

@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Exceptions\Flash;
+namespace Electro\Exceptions\Flash;
 
 class ImageException extends FileException
 {

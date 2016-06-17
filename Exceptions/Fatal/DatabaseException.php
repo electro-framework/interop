@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Exceptions\Fatal;
+namespace Electro\Exceptions\Fatal;
 
-use Selenia\Exceptions;
-use Selenia\Exceptions\FatalException;
+use Electro\Exceptions;
+use Electro\Exceptions\FatalException;
 
 class DatabaseException extends FatalException
 {

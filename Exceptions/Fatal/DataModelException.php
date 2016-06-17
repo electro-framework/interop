@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Exceptions\Fatal;
+namespace Electro\Exceptions\Fatal;
 
-use Selenia\DataObject;
-use Selenia\Exceptions\FatalException;
+use Electro\DataObject;
+use Electro\Exceptions\FatalException;
 
 class DataModelException extends FatalException
 {

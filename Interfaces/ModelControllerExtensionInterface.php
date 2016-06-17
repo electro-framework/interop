@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Electro\Interfaces;
 
 interface ModelControllerExtensionInterface
 {

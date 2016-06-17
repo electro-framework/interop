@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Exceptions\Flash;
+namespace Electro\Exceptions\Flash;
 
-use Selenia\Exceptions\FlashMessageException;
-use Selenia\Exceptions\FlashType;
+use Electro\Exceptions\FlashMessageException;
+use Electro\Exceptions\FlashType;
 
 class FileException extends FlashMessageException
 {

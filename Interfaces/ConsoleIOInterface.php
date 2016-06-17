@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Electro\Interfaces;
 
 use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;

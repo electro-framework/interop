@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Interfaces\Faults\en_US;
+namespace Electro\Interfaces\Faults\en_US;
 
-use Selenia\Faults\Faults as F;
+use Electro\Faults\Faults as F;
 
 interface Faults
 {

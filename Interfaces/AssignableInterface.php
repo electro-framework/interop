@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Electro\Interfaces;
 
 /**
  * Allows a class instance to have its fields (either public or not) be mass-assigned or mass-read.

@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Interfaces\Views;
+namespace Electro\Interfaces\Views;
 
-use Selenia\Exceptions\Fatal\FileNotFoundException;
-use Selenia\Exceptions\FatalException;
+use Electro\Exceptions\Fatal\FileNotFoundException;
+use Electro\Exceptions\FatalException;
 
 /**
  * The View service generates markup for displaying Graphical User Interfaces and web documents on web browsers.

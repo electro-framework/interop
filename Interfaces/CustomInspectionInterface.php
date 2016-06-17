@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Electro\Interfaces;
 
 /**
  * Indicates that a class provides custom logic for rending its inspection (debugging) representation.

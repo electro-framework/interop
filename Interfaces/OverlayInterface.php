@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Electro\Interfaces;
 
 /**
  * Allows a class' instances to inherit properties at runtime from another object or from an array.

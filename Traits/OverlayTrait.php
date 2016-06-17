@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Traits;
+namespace Electro\Traits;
 
-use Selenia\Interfaces\OverlayInterface;
+use Electro\Interfaces\OverlayInterface;
 
 /**
  * Allows instances of the class to inherit properties at runtime from another object.

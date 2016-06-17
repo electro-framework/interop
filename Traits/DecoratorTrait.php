@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Traits;
+namespace Electro\Traits;
 
 /**
  * **Warning:** you cannot use `parent::` on a class that uses this trait. Use `$this->decorated->` instead.

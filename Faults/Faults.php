@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Faults;
+namespace Electro\Faults;
 
 const N = Faults::class . '\\';
 

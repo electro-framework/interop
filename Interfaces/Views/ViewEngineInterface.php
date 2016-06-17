@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces\Views;
+namespace Electro\Interfaces\Views;
 
 /**
  * A low-level API to a view/templating engine, which is capable of compiling and/or rendering templates coded in a

@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Interop;
+namespace Electro\Interop;
 
-use Selenia\Interfaces\MapInterface;
+use Electro\Interfaces\MapInterface;
 
 class Map implements MapInterface
 {

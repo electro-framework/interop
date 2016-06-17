@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Interfaces\Navigation;
+namespace Electro\Interfaces\Navigation;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Selenia\Exceptions\Fault;
+use Electro\Exceptions\Fault;
 
 interface NavigationLinkInterface extends \IteratorAggregate
 {

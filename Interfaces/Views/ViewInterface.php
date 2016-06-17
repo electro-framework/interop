@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Interfaces\Views;
+namespace Electro\Interfaces\Views;
 
-use Selenia\Exceptions\FatalException;
+use Electro\Exceptions\FatalException;
 
 /**
  * A View represents a template that can be parsed, compiled and rendered to generate markup.

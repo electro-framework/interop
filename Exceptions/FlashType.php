@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Exceptions;
+namespace Electro\Exceptions;
 
 class FlashType
 {

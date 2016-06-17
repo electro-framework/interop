@@ -1,8 +1,8 @@
 <?php
-namespace Selenia\Interfaces;
+namespace Electro\Interfaces;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Selenia\Exceptions\FatalException;
+use Electro\Exceptions\FatalException;
 
 /**
  * Model controllers automate and encapsulate repetitive model-related tasks that, otherwise, would be redundantly

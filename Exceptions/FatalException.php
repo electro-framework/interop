@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Exceptions;
+namespace Electro\Exceptions;
 
-use Selenia\Exceptions;
+use Electro\Exceptions;
 
 /**
  * An exception that should not be handled/intercepted by application-level code.

@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Interfaces\DI;
+namespace Electro\Interfaces\DI;
 
 use Interop\Container\ContainerInterface;
 

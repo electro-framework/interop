@@ -1,7 +1,7 @@
 <?php
-namespace Selenia\Interfaces\Http\Shared;
+namespace Electro\Interfaces\Http\Shared;
 
-use Selenia\Interfaces\Http\MiddlewareStackInterface;
+use Electro\Interfaces\Http\MiddlewareStackInterface;
 
 /**
  * Represents the application's main/root HTTP middleware stack.
