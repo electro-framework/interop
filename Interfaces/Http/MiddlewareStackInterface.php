@@ -19,6 +19,7 @@ interface MiddlewareStackInterface extends RequestHandlerInterface
   /**
    * Adds a request handler to the pipeline.
    * @param string|callable|RequestHandlerInterface $handler The request handler to be added to the pipeline.
+   *                                                         If NULL, it will not be added.
    * @param string|int|null                         $key     An ordinal index or an arbitrary identifier to associate
    *                                                         with the given handler.
    *                                                         <p>If not specified, an auto-incrementing integer index

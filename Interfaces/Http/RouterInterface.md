@@ -10,20 +10,20 @@ tree traversal is completed.
 If the handler tree is exhausted, the router sends the request to the next handler on the application's main
 request handling stack.
 
-### A short introduction to Selenia's HTTP handling concepts
+### A short introduction to Electro's HTTP handling concepts
 
-Selenia's router has some unique features that set it apart from most other routers out there.  
+Electro's router has some unique features that set it apart from most other routers out there.
 
-For instance, it is a **hierarchical** router, while most other routers are linear ones.  
+For instance, it is a **hierarchical** router, while most other routers are linear ones.
 It also allows multiple handlers to handle a request, each one generating a part of the response. This enables advanced
 features like *composite responses* and **Turboload** navigation.
 
 To understand the way the router works, it's important to know the main concepts behind the framework's HTTP request
-handling. We'll shortly outline them here before proceeding to the details of the routing process. 
+handling. We'll shortly outline them here before proceeding to the details of the routing process.
 
 #### Request Handlers
 
-Request handlers are a central concept on Selenia's routing (and general HTTP processing).
+Request handlers are a central concept on Electro's routing (and general HTTP processing).
 
 All routable elements on a routing tree are either route mappings, request handlers or factories that produce handlers.
 
@@ -43,21 +43,21 @@ For example:
 - Compressing the response
 - Anything else related to the request/response lifecycle
 
-Selenia expands the traditional middleware concept by making your application logic (Controllers or Components) to also be
+Electro expands the traditional middleware concept by making your application logic (Controllers or Components) to also be
 implemented as middleware-compatible functions (or callable objects).
 
-So, on Selenia, **Request Handlers are a broad concept the applies to anything that processes HTTP requests and generates/modifies
+So, on Electro, **Request Handlers are a broad concept the applies to anything that processes HTTP requests and generates/modifies
 HTTP responses**.
 
 ##### What is the relation between Request Handlers and Middleware?
 
 Request handlers and 100% compatible with PSR-7-compatible middleware.
 
-- You can use existing PSR-7-compatible middleware from other projects or frameworks on your Selenia application.
-- You can use Selenia middleware on projects based on other frameworks (or even with no framework at all) as long as they
+- You can use existing PSR-7-compatible middleware from other projects or frameworks on your Electro application.
+- You can use Electro middleware on projects based on other frameworks (or even with no framework at all) as long as they
 are PSR-7-compatible.
 
-Nevertheless, on Selenia, request handlers are used on broader context than traditional middleware is.
+Nevertheless, on Electro, request handlers are used on broader context than traditional middleware is.
 They can be used to implement middleware, of course, but they are also used to implement routers, controllers and
 components.
 
@@ -80,7 +80,7 @@ start of the stack is reached, at which point it will be sent to the HTTP client
 If the request reaches the stack's end without a complete response being generated, the last handler will usually
 just send back an `HTTP 404 Not Found` response.
 
-To make the request and the response advance on the stack, each handler **MUST** call the next handler directly, by 
+To make the request and the response advance on the stack, each handler **MUST** call the next handler directly, by
 invoking the `$next` argument (the third parameter of a standard/common middleware signature).
 
 If a handler does not specifically invoke the next one, that next handler and all subsequent handlers will not be invoked
@@ -89,7 +89,7 @@ argument) will start immediately moving backwards the path travelled previously 
 
 #### The router middleware
 
-Selenia has a main, application-level, request handling stack. At a specific point on that stack, there is a
+Electro has a main, application-level, request handling stack. At a specific point on that stack, there is a
 **routing middleware handler**, also known as a **router**.
 
 The router makes the request/response flow into a parallel tree-like structure of routes, comprised of patterns
@@ -128,7 +128,7 @@ The branching depends on applying the pattern to the current request URL path.
 
 > If a routable handles the request irrespective of its URL, it is called a **middleware** and not a route.
 
-A route is defined by either calling the router's `route()` method and passing it an iterable routable as argument, or 
+A route is defined by either calling the router's `route()` method and passing it an iterable routable as argument, or
 indirectly as a child of another routable, somewhere on a hierarchy of interconnected routes.
 
 ### Routable Types
@@ -201,13 +201,13 @@ So, the iteration order for the keys is:
 
 ##### Middleware
 
-The example above highlights a major feature of Selenia's router: **you can mix routables with keys and routables without
+The example above highlights a major feature of Electro's router: **you can mix routables with keys and routables without
 keys**, and they'll be executed in order.
 
 As keyless routables always run, they are ideal for implementing traditional **middleware** (like filters, loggers, etc.).
 
 > In fact, an **iterable routable** is quite like a **handler stack**, but keys have special meaning because they are
-interpreted by a router, while a handler stack just blindly calls the next handler whenever a handler calls `$next()`. 
+interpreted by a router, while a handler stack just blindly calls the next handler whenever a handler calls `$next()`.
 
 If a middleware performs its own routing, it can be considered a **route**.
 
@@ -244,13 +244,13 @@ You can also type hint the parameters:
     $router->route (
       [
         'users' => UsersPage::class,
-        
+
         'user/@id' => function (ServerRequestInteface $request, ResponseInterface $response, callable $next) {
           $id = $request->getAttribute('@id');
           // do something
           return $next ();  // jumps to the next route ('other')
         },
-        
+
         'other' => function () {
           // You can ommit unneeded parameters
         }
@@ -302,7 +302,7 @@ the `RoutableFactory` class.
 Factories **MUST** return a routable instance (usually the same provided argument, but not always).
 
 If the returned routable is, again, a configurable router, the process is repeated recursively.
- 
+
 ##### Returning nothing or `null`
 
 If the factory returns nothing (or null), execution proceeds to the next route.
@@ -329,7 +329,7 @@ You may then call `route()` on the router to perform the routing.
         ->with ($request, $response, $next)
         ->route (...);
     }
-    
+
 > **Note:** most other examples on this documentation ommit this setup code, and begin with `$router->route(...)`.
  This is just for the sake of brevity.
 
@@ -359,23 +359,23 @@ For the path `user/37/records`:
     $router->route (
       [
         // You are not required to use a callable for a sub-route
-        
+
         'user'   => [
           '@id' => UserPage::class,
         ],
-        
+
         // But you can use one, if you whish
-        
+
         'user' => function () {         // $request, $response and $next can be ommited
           // it may do something here...
-          
+
           return $router->route ([      // sub-routing
             '@id' => UserPage::class,
           ]);
         },
-        
+
         // A more complex and contrived example
-        
+
         'author' => function ($request, $response, $next) {
           $path = $request->getUri ()->getPath ();        // $path == '37/records'
           if (!is_numeric ($path[0])) return $next ();    // give up and proceed to the next route
@@ -400,12 +400,12 @@ catches them with a `try catch` block surrounding its "next" call.
 If a handler catches an exception, it can either re-throw it to be catched by a previous handler, or convert it to an
 HTTP response that travels back the stack.
 
-> Exception handlers **SHOULD NEVER** suppress exceptions and resume executing the handler stack. 
+> Exception handlers **SHOULD NEVER** suppress exceptions and resume executing the handler stack.
 
 ### Route patterns
 
-Any iterable that exposes a set of keys and values is interpreted as a routing table.  
-Each key/value pair is a route.  
+Any iterable that exposes a set of keys and values is interpreted as a routing table.
+Each key/value pair is a route.
 Each key is a pattern written in a DSL that instructs the router on how to mach one or more URL path segments.
 
 > There are no patterns for matching other parts of the URL (like the protocol, domain, etc.). You don't need patterns
@@ -436,13 +436,13 @@ If not specified, it maches any method. To specify more than one, separate them 
 
 The pattern part **must** end with a single space.
 
-##### The path pattern part 
+##### The path pattern part
 
 It has the following syntax:
 
 `(.|*|literal|@param)[...]`
 
-- an empty path pattern is not allowed; at least on character must be specified. 
+- an empty path pattern is not allowed; at least on character must be specified.
 
 - `.` matches an empty URL path, which means either the path is the root path `/` or the path segment matched by the previous
 pattern was the final one on the URL.
@@ -454,13 +454,13 @@ pattern was the final one on the URL.
   A new request object is generated with its path set to `''`.
 
 - `...` is similar to `*`, but it generates a new request object with a new path that is comprised of all characters
-  matched by the dots. 
+  matched by the dots.
 
 - `literal` is any literal text. You can use any character excluding the ones reserved for pattern matching.
   You may also use `/` for matching multiple segments.<br>
   A new request object is generated with a new path that has the matched span removed.
   > The matcher assumes there is an implicit `/` at the end of any pattern, but it also matches if the URL
-  does not end with `/`.  
+  does not end with `/`.
   > Ex: `'user/37'` matches `'user/37/records'` and `'user/37'`, but not `'user/371'`
 
 - `@param` matches any character sequence until `/` and saves it as a route parameter with the given name.
