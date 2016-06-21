@@ -22,19 +22,16 @@ interface ViewServiceInterface
   function getEngine ($class);
 
   /**
-   * @param string $fileName
+   * @param string $path The complete file name, including the file name extension.
    * @return ViewEngineInterface
    * @throws FatalException If no match was found.
    */
-  function getEngineFromFileName ($fileName);
+  function getEngineFromFileName ($path);
 
   /**
    * Loads and compiles the specified template file.
    *
-   * If no file with the given name is found, a search is made for a file with the same name as prefix, but having one
-   * or more additional extensions. Ex: 'my-template' --> 'my-template.html'
-   *
-   * @param string $path
+   * @param string $path The complete file name, including the file name extension.
    * @return ViewInterface
    * @throws FileNotFoundException If no file is found with the given name or having that name as prefix.
    */
@@ -53,10 +50,7 @@ interface ViewServiceInterface
   /**
    * Attempts to load the specified view file.
    *
-   * If no file with the given name is found, a search is made for a file with the same name as prefix, but having one
-   * or more additional extensions. Ex: 'my-template' --> 'my-template.html'
-   *
-   * @param string $path
+   * @param string $path The complete file name, including the file name extension.
    * @return string The file's content.
    * @throws FileNotFoundException If no file is found with the given name or having that name as prefix.
    */
@@ -74,11 +68,14 @@ interface ViewServiceInterface
   /**
    * Searches for the specified view file and returns the absolute path to it.
    *
-   * @param string $path
+   * If no file with the given name is found, a search is made for the first file on the same directory that has the
+   * same name as prefix but that also has one or more additional extensions. Ex: 'my-template' --> 'my-template.html'
+   *
+   * @param string $viewName
    * @param string $base [output, optional] It will be set to the base path of the module's views folder.
    * @return string An absolute file path.
    * @throws FileNotFoundException If the file was not found.
    */
-  public function resolveTemplatePath ($path, &$base = null);
+  public function resolveTemplatePath ($viewName, &$base = null);
 
 }
