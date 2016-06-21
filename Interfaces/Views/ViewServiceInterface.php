@@ -31,8 +31,12 @@ interface ViewServiceInterface
   /**
    * Loads and compiles the specified template file.
    *
+   * If no file with the given name is found, a search is made for a file with the same name as prefix, but having one
+   * or more additional extensions. Ex: 'my-template' --> 'my-template.html'
+   *
    * @param string $path
    * @return ViewInterface
+   * @throws FileNotFoundException If no file is found with the given name or having that name as prefix.
    */
   function loadFromFile ($path);
 
@@ -49,9 +53,12 @@ interface ViewServiceInterface
   /**
    * Attempts to load the specified view file.
    *
+   * If no file with the given name is found, a search is made for a file with the same name as prefix, but having one
+   * or more additional extensions. Ex: 'my-template' --> 'my-template.html'
+   *
    * @param string $path
    * @return string The file's content.
-   * @throws FileNotFoundException If the file was not found.
+   * @throws FileNotFoundException If no file is found with the given name or having that name as prefix.
    */
   public function loadViewTemplate ($path);
 
