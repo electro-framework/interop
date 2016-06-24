@@ -11,5 +11,6 @@ interface Faults
     F::LINK_NOT_FOUND        => "Navigation link '%s' was not found",
     F::PROPERTY_IS_READ_ONLY => "Property '%s' is read-only",
     F::REQUEST_NOT_SET       => "No ServerRequest is set for the Navigation",
+    F::INVALID_RESPONSE_TYPE => "Invalid response type",
   ];
 }

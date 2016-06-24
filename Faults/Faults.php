@@ -10,4 +10,5 @@ interface Faults
   const LINK_NOT_FOUND        = N . 'LINK_NOT_FOUND';
   const PROPERTY_IS_READ_ONLY = N . 'PROPERTY_IS_READ_ONLY';
   const REQUEST_NOT_SET       = N . 'REQUEST_NOT_SET';
+  const INVALID_RESPONSE_TYPE = N . 'INVALID_RESPONSE_TYPE';
 }
