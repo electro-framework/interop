@@ -69,8 +69,9 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
    *
    * > <p>All objects on the path come from the navigation tree; these are not clones.
    *
-   * <p>**Important:** you must call this method before reading state from individual links on the navigation tree, as link state is
-   * not computed until this method is invoked for the first time. Subsequent calls return a cached version.<br>
+   * <p>**Important:** you must call this method before reading state from individual links on the navigation tree, as
+   * link state is not computed until this method is invoked for the first time. Subsequent calls return a cached
+   * version.<br>
    * **Note:** depending on the features you are using, the framework may already have done that for you.
    *
    * @param int $offset If specified, discards the first N items.
@@ -119,14 +120,12 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
   function link ();
 
   /**
-   * Provides the Navigation instance with information about the current HTTP request, so that it can generate
-   * a navigation that suits the application's current state.
-   * > <p>This is for internal use only.
+   * Gets the HTTP server request associated with this navigation, from which it can generate a navigation that suits
+   * the application's current state.
    *
-   * @param ServerRequestInterface $request [optional]
-   * @return $this|ServerRequestInterface
+   * @return ServerRequestInterface
    */
-  function request (ServerRequestInterface $request = null);
+  function request ();
 
   /**
    * The root of the tree of navigation links for this navigation instance.

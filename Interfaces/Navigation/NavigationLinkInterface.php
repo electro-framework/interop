@@ -1,8 +1,8 @@
 <?php
 namespace Electro\Interfaces\Navigation;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Electro\Exceptions\Fault;
+use Psr\Http\Message\ServerRequestInterface;
 
 interface NavigationLinkInterface extends \IteratorAggregate
 {
@@ -188,15 +188,11 @@ interface NavigationLinkInterface extends \IteratorAggregate
   function rawUrl ();
 
   /**
-   * Associates an HTTP server request with this link, to enable URL parameters resolution.
+   * Gets the HTTP server request associated with this link, from which URL parameters resolution is performed.
    *
-   * <p>This is only done for the root link of a navigation hierarchy, all other links will read from their
-   * parent until a link with a set value is reached.
-   *
-   * @param ServerRequestInterface $request [optional]
-   * @return $this|bool $this if an argument is given, the property's value otherwise.
+   * @return ServerRequestInterface
    */
-  function request (ServerRequestInterface $request = null);
+  function request ();
 
   /**
    * For internal use by the {@see NavigationInterface} that manages the link.
