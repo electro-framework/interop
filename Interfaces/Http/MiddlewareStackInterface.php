@@ -32,12 +32,17 @@ interface MiddlewareStackInterface extends RequestHandlerInterface
    *                                                         <p>Some MiddlewareStackInterface implementations
    *                                                         may use the key for other purposes (ex. route matching
    *                                                         patterns).
+   * @param string|int|null                         $before  Insert before an existing handler that lies at the given
+   *                                                         index, or that has the given key. When null, the handler is
+   *                                                         appended to the end of the pipeline, except if $after is
+   *                                                         provided.
    * @param string|int|null                         $after   Insert after an existing handler that lies at the given
-   *                                                         index, or that has the given key. When null, it is
-   *                                                         appended.
+   *                                                         index, or that has the given key. When null, the handler is
+   *                                                         appended to the end of the pipeline, except if $before is
+   *                                                         provided.
    * @return $this
    */
-  function add ($handler, $key = null, $after = null);
+  function add ($handler, $key = null, $before = null, $after = null);
 
   /**
    * Sets the pipeline to the given one.
