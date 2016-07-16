@@ -151,6 +151,16 @@ interface ModelControllerInterface
   function saveModel (array $defaultOptions = []);
 
   /**
+   * A dot-separated path to the main model, starting from the view model root.
+   *
+   * <p>All model fields should have path names beginning with this value as prefix.
+   * > <p>Ex: for the default value, which is `'model'`, all model fields should be prefixed with `'model.'`.
+   *
+   * @param string $path
+   */
+  public function setModelRootPath ($path);
+
+  /**
    * On composite models, it defines a dot-separated path to the main sub-model.
    *
    * <p>The main sub-model is the target for automatic route parameters merging.
