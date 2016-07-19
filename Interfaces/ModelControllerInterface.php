@@ -1,8 +1,8 @@
 <?php
 namespace Electro\Interfaces;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Electro\Exceptions\FatalException;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Model controllers automate and encapsulate repetitive model-related tasks that, otherwise, would be redundantly
@@ -17,6 +17,14 @@ use Electro\Exceptions\FatalException;
  */
 interface ModelControllerInterface
 {
+  /**
+   * Gets a field from the model or from a sub-model.
+   *
+   * @param string $path A dot delimited path.
+   * @return mixed
+   */
+  function get ($path);
+
   /**
    * Returns the model owned by the controller.
    *
@@ -34,6 +42,14 @@ interface ModelControllerInterface
    * @return ServerRequestInterface
    */
   function getRequest ();
+
+  /**
+   * Parses a property path and returns the target (sub)model and the target simple property identifier.
+   *
+   * @param string $path A dot delimited path.
+   * @return array A touple of (targetModel, targetProperty)
+   */
+  function getTarget ($path);
 
   /**
    * Sets up the model based on information provided by the HTTP request.
@@ -151,14 +167,12 @@ interface ModelControllerInterface
   function saveModel (array $defaultOptions = []);
 
   /**
-   * A dot-separated path to the main model, starting from the view model root.
+   * Sets a field on the model or on a sub-model.
    *
-   * <p>All model fields should have path names beginning with this value as prefix.
-   * > <p>Ex: for the default value, which is `'model'`, all model fields should be prefixed with `'model.'`.
-   *
-   * @param string $path
+   * @param string $path A dot delimited path.
+   * @param        $value
    */
-  public function setModelRootPath ($path);
+  function set ($path, $value);
 
   /**
    * On composite models, it defines a dot-separated path to the main sub-model.
@@ -179,6 +193,16 @@ interface ModelControllerInterface
    *                             itself.
    */
   function setModel ($data, $subModelPath = '');
+
+  /**
+   * A dot-separated path to the main model, starting from the view model root.
+   *
+   * <p>All model fields should have path names beginning with this value as prefix.
+   * > <p>Ex: for the default value, which is `'model'`, all model fields should be prefixed with `'model.'`.
+   *
+   * @param string $path
+   */
+  public function setModelRootPath ($path);
 
   /**
    * Sets the HTTP request that will be handled by {@see handleRequest()}.
