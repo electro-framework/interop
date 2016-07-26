@@ -63,16 +63,18 @@ interface ConsoleIOInterface
 
   /**
    * @param string $text
+   * @param int    $status Status exit code.
    */
-  function done ($text);
+  function done ($text, $status = 0);
 
   /**
    * Prints an error message and stops execution. Use only on commands, not on tasks.
    *
-   * @param string $text  The message.
-   * @param int    $width Error box width.
+   * @param string $text   The message.
+   * @param int    $width  Error box width.
+   * @param int    $status Status exit code.
    */
-  function error ($text, $width = 0);
+  function error ($text, $width = 0, $status = 1);
 
   /**
    * @return QuestionHelper
