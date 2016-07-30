@@ -46,6 +46,8 @@ interface ConsoleIOInterface
   function cancel ();
 
   /**
+   * Clears the display.
+   *
    * @return $this
    */
   function clear ();
@@ -92,6 +94,12 @@ interface ConsoleIOInterface
   function getOutput ();
 
   /**
+   * @param OutputInterface $output
+   * @return mixed
+   */
+  function setOutput (OutputInterface $output);
+
+  /**
    * Sets the indentation level for all lines from this point on.
    *
    * @param int $level
@@ -106,7 +114,7 @@ interface ConsoleIOInterface
    * immediately returned.
    *
    * @param string   $question
-   * @param string[] $options
+   * @param string[] $options      A list of options to display (numeric keys only).
    * @param int      $defaultIndex The default answer if the user just presses return. -1 = no default (empty input is
    *                               not allowed.
    * @param array    $secondColumn If specified, it contains the 2nd column for each option.
@@ -124,6 +132,8 @@ interface ConsoleIOInterface
   function nl ();
 
   /**
+   * Alias of `writeln()`.
+   *
    * @param string $text
    * @return $this
    */
@@ -141,10 +151,11 @@ interface ConsoleIOInterface
   /**
    * Outputs data in a tabular format.
    *
-   * @param string[]      $headers
-   * @param array         $data
-   * @param int[]         $widths
-   * @param string[]|null $align
+   * @param string[]      $headers A list of table column headers.
+   * @param array         $data    A bidimensional array of data for the table body.
+   * @param int[]         $widths  Each width that is 0 will be assigned the remaining horizontal space on the terminal,
+   *                               divided by the number of columns set to 0.
+   * @param string[]|null $align   A list of column alignments; values: 'L'|'R'|'C'
    */
   function table (array $headers, array $data, array $widths, array $align = null);
 
@@ -158,6 +169,8 @@ interface ConsoleIOInterface
   public function terminalSize (array $terminalSize = null);
 
   /**
+   * Writes a title line (with specific formatting) followed by a blank line.
+   *
    * @param string $text
    * @return $this
    */
@@ -172,12 +185,16 @@ interface ConsoleIOInterface
   function warn ($text);
 
   /**
+   * Writes text, with support for formatting tags.
+   *
    * @param string $text
    * @return $this
    */
   function write ($text);
 
   /**
+   * Like {@see write} but appends a line return to the output.
+   *
    * @param string $text
    * @return $this
    */
