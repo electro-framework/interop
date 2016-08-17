@@ -1,6 +1,7 @@
 <?php
 namespace Electro\Interfaces\DI;
 
+use Auryn\InjectionException;
 use Interop\Container\ContainerInterface;
 
 interface InjectorInterface extends ContainerInterface
@@ -75,9 +76,10 @@ interface InjectorInterface extends ContainerInterface
   /**
    * Instantiates/provisions a class instance from a class name, interface name or symbolic name.
    *
-   * @param string $name
-   * @param array  $args
+   * @param string $name A class name, interface name or symbolic name.
+   * @param array  $args A map of constructor argument definitions.
    * @return mixed
+   * @throws InjectionException If the requested class could not be instantiated.
    */
   public function make ($name, array $args = []);
 
@@ -87,7 +89,7 @@ interface InjectorInterface extends ContainerInterface
    * <p>Returns a closure that will instantiate and return the instance when called, without the caller needing to have
    * an instance of the injector.
    *
-   * @param string $name
+   * @param string $name A class name, interface name or symbolic name.
    * @param array  $args The same as {@see make}'s $args.
    * @return mixed
    */
