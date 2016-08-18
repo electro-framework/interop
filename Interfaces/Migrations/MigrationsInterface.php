@@ -1,12 +1,16 @@
 <?php
-namespace Electro\Interfaces;
+namespace Electro\Interfaces\Migrations;
 
+/**
+ * A service that provides migration tasks.
+ */
 interface MigrationsInterface
 {
   /**
    * Runs all pending migrations of the current module, optionally up to a specific version.
    *
-   * @param string $target [optional] The version number to migrate to.
+   * @param string $target [optional] The version number to migrate to. If not specified, it runs up to the most recent
+   *                       migration, either forward or backwards, depending on whether there are PENDING or
    */
   function migrate ($target = null);
 
@@ -36,7 +40,7 @@ interface MigrationsInterface
    *
    * @param string $seeder     [optional] The name of the seeder (in camel case).
    */
-  function seed ($seeder = null);
+  function seed ($seeder = 'Seeder');
 
   /**
    * Gets a list of all migrations of the current module, along with their current status.

@@ -42,8 +42,10 @@ interface ConsoleIOInterface
   /**
    * Displays an operation cancelation message and aborts execution.
    * <p>If the input stream is not interactive, no message will be displayed.
+   *
+   * @param string $message [optional]
    */
-  function cancel ();
+  function cancel ($message = 'Canceled');
 
   /**
    * Clears the display.
