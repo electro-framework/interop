@@ -1,12 +1,18 @@
 <?php
 namespace Electro\Traits;
 
+use Electro\Plugins\Matisse\Properties\TypeSystem\ReflectionClass;
+
 /**
- * Allows instances of the class to inherit properties and methods at runtime from another object.
+ * Allows instances of the class to inherit and override properties and methods at runtime from another object.
  *
  * <p>You should assign the `decorated` property before using the object. You can do that on the class constructor, or
  * you may create a setter.
  * <p>**Warning:** you cannot use `parent::` on a class that uses this trait. Use `$this->decorated->`, instead.
+ * <p>**Warning:** there are limitations to what a decorated class can do. For ex. it cannot be passed as an argument
+ * to a function that has a typehint to the original class.
+ * <p>**Warning:** this class uses reflection to run the decorated class methods on the context of the decorator and to
+ * be able to access private/protected properties and methods; so it's slower than the decorated class.
  */
 trait DecoratorTrait
 {
@@ -15,18 +21,22 @@ trait DecoratorTrait
   /**
    * @param string $n
    * @param array  $args
+   * @return mixed
    */
   function __call ($n, $args)
   {
-    return $this->decorated->$n (...$args);
+    return call_method ([$this->decorated, $n], $this, ...$args);
   }
 
   /**
    * @param string $n
+   * @return mixed
    */
   function __get ($n)
   {
-    return $this->decorated->$n;
+    $m = new \ReflectionProperty($this->decorated, $n);
+    $m->setAccessible (true);
+    return $m->getValue ($this->decorated);
   }
 
   /**
@@ -35,7 +45,9 @@ trait DecoratorTrait
    */
   function __set ($n, $value)
   {
-    $this->decorated->$n = $value;
+    $m = new \ReflectionProperty($this->decorated, $n);
+    $m->setAccessible (true);
+    $m->setValue ($this->decorated, $value);
   }
 
   /**
@@ -44,7 +56,8 @@ trait DecoratorTrait
    */
   function __isset ($n)
   {
-    return isset($this->decorated->$n);
+    $c = new ReflectionClass($this->decorated);
+    return $c->hasProperty ($n);
   }
 
   /**
@@ -52,7 +65,7 @@ trait DecoratorTrait
    */
   function __unset ($n)
   {
-    unset ($this->decorated->$n);
+    $this->__set ($n, null);
   }
 
 }
