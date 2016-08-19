@@ -2,7 +2,11 @@
 namespace Electro\Traits;
 
 /**
- * **Warning:** you cannot use `parent::` on a class that uses this trait. Use `$this->decorated->` instead.
+ * Allows instances of the class to inherit properties and methods at runtime from another object.
+ *
+ * <p>You should assign the `decorated` property before using the object. You can do that on the class constructor, or
+ * you may create a setter.
+ * <p>**Warning:** you cannot use `parent::` on a class that uses this trait. Use `$this->decorated->`, instead.
  */
 trait DecoratorTrait
 {
