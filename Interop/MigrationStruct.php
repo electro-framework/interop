@@ -9,7 +9,7 @@ class MigrationStruct
   /** The migration has already run. */
   const DONE = 'done';
   /** The migration no longer exists on the project. */
-  const GONE = 'gone';
+  const OBSOLETE = 'obsolete';
   /** The migration has not run yet. */
   const PENDING = 'pending';
   /**
@@ -40,6 +40,12 @@ class MigrationStruct
    *             <p>Note: this field is computed, it's not present on the database.
    */
   const status = 'status';
+
+  static public function classFromFilename ($path)
+  {
+    return ucfirst (str_dehyphenate (str_segmentsStripFirst (
+      pathinfo ($path)['filename'], '_'), true, '_'));
+  }
 
   static public function nameFromFilename ($path)
   {

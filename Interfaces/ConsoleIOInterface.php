@@ -66,10 +66,10 @@ interface ConsoleIOInterface
   function confirm ($question);
 
   /**
-   * @param string $text
+   * @param string $text [optional]
    * @param int    $status Status exit code.
    */
-  function done ($text, $status = 0);
+  function done ($text = '', $status = 0);
 
   /**
    * Prints an error message and stops execution. Use only on commands, not on tasks.
