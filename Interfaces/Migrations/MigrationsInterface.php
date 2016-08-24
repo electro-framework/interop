@@ -31,15 +31,10 @@ interface MigrationsInterface
   function module ($moduleName);
 
   /**
-   * Rollback all database migrations of the current module.
-   */
-  function reset ();
-
-  /**
    * Reverts the last migration of the current module, or optionally up to a specific version or date.
    *
-   * @param string $target  [optional] The version number to migrate to.
-   * @param string $date    [optional] The date to rollback to.
+   * @param string $target  [optional] The version number to migrate to. 0 = roll back all migrations.
+   * @param string $date    [optional] The date to rollback to. All migrations after that date will be rolled back.
    * @param bool   $pretend If true, the migration is not actually run and the SQL code that would be executed is
    *                        returned.
    * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of migrations
@@ -51,8 +46,12 @@ interface MigrationsInterface
    * Runs all available seeders of the current module, or just a specific seeder.
    *
    * @param string $seeder [optional] The name of the seeder (in camel case).
+   * @param bool   $pretend If true, the seeder is not actually run and the SQL code that would be executed is
+   *                        returned.
+   * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of seeders
+   *                    executed.
    */
-  function seed ($seeder = 'Seeder');
+  function seed ($seeder = 'Seeder', $pretend = false);
 
   /**
    * Gets a list of all migrations of the current module, along with their current status.

@@ -66,10 +66,12 @@ interface ConsoleIOInterface
   function confirm ($question);
 
   /**
-   * @param string $text [optional]
-   * @param int    $status Status exit code.
+   * Prints a success message and stops execution with status code 0. Use only on commands, not on tasks.
+   *
+   * @param string $text     [optional]
+   * @param bool   $dontExit Set to true to prevent an immediate program termination.
    */
-  function done ($text = '', $status = 0);
+  function done ($text = '', $dontExit = false);
 
   /**
    * Prints an error message and stops execution. Use only on commands, not on tasks.
@@ -94,12 +96,6 @@ interface ConsoleIOInterface
    * @return OutputInterface
    */
   function getOutput ();
-
-  /**
-   * @param OutputInterface $output
-   * @return mixed
-   */
-  function setOutput (OutputInterface $output);
 
   /**
    * Sets the indentation level for all lines from this point on.
@@ -151,6 +147,12 @@ interface ConsoleIOInterface
   function setColor ($name, $style);
 
   /**
+   * @param OutputInterface $output
+   * @return mixed
+   */
+  function setOutput (OutputInterface $output);
+
+  /**
    * Outputs data in a tabular format.
    *
    * @param string[]      $headers A list of table column headers.
@@ -179,7 +181,7 @@ interface ConsoleIOInterface
   function title ($text);
 
   /**
-   * Adds a warning message to be displayed later when done() is called.
+   * Writes a warning message.
    *
    * @param string $text
    * @return $this
