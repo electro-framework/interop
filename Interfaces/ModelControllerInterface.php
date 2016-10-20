@@ -161,10 +161,8 @@ interface ModelControllerInterface
 
   /**
    * Saves the whole model on the database.
-   *
-   * @param array $defaultOptions [optional] Driver/ORM-specific options for the default save handler.
    */
-  function saveModel (array $defaultOptions = []);
+  function saveModel ();
 
   /**
    * Sets a field on the model or on a sub-model.
