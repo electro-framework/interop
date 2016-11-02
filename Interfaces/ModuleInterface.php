@@ -1,6 +1,7 @@
 <?php
 namespace Electro\Interfaces;
 
+use Electro\Core\Assembly\ModuleInfo;
 use Electro\Core\Assembly\Services\Bootstrapper;
 
 /**
@@ -14,8 +15,9 @@ interface ModuleInterface
    * <p>The provided argument is a bootstrapper service that allows the module to listen to one or more bootstrap
    * events.
    *
-   * @param Bootstrapper $boot The bootstrapper service.
-   * @return void
+   * @param Bootstrapper $bootstrapper The bootstrapper service.
+   * @param ModuleInfo   $moduleInfo
+   * @return
    */
-  static function boot (Bootstrapper $boot);
+  static function bootUp (Bootstrapper $bootstrapper, ModuleInfo $moduleInfo);
 }

@@ -20,10 +20,12 @@ trait EventEmitterTrait
    *
    * @param string   $event   The event name.
    * @param callable $handler A callback function (...$eventArgs).
+   * @return $this For chaining.
    */
   function on ($event, callable $handler)
   {
     $this->listeners[$event][] = $handler;
+    return $this;
   }
 
   /**
