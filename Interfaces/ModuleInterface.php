@@ -1,8 +1,8 @@
 <?php
 namespace Electro\Interfaces;
 
-use Electro\Core\Assembly\ModuleInfo;
-use Electro\Core\Assembly\Services\Bootstrapper;
+use Electro\Kernel\Lib\ModuleInfo;
+use Electro\Kernel\Services\Bootstrapper;
 
 /**
  * Marks a class as being able to provide configuration and bootstrapping for the module it belongs to.
