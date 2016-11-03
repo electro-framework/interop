@@ -2,22 +2,21 @@
 namespace Electro\Interfaces;
 
 use Electro\Kernel\Lib\ModuleInfo;
-use Electro\Kernel\Services\Bootstrapper;
 
 /**
- * Marks a class as being able to provide configuration and bootstrapping for the module it belongs to.
+ * Marks a class as being able to provide configuration and initialization for the module it belongs to.
  */
 interface ModuleInterface
 {
   /**
-   * Allows a module to perform its initialization during the framework's bootstrap process.
+   * Starts up the module.
    *
-   * <p>The provided argument is a bootstrapper service that allows the module to listen to one or more bootstrap
-   * events.
+   * <p>Use this method to perform module initialization during the framework's start up process.
    *
-   * @param Bootstrapper $bootstrapper The bootstrapper service.
-   * @param ModuleInfo   $moduleInfo
+   * @param KernelInterface $kernel     The kernel service. It allows the module to listen to one or more kernel
+   *                                    events.
+   * @param ModuleInfo      $moduleInfo Information about the module being loaded.
    * @return
    */
-  static function bootUp (Bootstrapper $bootstrapper, ModuleInfo $moduleInfo);
+  static function startUp (KernelInterface $kernel, ModuleInfo $moduleInfo);
 }

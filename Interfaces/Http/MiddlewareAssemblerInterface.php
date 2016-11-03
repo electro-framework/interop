@@ -7,7 +7,7 @@ namespace Electro\Interfaces\Http;
  * This interface allows the application to override the framework's predefined middleware and assemble a completely
  * customized alternative.
  */
-interface ApplicationMiddlewareAssemblerInterface
+interface MiddlewareAssemblerInterface
 {
   /**
    * Assembles the middleware pipeline.
