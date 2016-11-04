@@ -98,6 +98,6 @@ interface KernelInterface extends EventSubscriberInterface
   /**
    * Loads the kernel, the relevant framework subsystems and all registered plugins and application modules.
    */
-  function run ();
+  function boot ();
 
 }

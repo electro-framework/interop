@@ -7,9 +7,9 @@ namespace Electro\Interfaces;
 interface ProfileInterface
 {
   /**
-   * @return string The class name of the framework bootstrapper to be used when booting with this profile.
+   * @return string The class name of the framework bootloader to be used when booting up with this profile.
    */
-  static public function getBootstrapperClass ();
+  static public function getBootloaderClass ();
 
   /**
    * @return string[] A list of module names, of any module type.
@@ -17,8 +17,8 @@ interface ProfileInterface
   public function getExcludedModules ();
 
   /**
-   * @return string The profile's name, which is used to generate a file path for the profile's framework-generated
-   *                bootloader file.
+   * @return string The profile's name, which is used to generate a file path for the framework-generated cached
+   *                bootloader file for the profile.
    */
   public function getName ();
 
