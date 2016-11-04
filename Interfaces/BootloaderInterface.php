@@ -12,11 +12,10 @@ use Electro\Interfaces\DI\InjectorInterface;
 interface BootloaderInterface
 {
   /**
-   * @param InjectorInterface $injector     Provide your favorite dependency injector, eventually with some
-   *                                        pre-registered services to override some of the core framework services.
-   * @param string            $profileClass The configuration profile's fully qualified class name.
+   * @param InjectorInterface $injector Provide your favorite dependency injector, eventually with some
+   *                                    pre-registered services to override some of the core framework services.
    */
-  function __construct (InjectorInterface $injector, $profileClass);
+  function __construct (InjectorInterface $injector);
 
   /**
    * Bootstraps the application
