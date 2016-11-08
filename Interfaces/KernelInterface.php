@@ -14,6 +14,15 @@ interface KernelInterface extends EventSubscriberInterface
   function boot ();
 
   /**
+   * Gets the exit status code that will be returned to the operating system when the program ends.
+   *
+   * <p>This is only relevant for console applications.
+   *
+   * @return int 0 if everything went fine, or an error code.
+   */
+  function getExitCode ();
+
+  /**
    * Returns the active configuration profile.
    *
    * @return ProfileInterface
@@ -144,5 +153,15 @@ interface KernelInterface extends EventSubscriberInterface
    * @return $this Self for chaining.
    */
   function onShutdown (callable $handler);
+
+  /**
+   * Sets the exit status code that will be returned to the operating system when the program ends.
+   *
+   * <p>This is only relevant for console applications.
+   *
+   * @param int $code 0 if everything went fine, or an error code.
+   * @return void
+   */
+  function setExitCode ($code);
 
 }
