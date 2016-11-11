@@ -14,6 +14,20 @@ interface KernelInterface extends EventSubscriberInterface
   function boot ();
 
   /**
+   * Indicates whether the application is running in a development (aka debugging) environment or not.
+   *
+   * <p>Providing this information on the kernel allows modules to decide whether to register some kernel events or not
+   * and thereby prevent unnecessary service injections that are not relevant to the current environment the application
+   * is running on.
+   *
+   * ><p>This is specifically not made available on {@see KernelSettings} to avoid the need to inject one more service
+   * on each module bootstrapper.
+   *
+   * @return bool
+   */
+  function isDevEnv ();
+
+  /**
    * Gets the exit status code that will be returned to the operating system when the program ends.
    *
    * <p>This is only relevant for console applications.
