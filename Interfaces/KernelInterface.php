@@ -25,7 +25,7 @@ interface KernelInterface extends EventSubscriberInterface
    *
    * @return bool
    */
-  function isDevEnv ();
+  function devEnv ();
 
   /**
    * Gets the exit status code that will be returned to the operating system when the program ends.
