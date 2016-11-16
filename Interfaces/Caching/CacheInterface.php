@@ -50,9 +50,19 @@ interface CacheInterface
   function inc ($key, $value = 1);
 
   /**
+   * Stores data under the given key.
    * @param string $key
    * @param mixed  $value
    * @return void
    */
   function set ($key, $value);
+
+  /**
+   * Stores data under the given key, only if it does not already exist.
+   * @param string $key
+   * @param mixed  $value
+   * @return void
+   */
+  function add ($key, $value);
+
 }
