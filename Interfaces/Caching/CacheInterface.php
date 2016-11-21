@@ -20,7 +20,8 @@ interface CacheInterface
   function add ($key, $value);
 
   /**
-   * Clears all items from the cache, or a subset of them if filtering options have been previously set.
+   * Clears all items from the cache's current namespace, or a subset of them if filtering options have been previously
+   * set.
    *
    * <p>The available options are determined by the underlying cache driver.
    *
@@ -29,26 +30,20 @@ interface CacheInterface
   function clear ();
 
   /**
-   * Removes the cache item with the specified key, if it exists.
-   *
-   * @param string $key
-   * @return bool TRUE if the item was deleted, FALSE if it didn't exist.
-   */
-  function delete ($key);
-
-  /**
    * Retrieves an entry from the cache referenced by the given key and, if it doesn't exist, creates a new entry with
    * the given value and returns it.
    *
    * <p>If the given value is a {@see Closure}, it is called with no arguments and its return value will be used as the
    * intended value for the key.
    *
-   * @param string         $key
-   * @param mixed|\Closure $value A serializable value or a Closure.
+   * @param string              $key
+   * @param mixed|\Closure|null $value A serializable value or a Closure. If NULL, no attempt will be made to cache a
+   *                                   value if the key is not on the cache.
    * @return mixed The cached value or $value if one doesn't exist.
-   *                              Returns NULL if the key doesn't exist and the new value couldn't be saved.
+   *                                   Returns NULL if the key doesn't exist and the new value couldn't be saved or if
+   *                                   no value to be cached has been given.
    */
-  function get ($key, $value);
+  function get ($key, $value = null);
 
   /**
    * Returns the active namespace name.
@@ -56,6 +51,14 @@ interface CacheInterface
    * @return string
    */
   function getNamespace ();
+
+  /**
+   * Gets the item's creation or last modification time.
+   *
+   * @param string $key
+   * @return int|false A Unix timestamp, with second level granularity, or FALSE if the item does not exist.
+   */
+  function getTimestamp ($key);
 
   /**
    * Checks if a specific cache item exists without loading it.
@@ -88,6 +91,14 @@ interface CacheInterface
   function prune ();
 
   /**
+   * Removes the cache item with the specified key, if it exists.
+   *
+   * @param string $key
+   * @return bool TRUE if the item was deleted, FALSE if it didn't exist.
+   */
+  function remove ($key);
+
+  /**
    * Stores data under the given key.
    *
    * @param string $key
@@ -99,10 +110,14 @@ interface CacheInterface
   /**
    * Sets the namespace under which all subsequent operations will take place.
    *
+   * <p>Namespaces are hierarchical. Path segments are delimited by the `/` character.
+   *
    * <p>Keys from one namespace will not collide with other keys with the same name on other namespaces.
    *
+   * <p>Clearing the cache will only clear items from the current namespace and from its sub-namespaces.
+   *
    * <p>If the cache driver supports tags, clearing cache entries by tag will only affect entries from the active
-   * namespace.
+   * namespace and from its sub-namespaces.
    *
    * @param string $name
    * @return void
@@ -110,7 +125,15 @@ interface CacheInterface
   function setNamespace ($name);
 
   /**
-   * Similar to {@see with}, but the options will remain set during the current script execution.
+   * Sets configuration options that will remain set during the current script execution.
+   *
+   * <p>All drivers should (but may not) support, at least, the following options:
+   *
+   * ###### `serializer: callable`
+   * A function for serializing data to a string before saving it; defaults to the `'serialize'` string.
+   *
+   * ###### `unserializer: callable`
+   * A function for unserializing data from a string loaded from the cache; defaults to the `'unserialize'` string.
    *
    * @param array $options A map of option names to option values.
    * @return $this
