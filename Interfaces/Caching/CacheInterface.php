@@ -10,12 +10,14 @@ interface CacheInterface
    * intended value for the key.
    * > The Closure will only be called if the key is not present on the cache.
    *
-   * <p>If the cache systems supports LRU, callid this method, even if the key exists, will bump the item to the from of
+   * <p>If the cache systems supports LRU, callid this method, even if the key exists, will bump the item to the from
+   * of
    * the LRU queue.
    *
    * @param string         $key
    * @param mixed|\Closure $value A serializable value or a Closure.
-   * @return bool TRUE if the item was created, FALSE if it already existed.
+   * @return bool TRUE if the item was created, FALSE if it already existed, the saving operation failed or the
+   *                              effective value of $value is NULL.
    */
   function add ($key, $value);
 
@@ -39,16 +41,16 @@ interface CacheInterface
    * @param string              $key
    * @param mixed|\Closure|null $value A serializable value or a Closure. If NULL, no attempt will be made to cache a
    *                                   value if the key is not on the cache.
-   * @return mixed The cached value or $value if one doesn't exist.
-   *                                   Returns NULL if the key doesn't exist and the new value couldn't be saved or if
-   *                                   no value to be cached has been given.
+   * @return mixed The cached value or the effective value of $value if one doesn't exist.
+   *                                   Returns NULL if the key doesn't exist and either the new value couldn't be saved
+   *                                   or no value to be cached has been given.
    */
   function get ($key, $value = null);
 
   /**
    * Returns the active namespace name.
    *
-   * @return string
+   * @return string If the cache does not support namespaces, this always returns an empty string.
    */
   function getNamespace ();
 
@@ -71,11 +73,12 @@ interface CacheInterface
   /**
    * Atomically increments/decrements the integer value with the given key by the specified amount.
    *
-   * <p>If the current value is not an integer, it will be set to `0` before being incremented.
+   * <p>If the current value is not an integer, `inc` will fail.
    *
    * @param string $key
    * @param int    $value
-   * @return void
+   * @return bool TRUE if the item was successfully incremented; FALSE if either the item does not exist or there was
+   *              an error.
    */
   function inc ($key, $value = 1);
 
@@ -94,7 +97,7 @@ interface CacheInterface
    * Removes the cache item with the specified key, if it exists.
    *
    * @param string $key
-   * @return bool TRUE if the item was deleted, FALSE if it didn't exist.
+   * @return bool TRUE if the item was removed, FALSE if it didn't exist or an error occurred.
    */
   function remove ($key);
 
@@ -102,8 +105,11 @@ interface CacheInterface
    * Stores data under the given key.
    *
    * @param string $key
-   * @param mixed  $value
-   * @return bool TRUE if the item was successfully persisted; FALSE if there was an error.
+   * @param mixed  $value Unlike {@see add} or {@see get}, Closures are not invoked and, therefore, can't be
+   *                      stored.<br>
+   *                      If NULL, the value will not be stored.
+   * @return bool TRUE if the item was successfully persisted; FALSE if there was an error, $value is a Closure or
+   *                      $value is NULL.
    */
   function set ($key, $value);
 
@@ -111,6 +117,8 @@ interface CacheInterface
    * Sets the namespace under which all subsequent operations will take place.
    *
    * <p>Namespaces are hierarchical. Path segments are delimited by the `/` character.
+   *
+   * <p>An empty string is a valid namespace; it refers to the root of all namespaces.
    *
    * <p>Keys from one namespace will not collide with other keys with the same name on other namespaces.
    *
