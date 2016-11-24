@@ -23,7 +23,7 @@ interface ViewInterface
    *
    * <p>For view engines that do not support template compilation, this returns null.
    *
-   * @return mixed|null
+   * @return mixed|null The compiled template. The data format is engine-dependent.
    */
   function getCompiled ();
 
@@ -53,11 +53,21 @@ interface ViewInterface
   function render ($data = null);
 
   /**
+   * Sets the compiled template.
+   *
+   * <p>For view engines that do not support template compilation, this has no effect.
+   *
+   * @param mixed $compiled The compiled template. The data format is engine-dependent.
+   * @return $this Self, for chaining.
+   */
+  function setCompiled ($compiled);
+
+  /**
    * Sets the source code (the template).
    * <p>This also clears the current compiled template.
    *
    * @param string $src
-   * @return $this
+   * @return $this Self, for chaining.
    */
   function setSource ($src);
 

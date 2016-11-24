@@ -29,7 +29,8 @@ interface ViewServiceInterface
   function getEngineFromFileName ($path);
 
   /**
-   * Loads and compiles the specified template file.
+   * Retrieves the compiled template for the specified file from a template cache; if it's not cached, this method
+   * loads the file, compiles it and caches it for future requests.
    *
    * @param string $path The complete file name, including the file name extension.
    * @return ViewInterface

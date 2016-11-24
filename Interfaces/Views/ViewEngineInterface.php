@@ -1,6 +1,8 @@
 <?php
 namespace Electro\Interfaces\Views;
 
+use Electro\Caching\Lib\CachingFileCompiler;
+
 /**
  * A low-level API to a view/templating engine, which is capable of compiling and/or rendering templates coded in a
  * specific templating language.
@@ -34,5 +36,15 @@ interface ViewEngineInterface
    * @return string The generated output (ex: HTML).
    */
   function render ($template, $data = null);
+
+  /**
+   * Returns the compiled representation of a given source code file, either from the cache (if available) or by
+   * invoking the specified compiler.
+   *
+   * @param CachingFileCompiler $cache      This method will try to load the compiled code from this cache.
+   * @param string              $sourceFile The filesystem path of the source code file.
+   * @return mixed The compiled code.
+   */
+  function loadFromCache (CachingFileCompiler $cache, $sourceFile);
 
 }
