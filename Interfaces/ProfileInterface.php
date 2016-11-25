@@ -15,13 +15,23 @@ interface ProfileInterface
   public function getBootloaderClass ();
 
   /**
-   * Returns a blacklist of names of modules (of any type) that must not be loaded.
+   * Returns a blacklist of names of modules that must not be loaded.
    *
    * <p>Exclusions from this list take precedence over whitelisted modules.
    *
+   * @see getIncludedModules
    * @return string[]
    */
   public function getExcludedModules ();
+
+  /**
+   * Returns a whitelist of names of modules that will always be loaded, even if they state that they are not compatible
+   * with this profile.
+   *
+   * @see getExcludedModules
+   * @return string[]
+   */
+  public function getIncludedModules ();
 
   /**
    * @return string The injector instance to use on the framework when using this profile.
@@ -38,14 +48,5 @@ interface ProfileInterface
    *                bootloader file for the profile.
    */
   public function getName ();
-
-  /**
-   * Returns a whitelist of names of subsystem modules that should be loaded.
-   *
-   * <p>Only those subsystems that are on the list will be loaded.
-   *
-   * @return string[]
-   */
-  public function getSubsystems ();
 
 }
