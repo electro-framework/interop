@@ -1,8 +1,6 @@
 <?php
 namespace Electro\Traits;
 
-use Electro\Plugins\Matisse\Properties\TypeSystem\ReflectionClass;
-
 /**
  * Allows instances of the class to inherit and override properties and methods at runtime from another object.
  *
@@ -56,7 +54,7 @@ trait DecoratorTrait
    */
   function __isset ($n)
   {
-    $c = new ReflectionClass($this->decorated);
+    $c = new \ReflectionClass($this->decorated);
     return $c->hasProperty ($n);
   }
 
