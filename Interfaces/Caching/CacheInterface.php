@@ -57,8 +57,16 @@ interface CacheInterface
   /**
    * Gets the item's creation or last modification time.
    *
+   * <p>This returns:
+   * <li>an Unix timestamp (with second-level granularity), or
+   * <li>0 if the item does not exist (0=oldest possible time), or
+   * <li>FALSE if the cache does not support timestamping.
+   *
+   * ><p>If the cache does not support timestamping, you MUST return FALSE, never 0 nor the current time, otherwise
+   * some composite caching systems will misbehave.
+   *
    * @param string $key
-   * @return int|false A Unix timestamp, with second level granularity, or FALSE if the item does not exist.
+   * @return int|false An Unix timestamp, 0 or FALSE.
    */
   function getTimestamp ($key);
 

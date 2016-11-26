@@ -40,7 +40,8 @@ interface ViewServiceInterface
 
   /**
    * Compiles the given template.
-   * > Don't forget to set a view engine before calling this method.
+   * > Don't forget to set a view engine before calling this method as the engine to use can't be inferred from a
+   * string template.
    *
    * @param string                     $src
    * @param string|ViewEngineInterface $engineOrClass The view engine's class name or an instance of it.
