@@ -17,26 +17,34 @@ interface ViewServiceInterface
    * Gets an engine instance with the specified class.
    *
    * @param string $class
+   * @param array  $options Passes the given object or array to the view engine.
+   *                        It may be anything that the engine needs to perform the compilation or rendering steps.
+   *                        It applies only to the returned instance.
    * @return ViewEngineInterface
    */
-  function getEngine ($class);
+  function getEngine ($class, $options = []);
 
   /**
    * @param string $path The complete file name, including the file name extension.
+   * @param array  $options Passes the given object or array to the view engine.
+   *                        It may be anything that the engine needs to perform the compilation or rendering steps on
+   *                        this specific file.
    * @return ViewEngineInterface
    * @throws FatalException If no match was found.
    */
-  function getEngineFromFileName ($path);
+  function getEngineFromFileName ($path, $options = []);
 
   /**
    * Retrieves the compiled template for the specified file from a template cache; if it's not cached, this method
    * loads the file, compiles it and caches it for future requests.
    *
-   * @param string $path The complete file name, including the file name extension.
+   * @param string $path    The complete file name, including the file name extension.
+   * @param array  $options Passes the given object or array to the view engine.
+   *                        It may be anything that the engine needs to perform the compilation or rendering steps on
+   *                        this specific file.
    * @return ViewInterface
-   * @throws FileNotFoundException If no file is found with the given name or having that name as prefix.
    */
-  function loadFromFile ($path);
+  function loadFromFile ($path, array $options = []);
 
   /**
    * Compiles the given template.
@@ -45,18 +53,12 @@ interface ViewServiceInterface
    *
    * @param string                     $src
    * @param string|ViewEngineInterface $engineOrClass The view engine's class name or an instance of it.
+   * @param array  $options Passes the given object or array to the view engine.
+   *                        It may be anything that the engine needs to perform the compilation or rendering steps on
+   *                        this specific template.
    * @return ViewInterface
    */
-  function loadFromString ($src, $engineOrClass);
-
-  /**
-   * Attempts to load the specified view file.
-   *
-   * @param string $path The complete file name, including the file name extension.
-   * @return string The file's content.
-   * @throws FileNotFoundException If no file is found with the given name or having that name as prefix.
-   */
-  public function loadViewTemplate ($path);
+  function loadFromString ($src, $engineOrClass, array $options = []);
 
   /**
    * Registes a view engine to be used for rendering files that match the given regular expression pattern.

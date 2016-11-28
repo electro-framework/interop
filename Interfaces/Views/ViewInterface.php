@@ -35,14 +35,14 @@ interface ViewInterface
   function getEngine ();
 
   /**
-   * Gets the original source code (the template).
+   * Gets the original source markup (the template).
    *
    * @return string
    */
   function getSource ();
 
   /**
-   * Renders the previously compiled template.
+   * Renders the view.
    *
    * <p>If the view is not compiled yet, it will be so before being rendered.
    *

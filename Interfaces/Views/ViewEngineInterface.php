@@ -6,6 +6,9 @@ use Electro\Caching\Lib\CachingFileCompiler;
 /**
  * A low-level API to a view/templating engine, which is capable of compiling and/or rendering templates coded in a
  * specific templating language.
+ *
+ * ><p>**Warning:** do not share globally a single instance of this class; each {@see ViewInterface} instance should own
+ * a distinct engine instance for correct operation.
  */
 interface ViewEngineInterface
 {
@@ -18,12 +21,27 @@ interface ViewEngineInterface
   function compile ($src);
 
   /**
-   * Passes the given object or array to the view engine. It may be anything that the engine needs to perform the
-   * compilation or rendering steps.
+   * Passes the given configuration associative array to the view engine.
    *
-   * @param mixed $options
+   * <p>The array should contain a map of option names to option values, which are engine-specific and are meant to
+   * configure the engine for operation. They remain in effect until changed.
+   *
+   * >**Note:** although the configuration is permanent, each {@see ViewInterface} instance owns a distinct engine
+   * instance, so actually, the configuration set via this method applies to a single view.
+   *
+   * @param array $options
    */
-  function configure ($options);
+  function configure (array $options = []);
+
+  /**
+   * Returns the compiled representation of a given source code file, either from the cache (if available) or by
+   * invoking the specified compiler.
+   *
+   * @param CachingFileCompiler $cache      This method will try to load the compiled code from this cache.
+   * @param string              $sourceFile The filesystem path of the source code file.
+   * @return mixed The compiled code.
+   */
+  function loadFromCache (CachingFileCompiler $cache, $sourceFile);
 
   /**
    * Renders the compiled template.
@@ -36,15 +54,5 @@ interface ViewEngineInterface
    * @return string The generated output (ex: HTML).
    */
   function render ($template, $data = null);
-
-  /**
-   * Returns the compiled representation of a given source code file, either from the cache (if available) or by
-   * invoking the specified compiler.
-   *
-   * @param CachingFileCompiler $cache      This method will try to load the compiled code from this cache.
-   * @param string              $sourceFile The filesystem path of the source code file.
-   * @return mixed The compiled code.
-   */
-  function loadFromCache (CachingFileCompiler $cache, $sourceFile);
 
 }
