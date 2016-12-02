@@ -42,8 +42,7 @@ interface CacheInterface
    * @param mixed|\Closure|null $value A serializable value or a Closure. If NULL, no attempt will be made to cache a
    *                                   value if the key is not on the cache.
    * @return mixed The cached value or the effective value of $value if one doesn't exist.
-   *                                   Returns NULL if the key doesn't exist and either the new value couldn't be saved
-   *                                   or no value to be cached has been given.
+   *                                   Returns NULL if the key doesn't exist and no value to be cached has been given.
    */
   function get ($key, $value = null);
 
