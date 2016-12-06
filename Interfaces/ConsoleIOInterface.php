@@ -125,6 +125,13 @@ interface ConsoleIOInterface
                  callable $validator = null);
 
   /**
+   * Suppresses the output from the following operations.
+   *
+   * @return $this
+   */
+  function mute ();
+
+  /**
    * @return $this
    */
   function nl ();
@@ -179,6 +186,13 @@ interface ConsoleIOInterface
    * @return $this
    */
   function title ($text);
+
+  /**
+   * Restores the original output verbosity; the following operations will be displayed normally.
+   *
+   * @return $this
+   */
+  function unmute ();
 
   /**
    * Writes a warning message.
