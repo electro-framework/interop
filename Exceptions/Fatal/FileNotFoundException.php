@@ -9,7 +9,8 @@ class FileNotFoundException extends FatalException
 
   public function __construct ($filename, $extra = '')
   {
-    parent::__construct ("<p>File <kbd>$filename</kbd> was not found.</p>$extra");
+    parent::__construct ("<p>File <kbd>$filename</kbd> was not found.</p>
+$extra");
   }
 
 }
