@@ -20,8 +20,8 @@ interface KernelInterface extends EventSubscriberInterface
    * and thereby prevent unnecessary service injections that are not relevant to the current environment the application
    * is running on.
    *
-   * ><p>This is specifically not made available on {@see KernelSettings} to avoid the need to inject one more service
-   * on each module bootstrapper.
+   * ><p>This is an alternate way to access {@see KernelSettings::$devEnv} to avoid the need to inject
+   * {@see KernelSettings} on each module bootstrapper.
    *
    * @return bool
    */
