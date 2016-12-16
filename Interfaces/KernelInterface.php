@@ -16,12 +16,11 @@ interface KernelInterface extends EventSubscriberInterface
   /**
    * Indicates whether the application is running in a development (aka debugging) environment or not.
    *
-   * <p>Providing this information on the kernel allows modules to decide whether to register some kernel events or not
+   * ><p>This is the master setting. You may also access a copy of it on {@see DebugSettings::$devEnv}.
+   *
+   * ><p>Providing this information on the kernel allows modules to decide whether to register some kernel events or not
    * and thereby prevent unnecessary service injections that are not relevant to the current environment the application
    * is running on.
-   *
-   * ><p>This is an alternate way to access {@see KernelSettings::$devEnv} to avoid the need to inject
-   * {@see KernelSettings} on each module bootstrapper.
    *
    * @return bool
    */
