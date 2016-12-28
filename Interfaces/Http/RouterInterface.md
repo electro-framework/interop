@@ -43,33 +43,29 @@ For example:
 - Compressing the response
 - Anything else related to the request/response lifecycle
 
-Electro expands the traditional middleware concept by making your application logic (Controllers or Components) to also be
-implemented as middleware-compatible functions (or callable objects).
+Electro expands the traditional middleware concept by making your application logic (Controllers or Components) also implemented as middleware-compatible functions (or callable objects).
 
-So, on Electro, **Request Handlers are a broad concept the applies to anything that processes HTTP requests and generates/modifies
-HTTP responses**.
+So, on Electro, **Request Handlers are a broad concept the applies to anything that processes HTTP requests and generates/modifies HTTP responses**.
 
 ##### What is the relation between Request Handlers and Middleware?
 
-Request handlers and 100% compatible with PSR-7-compatible middleware.
+Request handlers are 100% compatible with PSR-7-compatible middleware.
 
 - You can use existing PSR-7-compatible middleware from other projects or frameworks on your Electro application.
 - You can use Electro middleware on projects based on other frameworks (or even with no framework at all) as long as they
 are PSR-7-compatible.
 
-Nevertheless, on Electro, request handlers are used on broader context than traditional middleware is.
+Nevertheless, on Electro, request handlers are used on a broader context than traditional middleware is.
 They can be used to implement middleware, of course, but they are also used to implement routers, controllers and
 components.
 
-So, unlinke middleware (which only implement *concerns* or *aspects*), request handlers are also used to implement
-application-specific logic.
-
-You can assemble middlewares into a **middleware stack**, which is a set of concentric middleware layers.
+So, unlinke middleware (which only implement *concerns* or *aspects*), request handlers also implement application-specific (domain) logic.
 
 ##### Composing Request Handlers (the Handler Stack)
 
-Traditional middleware is implemented as a decorator pattern: it wraps around the next middleware on a stack and
-interceps HTTP requests and responses that flow in and out of it.
+You can assemble middlewares (i.e. request handlers acting as middleware) into a **middleware stack**, which is a set of concentric middleware layers.
+
+Traditional middleware is implemented as a decorator pattern: it wraps around the next middleware on a stack and intercepts HTTP requests and responses that flow in and out of it.
 
 Request handlers are composed in a **handler stack**.
 
@@ -80,8 +76,7 @@ start of the stack is reached, at which point it will be sent to the HTTP client
 If the request reaches the stack's end without a complete response being generated, the last handler will usually
 just send back an `HTTP 404 Not Found` response.
 
-To make the request and the response advance on the stack, each handler **MUST** call the next handler directly, by
-invoking the `$next` argument (the third parameter of a standard/common middleware signature).
+To make the request and the response advance on the stack, each handler **MUST** call the next handler directly by invoking the `$next` argument (the third parameter of a standard/common middleware signature).
 
 If a handler does not specifically invoke the next one, that next handler and all subsequent handlers will not be invoked
 for the current request, and the current handler's response (either the function's return value or the function's response
@@ -92,15 +87,13 @@ argument) will start immediately moving backwards the path travelled previously 
 Electro has a main, application-level, request handling stack. At a specific point on that stack, there is a
 **routing middleware handler**, also known as a **router**.
 
-The router makes the request/response flow into a parallel tree-like structure of routes, comprised of patterns
-and routable elements (where most of them are also request handlers). This will be explained further ahead.
+The router branches the request/response flow into a parallel tree-like structure of routes, comprised of patterns
+and routable elements (where most of them are also request handlers). This will be explained further below.
 
 You can picture this as a tree-like structure whose root is attached to a point in the linear request handling
 stack. The request/response must flow trought that tree before returning to the main stack, where it may resume
 traveling forward (if there is no complete response to send back) or it may turn back and send the generated response
 backwards for eventual further processing and output to the HTTP client.
-
-Now, let's talk about routing.
 
 ### Routables
 
@@ -156,8 +149,8 @@ The matching patterns are a DSL that will be explained further below.
         SomeOtherMiddleware2::class,
         'user' =>
           [
-            'GET: @id' => function () { ... },
-            'POST:' => function () { ... }
+            'GET @id' => function () { ... },
+            'POST' => function () { ... }
           ]
       ]
     );
@@ -180,8 +173,8 @@ Therefore, the example above is equivalent to:
         2       => SomeOtherMiddleware2::class,
         'user'  =>
           [
-            'GET: @id' => function () { ... },
-            'POST:'    => function () { ... }
+            'GET @id' => function () { ... },
+            'POST'    => function () { ... }
           ]
       ]
     );
@@ -193,8 +186,8 @@ So, the iteration order for the keys is:
 - `1`
 - `2`
 - `'user'`
-- `'GET: @id'`
-- `'POST:'`
+- `'GET @id'`
+- `'POST'`
 
 **Important:** integer keys are never matched against the request's URL; their corresponding routables
 **always run**.
@@ -259,10 +252,9 @@ You can also type hint the parameters:
 
 ##### Request handlers' execution flow
 
-Handlers (or middleware) are executed sequentally, but only if each Handlers calls the provided "next" argument.
+Handlers (or middleware) are executed sequentally, but only if each handler calls the provided "next" argument.
 
-When a Handler does not call the "next" argument, the router immediately returns the response to the previous
-route/middleware (even if the curent middleware returns nothing).
+When a handler does not call the "next" argument, the router immediately returns the response to the previous route/middleware (even if the curent middleware returns nothing).
 
 Inside a Handler function, the router instance is mutated to reflect the current request and response at the point.
 So, you don't need to call `$router->with()`, you can just `use ($router)` on the Handler function.
