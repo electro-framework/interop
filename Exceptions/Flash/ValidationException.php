@@ -17,7 +17,7 @@ class ValidationException extends FlashMessageException
   const INVALID_VALUE     = 8;
 
   public static $messages = [
-    self::OTHER             => '',
+    self::OTHER             => '#',
     self::REQUIRED_FIELD    => "Por favor preencha o campo '#'.",
     self::INVALID_NUMBER    => "Por favor introduza um número válido no campo #.",
     self::INVALID_DATE      => "Por favor introduza uma data válida (aaaa-mm-dd) no campo #.",
