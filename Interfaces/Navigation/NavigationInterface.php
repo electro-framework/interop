@@ -128,6 +128,23 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
   function request ();
 
   /**
+   * Converts an URL to an absolute form, taking into account the current request's URL.
+   *
+   * <p>If the URL is already absolute, it will be returned unmodified.
+   *
+   * @param string $url
+   * @return string
+   */
+  function absoluteUrlOf ($url);
+
+  /**
+   * Checks whether the given URL is absolute or not.
+   *
+   * @return bool
+   */
+  function isAbsolute ($url);
+
+  /**
    * The root of the tree of navigation links for this navigation instance.
    *
    * <p>This link is not part of the navigation itself,

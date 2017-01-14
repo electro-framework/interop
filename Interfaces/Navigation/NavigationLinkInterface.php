@@ -17,6 +17,15 @@ interface NavigationLinkInterface extends \IteratorAggregate
   function __toString ();
 
   /**
+   * Gets the link's absolute URL.
+   *
+   * <p>It returns the value of {@see url} but, if it's relative, it will first be converted to an absolute URL.
+   *
+   * @return string
+   */
+  function absoluteUrl ();
+
+  /**
    * Are links to this location enabled?
    *
    * <p>If disabled, the links will be shown but will not be actionable.
@@ -57,13 +66,6 @@ interface NavigationLinkInterface extends \IteratorAggregate
   function getMenu ();
 
   /**
-   * Rwturns the original URL as it was set on the navigation declaration.
-   *
-   * @return string
-   */
-  function getOriginalUrl ();
-
-  /**
    * The menu item's icon.
    *
    * @param string $icon [optional] A space-separated list of CSS class selectors. Ex: 'fa fa-home'
@@ -83,6 +85,13 @@ interface NavigationLinkInterface extends \IteratorAggregate
    * @throws \InvalidArgumentException If any child has a duplicate ID on the current navigation tree.
    */
   function id ($id = null);
+
+  /**
+   * Checks whether the link's URL is absolute or not.
+   *
+   * @return bool
+   */
+  function isAbsolute ();
 
   /**
    * Indicates if the link matches the current URL, either totally or partially.
@@ -229,11 +238,11 @@ interface NavigationLinkInterface extends \IteratorAggregate
   /**
    * The link's full URL or complete URL path.
    *
-   * <p>It can be a path relative to the application's base path, an absolute path or a full URL address.
+   * <p>It can be set as a path relative to the application's base path, an absolute path or a full URL address.
    *
    * <p>Example: **`'admin/users'`** (which is relative to the app's base path)
    *
-   * > <p>**Note:** route parameters are evaluated, so `@`-prefixed values will be replaced by the correpsonding values.
+   * > <p>**Note:** route parameters are evaluated, so `@`-prefixed values will be replaced by the corresponding values.
    *
    * > <p>**Warning:** unlike other link properties, the value read back from this property after it is explicitly set
    * will frequently differ from the set value.
