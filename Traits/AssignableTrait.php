@@ -42,7 +42,7 @@ trait AssignableTrait
    * @param array|AssignableInterface $data
    * @return $this For chaining.
    */
-  function setDdefaults ($data)
+  function setDefaults ($data)
   {
     if ($data instanceof AssignableInterface)
       $data = $data->export ();

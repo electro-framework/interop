@@ -25,7 +25,7 @@ interface AssignableInterface
    * @param array|AssignableInterface $data
    * @return $this For chaining.
    */
-  function setDdefaults ($data);
+  function setDefaults ($data);
 
   /**
    * Exports all of object's properties, including private and protected ones.
