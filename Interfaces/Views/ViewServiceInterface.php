@@ -3,6 +3,7 @@ namespace Electro\Interfaces\Views;
 
 use Electro\Exceptions\Fatal\FileNotFoundException;
 use Electro\Exceptions\FatalException;
+use Electro\Interfaces\EventSubscriberInterface;
 
 /**
  * The View service generates markup for displaying Graphical User Interfaces and web documents on web browsers.
@@ -10,8 +11,16 @@ use Electro\Exceptions\FatalException;
  * <p>It provides view template loading, compiling, caching and dynamic generation (rendering) capabilities.
  * <p>It can handle multiple templating engines via a single unified interface.
  */
-interface ViewServiceInterface
+interface ViewServiceInterface extends EventSubscriberInterface
 {
+  /**
+   * An event that is emitted when a view is about to be rendered.
+   *
+   * ##### Event arguments
+   * - string $path The filesystem path of the template file, relative to the project's root.
+   * - ArrayObject $data The view's view model data.
+   */
+  const EVENT_RENDER = 'render';
 
   /**
    * Gets an engine instance with the specified class.

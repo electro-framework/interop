@@ -1,15 +1,18 @@
 <?php
+
 namespace Electro\Interfaces;
 
 /**
- * A class that implements the event emitter pattern, which is a variation of the publish/subscribe pattern.
- *
- * <p>Unlike a typical pub/sub system, only the emitter can publish its events to its subscribers, so the later are
- * coupled to the former.
+ * A class that implements the event subscriber pattern.
  *
  * <p>This interface only exposes the functionality required for registering event listeners.
- * If the class also exposes event emitting, it should implement also the
+ * <p>If the class also exposes event emitting, it should also implement
  * {@see \Electro\Interfaces\EventEmitterInterface}.
+ *
+ * ><p>**Note:** sometimes an event emitter class may need to implement the `emit` method as a protected or private
+ * method to prevent other classes to emit its events. That's the reason for splitting this pattern into two interfaces.
+ *
+ * @see EventBroadcasterTrait
  */
 interface EventSubscriberInterface
 {

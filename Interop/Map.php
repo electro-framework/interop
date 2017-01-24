@@ -55,7 +55,7 @@ class Map implements MapInterface
    *
    * <p>This is an alias of the `[ ]` indexing operator.
    *
-   * ><p>**Note:** this method provides compabibility with other interfaces, like for instance, the
+   * ><p>**Note:** this method provides compatibility with other interfaces, like for instance, the
    * {@see \Interop\Container\ContainerInterface}.
    *
    * @param string $key
@@ -80,7 +80,7 @@ class Map implements MapInterface
   {
     return array_keys ($this->_data);
   }
-  
+
   public function serialize ()
   {
     return serialize ($this->_data);

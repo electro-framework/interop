@@ -1,4 +1,5 @@
 <?php
+
 namespace Electro\Interfaces;
 
 /**
@@ -6,7 +7,7 @@ namespace Electro\Interfaces;
  *
  * <p>Modules should use this service to subscribe to startup events (see the `Electro\Kernel\Services` constants).
  */
-interface KernelInterface extends EventSubscriberInterface
+interface KernelInterface
 {
   /**
    * Loads the kernel, the relevant framework subsystems and all registered plugins and application modules.

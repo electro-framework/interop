@@ -2,15 +2,17 @@
 namespace Electro\Traits;
 
 /**
- * Implements the event emitter pattern, which is a variation of the publish/subscribe pattern.
+ * Implements the event emitter/subscriber pattern, which is a variation of the publish/subscribe pattern.
  *
  * <p>A class using this trait is able to emmit events to a set of listeners that have subscribed to those events.
  * <p>Unlike a typical pub/sub system, only the emitter can publish its events to its subscribers, so the later are
  * coupled to the former.
  *
- * <p>A class using this trait should implement the {@see \Electro\Interfaces\EventSubscriberInterface}.
+ * <p>A class using this trait should implement only {@see \Electro\Interfaces\EventSubscriberInterface}, as the `emit`
+ * method from {@see \Electro\Interfaces\EventEmitterInterface} is not public; on this trait, it is meant for private
+ * use, i.e. only the class itself may emit events for its subscribers.
  */
-trait EventEmitterTrait
+trait EventBroadcasterTrait
 {
   /**
    * @var callable[][]
