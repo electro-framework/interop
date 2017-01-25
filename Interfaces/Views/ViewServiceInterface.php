@@ -18,7 +18,7 @@ interface ViewServiceInterface extends EventSubscriberInterface
    *
    * ##### Event arguments
    * - string $path The filesystem path of the template file, relative to the project's root.
-   * - ArrayObject $data The view's view model data.
+   * - ViewModel $data The view's view model data.
    */
   const EVENT_RENDER = 'render';
 

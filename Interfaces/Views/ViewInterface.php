@@ -1,10 +1,14 @@
 <?php
+
 namespace Electro\Interfaces\Views;
 
 use Electro\Exceptions\FatalException;
+use Electro\Interop\ViewModel;
 
 /**
  * A View represents a template that can be parsed, compiled and rendered to generate markup.
+ *
+ * <p>A View instance is not concerned with loading/caching templates.
  */
 interface ViewInterface
 {
@@ -42,15 +46,25 @@ interface ViewInterface
   function getSource ();
 
   /**
+   * Returns the full filesystem path of the template that originated this view, if a template was loaded. Otherwise,
+   * returns `null`, which usually happens for dynamically generated views.
+   *
+   * <p>This is for informational purposes only.
+   *
+   * @return string|null
+   */
+  function getTemplatePath ();
+
+  /**
    * Renders the view.
    *
    * <p>If the view is not compiled yet, it will be so before being rendered.
    *
-   * @param array|object $data The view model; optional data for use by databinding expressions on the template.
+   * @param ViewModel $data The view model; optional data for use by databinding expressions on the template.
    * @return string The generated output (ex: HTML).
    * @throws FatalException if no template is set.
    */
-  function render ($data = null);
+  function render (ViewModel $data = null);
 
   /**
    * Sets the compiled template.
@@ -70,5 +84,4 @@ interface ViewInterface
    * @return $this Self, for chaining.
    */
   function setSource ($src);
-
 }

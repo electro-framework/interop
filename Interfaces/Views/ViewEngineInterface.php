@@ -1,7 +1,9 @@
 <?php
+
 namespace Electro\Interfaces\Views;
 
 use Electro\Caching\Lib\CachingFileCompiler;
+use Electro\Interop\ViewModel;
 
 /**
  * A low-level API to a view/templating engine, which is capable of compiling and/or rendering templates coded in a
@@ -46,13 +48,11 @@ interface ViewEngineInterface
   /**
    * Renders the compiled template.
    *
-   * @param mixed        $template The compiled template,or the original source code if the engine does not support
-   *                               template compilation. When called from a View, this is guaranteed to be non-null.
-   * @param array|object $data     The view model; optional data for use by data binding expressions on the template.
-   *                               <p>Note: Matisse components ignore this parameter, as the view model is set by other
-   *                               means.
+   * @param mixed                      $template The compiled template,or the original source code if the engine does not support
+   *                            template compilation. When called from a View, this is guaranteed to be non-null.
+   * @param \Electro\Interop\ViewModel $data     The view model; optional data for use by data binding expressions on the template.
    * @return string The generated output (ex: HTML).
    */
-  function render ($template, $data = null);
+  function render ($template, ViewModel $data = null);
 
 }

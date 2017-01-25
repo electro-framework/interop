@@ -1,4 +1,5 @@
 <?php
+
 namespace Electro\Interfaces\Http;
 
 /**
@@ -18,31 +19,33 @@ interface MiddlewareStackInterface extends RequestHandlerInterface
 {
   /**
    * Adds a request handler to the pipeline.
-   * @param string|callable|RequestHandlerInterface $handler The request handler to be added to the pipeline.
-   *                                                         If NULL, it will not be added.
-   * @param string|int|null                         $key     An ordinal index or an arbitrary identifier to associate
-   *                                                         with the given handler.
-   *                                                         <p>If not specified, an auto-incrementing integer index
-   *                                                         will be assigned.
-   *                                                         <p>If an integer is specified, it may cause the handler to
-   *                                                         overwrite an existing handler at the same ordinal position
-   *                                                         on the pipeline.
-   *                                                         <p>String keys allow you to insert new handlers after a
-   *                                                         specific one.
-   *                                                         <p>Some MiddlewareStackInterface implementations
-   *                                                         may use the key for other purposes (ex. route matching
-   *                                                         patterns).
-   * @param string|int|null                         $before  Insert before an existing handler that lies at the given
-   *                                                         index, or that has the given key. When null, the handler is
-   *                                                         appended to the end of the pipeline, except if $after is
-   *                                                         provided.
-   * @param string|int|null                         $after   Insert after an existing handler that lies at the given
-   *                                                         index, or that has the given key. When null, the handler is
-   *                                                         appended to the end of the pipeline, except if $before is
-   *                                                         provided.
+   *
+   * @param string|callable|RequestHandlerInterface|array $handlers The request handler (or handlers) to be added to
+   *                                                                the pipeline. If NULL or empty, nothing will be
+   *                                                                added.
+   * @param string|int|null                               $key      An ordinal index or an arbitrary identifier to
+   *                                                                associate with the given handler.
+   *                                                                <p>If not specified, an auto-incrementing integer
+   *                                                                index will be assigned.
+   *                                                                <p>If an integer is specified, it may cause the
+   *                                                                handler to overwrite an existing handler at the
+   *                                                                same ordinal position on the pipeline.
+   *                                                                <p>String keys allow you to insert new handlers
+   *                                                                after a specific one.
+   *                                                                <p>Some MiddlewareStackInterface implementations
+   *                                                                may use the key for other purposes (ex. route
+   *                                                                matching patterns).
+   * @param string|int|null                               $before   Insert before an existing handler that lies at the
+   *                                                                given index, or that has the given key. When null,
+   *                                                                the handler is appended to the end of the pipeline,
+   *                                                                except if $after is provided.
+   * @param string|int|null                               $after    Insert after an existing handler that lies at the
+   *                                                                given index, or that has the given key. When null,
+   *                                                                the handler is appended to the end of the pipeline,
+   *                                                                except if $before is provided.
    * @return $this
    */
-  function add ($handler, $key = null, $before = null, $after = null);
+  function add ($handlers, $key = null, $before = null, $after = null);
 
   /**
    * Sets the pipeline to the given one.

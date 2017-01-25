@@ -8,9 +8,12 @@ namespace Electro\Traits;
  * <p>Unlike a typical pub/sub system, only the emitter can publish its events to its subscribers, so the later are
  * coupled to the former.
  *
- * <p>A class using this trait should implement only {@see \Electro\Interfaces\EventSubscriberInterface}, as the `emit`
- * method from {@see \Electro\Interfaces\EventEmitterInterface} is not public; on this trait, it is meant for private
- * use, i.e. only the class itself may emit events for its subscribers.
+ * <p>A class using this trait should implement {@see \Electro\Interfaces\EventSubscriberInterface}, and/or
+ * {@see \Electro\Interfaces\EventEmitterInterface}.<br>
+ * To make one or both of them private or protected, use the following syntax:
+ * ```
+ * use EventBroadcasterTrait { emit as protected; }
+ * ```
  */
 trait EventBroadcasterTrait
 {
@@ -40,7 +43,7 @@ trait EventBroadcasterTrait
    * @param string $event   The event name.
    * @param mixed  ...$args The arguments sent to each listener callback.
    */
-  protected function emit ($event, ...$args)
+  function emit ($event, ...$args)
   {
     foreach (get ($this->listeners, $event, []) as $l)
       $l (...$args);
