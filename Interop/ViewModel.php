@@ -2,47 +2,24 @@
 
 namespace Electro\Interop;
 
-/**
- * A kind of storage similar to an array but for exclusive use as a data source for rendering views.
- *
- * <p>The view model's content *must* be accessed via the array access syntax (i.e. `[]`).
- *
- * <p>View models behave mostly as arrays do, but they are not *copy-on-write*, so changes made to an instance are
- * visible to all functions that have a reference to that instance.
- *
- * ><p>You can't use view models with the standard array functions (ex: `array_merge`).
- *
- */
-class ViewModel extends \ArrayObject
+use Electro\Interfaces\Views\ViewModelInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
+class ViewModel extends \ArrayObject implements ViewModelInterface
 {
   /**
    * ViewModel constructor.
    *
    * <p>The constructor's argument is optional and may be an array or a ViewModel.
    *
-   * ><p>**Note:** the constructor has none of the inherited ArrayObject's arguments to prevent incorrect configuration
-   * of it and to provide a stable API.
-   *
-   * @param array|self $data
+   * ><p>**Note:** the constructor has none of the inherited ArrayObject's arguments so that subclasses may define
+   * injectable dependencies on their constructor.
    */
-  public function __construct ($data = null)
+  public function __construct ()
   {
-    if (isset($data)) {
-      if (!is_array ($data)) {
-        if (is_object ($data) && $data instanceof self)
-          $data = $data->getArrayCopy ();
-        else throw new \InvalidArgumentException ("Argument must be an array or a " . __CLASS__ . " instance");
-      }
-    }
-    else $data = [];
-    parent::__construct ($data);
+    parent::__construct ([]);
   }
 
-  /**
-   * Merges the provided data with the current view model's data.
-   *
-   * @param array|self $data
-   */
   public function set ($data)
   {
     if (!is_array ($data)) {
@@ -53,6 +30,17 @@ class ViewModel extends \ArrayObject
       throw new \InvalidArgumentException ("Argument must be an array or a " . __CLASS__ . " instance");
     }
     $this->exchangeArray (array_merge ($this->getArrayCopy (), $data));
+  }
+
+  /**
+   * Handles an HTTP request by setting view model data that dependens on the request's data.
+   *
+   * @param ServerRequestInterface $request
+   * @return void
+   */
+  function handle (ServerRequestInterface $request)
+  {
+    // NO OP.
   }
 
 }

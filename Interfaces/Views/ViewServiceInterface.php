@@ -1,9 +1,10 @@
 <?php
+
 namespace Electro\Interfaces\Views;
 
 use Electro\Exceptions\Fatal\FileNotFoundException;
 use Electro\Exceptions\FatalException;
-use Electro\Interfaces\EventSubscriberInterface;
+use Electro\Interop\ViewModel;
 
 /**
  * The View service generates markup for displaying Graphical User Interfaces and web documents on web browsers.
@@ -11,16 +12,15 @@ use Electro\Interfaces\EventSubscriberInterface;
  * <p>It provides view template loading, compiling, caching and dynamic generation (rendering) capabilities.
  * <p>It can handle multiple templating engines via a single unified interface.
  */
-interface ViewServiceInterface extends EventSubscriberInterface
+interface ViewServiceInterface
 {
   /**
-   * An event that is emitted when a view is about to be rendered.
+   * Attempts to create a view model for the specified view.
    *
-   * ##### Event arguments
-   * - string $path The filesystem path of the template file, relative to the project's root.
-   * - ViewModel $data The view's view model data.
+   * @param ViewInterface $view The target view.
+   * @return ViewModel|null NULL if the correct view model class could not be determined.
    */
-  const EVENT_RENDER = 'render';
+  function createViewModelFor (ViewInterface $view);
 
   /**
    * Gets an engine instance with the specified class.
@@ -34,7 +34,7 @@ interface ViewServiceInterface extends EventSubscriberInterface
   function getEngine ($class, $options = []);
 
   /**
-   * @param string $path The complete file name, including the file name extension.
+   * @param string $path    The complete file name, including the file name extension.
    * @param array  $options Passes the given object or array to the view engine.
    *                        It may be anything that the engine needs to perform the compilation or rendering steps on
    *                        this specific file.
@@ -62,9 +62,9 @@ interface ViewServiceInterface extends EventSubscriberInterface
    *
    * @param string                     $src
    * @param string|ViewEngineInterface $engineOrClass The view engine's class name or an instance of it.
-   * @param array  $options Passes the given object or array to the view engine.
-   *                        It may be anything that the engine needs to perform the compilation or rendering steps on
-   *                        this specific template.
+   * @param array                      $options       Passes the given object or array to the view engine.
+   *                                                  It may be anything that the engine needs to perform the
+   *                                                  compilation or rendering steps on this specific template.
    * @return ViewInterface
    */
   function loadFromString ($src, $engineOrClass, array $options = []);
@@ -89,6 +89,5 @@ interface ViewServiceInterface extends EventSubscriberInterface
    * @return string An absolute file path.
    * @throws FileNotFoundException If the file was not found.
    */
-  public function resolveTemplatePath ($viewName, &$base = null);
-
+  function resolveTemplatePath ($viewName, &$base = null);
 }
