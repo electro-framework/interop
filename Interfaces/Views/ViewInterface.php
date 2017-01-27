@@ -38,21 +38,24 @@ interface ViewInterface
   function getEngine ();
 
   /**
+   * Returns the relative filesystem path of the template that originated this view, if a template was loaded.
+   * Otherwise, returns `null`, which usually happens for dynamically generated views.
+   *
+   * <p>This is for informational purposes only; it is used for determining which view model class to instantiate for a
+   * given view.
+   *
+   * <p>The path sould be relative to the module's views folder.
+   *
+   * @return string|null
+   */
+  function getPath ();
+
+  /**
    * Gets the original source markup (the template).
    *
    * @return string
    */
   function getSource ();
-
-  /**
-   * Returns the full filesystem path of the template that originated this view, if a template was loaded. Otherwise,
-   * returns `null`, which usually happens for dynamically generated views.
-   *
-   * <p>This is for informational purposes only.
-   *
-   * @return string|null
-   */
-  function getTemplatePath ();
 
   /**
    * Renders the view.
@@ -84,6 +87,21 @@ interface ViewInterface
   public function setEngine (ViewEngineInterface $viewEngine);
 
   /**
+   * Sets the relative filesystem path of the template that originated this view, if a template was loaded.
+   *
+   * <p>This is meaningless for dynamically generated views.
+   *
+   * <p>This is for informational purposes only; it is used for determining which view model class to instantiate for a
+   * given view.
+   *
+   * <p>The path sould be relative to the module's views folder.
+   *
+   * @param string $path
+   * @return $this
+   */
+  public function setPath ($path);
+
+  /**
    * Sets the source code (the template).
    * <p>This also clears the current compiled template.
    *
@@ -91,14 +109,4 @@ interface ViewInterface
    * @return $this Self, for chaining.
    */
   function setSource ($src);
-
-  /**
-   * Sets the full filesystem path of the template that originated this view, if a template was loaded.
-   *
-   * <p>This is meaningless for dynamically generated views.
-   *
-   * @param string $path
-   * @return $this
-   */
-  public function setTemplatePath ($path);
 }

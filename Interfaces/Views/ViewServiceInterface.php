@@ -4,7 +4,6 @@ namespace Electro\Interfaces\Views;
 
 use Electro\Exceptions\Fatal\FileNotFoundException;
 use Electro\Exceptions\FatalException;
-use Electro\Interop\ViewModel;
 
 /**
  * The View service generates markup for displaying Graphical User Interfaces and web documents on web browsers.
@@ -17,10 +16,11 @@ interface ViewServiceInterface
   /**
    * Attempts to create a view model for the specified view.
    *
-   * @param ViewInterface $view The target view.
-   * @return ViewModel|null NULL if the correct view model class could not be determined.
+   * @param ViewInterface|null $view    The target view or NULL to return a generic view model (when $default=null).
+   * @param bool               $default When TRUE, a default view model will be returned if no mapping was found.
+   * @return ViewModelInterface|null NULL if a custom view model class could not be determined and $default is FALSE.
    */
-  function createViewModelFor (ViewInterface $view);
+  function createViewModelFor (ViewInterface $view = null, $default = false);
 
   /**
    * Gets an engine instance with the specified class.
@@ -47,13 +47,14 @@ interface ViewServiceInterface
    * Retrieves the compiled template for the specified file from a template cache; if it's not cached, this method
    * loads the file, compiles it and caches it for future requests.
    *
-   * @param string $path    The complete file name, including the file name extension.
-   * @param array  $options Passes the given object or array to the view engine.
-   *                        It may be anything that the engine needs to perform the compilation or rendering steps on
-   *                        this specific file.
+   * @param string $viewPath A relative file name (from a module's views directory), possibly excluding the file name
+   *                         extension.
+   * @param array  $options  Passes the given object or array to the view engine.
+   *                         It may be anything that the engine needs to perform the compilation or rendering steps on
+   *                         this specific file.
    * @return ViewInterface
    */
-  function loadFromFile ($path, array $options = []);
+  function loadFromFile ($viewPath, array $options = []);
 
   /**
    * Compiles the given template.
