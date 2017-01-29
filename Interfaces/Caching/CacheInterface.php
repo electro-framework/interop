@@ -1,4 +1,5 @@
 <?php
+
 namespace Electro\Interfaces\Caching;
 
 interface CacheInterface
@@ -30,6 +31,16 @@ interface CacheInterface
    * @return void
    */
   function clear ();
+
+  /**
+   * Set's the enabled/disabled state of the cache.
+   *
+   * <p>When disabled, no data will be saved on the cache and all read operations will return the default/generated
+   * value.
+   *
+   * @param bool $enabled
+   */
+  function enable ($enabled = true);
 
   /**
    * Retrieves an entry from the cache referenced by the given key and, if it doesn't exist, creates a new entry with
@@ -88,6 +99,14 @@ interface CacheInterface
    *              an error.
    */
   function inc ($key, $value = 1);
+
+  /**
+   * Get's the enabled/disabled state of the cache.
+   *
+   * @see enable
+   * @return bool
+   */
+  function isEnabled ();
 
   /**
    * Removes stale data from the cache.
