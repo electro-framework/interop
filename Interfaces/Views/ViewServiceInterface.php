@@ -86,12 +86,24 @@ interface ViewServiceInterface
    * If no file with the given name is found, a search is made for the first file on the same directory that has the
    * same name as prefix but that also has one or more additional extensions. Ex: 'my-template' --> 'my-template.html'
    *
-   * @param string $viewPath A file path relative to the project's root directory or relative to one of the project's
+   * @param string $path     A file path relative to the project's root directory or relative to one of the project's
    *                         module's views directory.
    * @param string $base     [output, optional] It will be set to the base path of the module's views directory where
    *                         the file was found.
+   * @param string $viewPath [output, optional] It will be set to a relative path from the module's views directory
+   *                         where the file was found.
    * @return string An absolute file path.
    * @throws FileNotFoundException If the file was not found.
    */
-  function resolveTemplatePath ($viewPath, &$base = null);
+  function resolveTemplatePath ($path, &$base = null, &$viewPath = null);
+
+  /**
+   * Tries to find a View Model class name for the specified template.
+   *
+   * @param string $templatePath
+   * @return null|string NULL if a class name could not be determined, otherwise a fully qualified class name.
+   * @throws FileNotFoundException
+   */
+  function getViewModelClass ($templatePath);
+
 }
