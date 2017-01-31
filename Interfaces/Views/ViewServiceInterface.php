@@ -80,15 +80,18 @@ interface ViewServiceInterface
   function register ($engineClass, $filePattern);
 
   /**
-   * Searches for the specified view file and returns the absolute path to it.
+   * Searches for the specified view file on all registered template directories and, if found, returns the absolute
+   * path to it.
    *
    * If no file with the given name is found, a search is made for the first file on the same directory that has the
    * same name as prefix but that also has one or more additional extensions. Ex: 'my-template' --> 'my-template.html'
    *
-   * @param string $viewName
-   * @param string $base [output, optional] It will be set to the base path of the module's views folder.
+   * @param string $viewPath A file path relative to the project's root directory or relative to one of the project's
+   *                         module's views directory.
+   * @param string $base     [output, optional] It will be set to the base path of the module's views directory where
+   *                         the file was found.
    * @return string An absolute file path.
    * @throws FileNotFoundException If the file was not found.
    */
-  function resolveTemplatePath ($viewName, &$base = null);
+  function resolveTemplatePath ($viewPath, &$base = null);
 }
