@@ -8,12 +8,12 @@ use Psr\Http\Message\ServerRequestInterface;
  * Model controllers automate and encapsulate repetitive model-related tasks that, otherwise, would be redundantly
  * repeated on multiple pages/components.
  *
- * A model controller is a viewless controller that concerns itself mostly with the model layer.
+ * <p>A model controller is a viewless controller that concerns itself mostly with the model layer.
  * It “owns” the model; its primary responsibilities are to mutate the model in response to HTTP requests, validate and
  * parse/transform input data, format data for output and save the model to the database.
  *
- * The model controller is a service shared troughout the application, and its capabilities can be extended via "model
- * controller plugins" (do not confuse with "plugin modules").
+ * <p>The model controller is a service shared throughout the application. Its capabilities can be extended via
+ * *model controller extensions* and *event handlers*.
  */
 interface ModelControllerInterface
 {
@@ -126,7 +126,7 @@ interface ModelControllerInterface
    * <p>The controller provides a built-in default handler, which tries to save the model automatically.
    * It supports some types of composite models, where they are arrays that contain multiple simple sub-models, or
    * where
-   * each sub-model has relationships to other sub-models (for instance, a one-tp-many relationship on an ORM model).
+   * each sub-model has relationships to other sub-models (for instance, a one-to-many relationship on an ORM model).
    * <p>Classes implementing this interface will provide varying levels of auto-save functionality, depending on the
    * ORM they support.
    *

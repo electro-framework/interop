@@ -1,4 +1,5 @@
 <?php
+
 namespace Electro\Interfaces\Navigation;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -32,6 +33,16 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
    * @return NavigationLinkInterface[] A map of ID => NavigationLinkInterface
    */
   function IDs ();
+
+  /**
+   * Converts an URL to an absolute form, taking into account the current request's URL.
+   *
+   * <p>If the URL is already absolute, it will be returned unmodified.
+   *
+   * @param string $url
+   * @return string
+   */
+  function absoluteUrlOf ($url);
 
   /**
    * Inserts a navigation map into this navigation.
@@ -75,7 +86,7 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
    * **Note:** depending on the features you are using, the framework may already have done that for you.
    *
    * @param int $offset If specified, discards the first N items.
-   * @return $this|NavigationLinkInterface[]
+   * @return NavigationLinkInterface[]
    */
   function getCurrentTrail ($offset = 0);
 
@@ -96,7 +107,7 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
    *
    * <p>See also {@see getCurrentTrail()}.
    *
-   * @return $this|NavigationLinkInterface[]
+   * @return NavigationLinkInterface[]
    */
   function getVisibleTrail ();
 
@@ -113,31 +124,6 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
   function group ();
 
   /**
-   * Creates a new navigation link object, bound to this Navigation.
-   *
-   * @return NavigationLinkInterface
-   */
-  function link ();
-
-  /**
-   * Gets the HTTP server request associated with this navigation, from which it can generate a navigation that suits
-   * the application's current state.
-   *
-   * @return ServerRequestInterface
-   */
-  function request ();
-
-  /**
-   * Converts an URL to an absolute form, taking into account the current request's URL.
-   *
-   * <p>If the URL is already absolute, it will be returned unmodified.
-   *
-   * @param string $url
-   * @return string
-   */
-  function absoluteUrlOf ($url);
-
-  /**
    * Checks whether the given URL is absolute or not.
    *
    * @return bool
@@ -145,7 +131,22 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
   function isAbsolute ($url);
 
   /**
-   * The root of the tree of navigation links for this navigation instance.
+   * Creates a new navigation link object, bound to this Navigation.
+   *
+   * @return NavigationLinkInterface
+   */
+  function link ();
+
+  /**
+   * Gets the HTTP server request associated with this navigation, from which it can generate a navigation that matches
+   * the application's current state.
+   *
+   * @return ServerRequestInterface
+   */
+  function request ();
+
+  /**
+   * Gets or sets the root of the tree of navigation links for this navigation instance.
    *
    * <p>This link is not part of the navigation itself,
    * <p>You do not usually set this property, as a root link will be created automatically and you can just add
@@ -164,5 +165,16 @@ interface NavigationInterface extends \IteratorAggregate, \ArrayAccess
    * @return NavigationLinkInterface|null null if not found.
    */
   function selectedLink ();
+
+  /**
+   * Sets the HTTP server request associated with this navigation, from which it can generate a navigation that matches
+   * the application's current state.
+   *
+   * <p>This also initializes the service for use by computing the current navigation trail.
+   *
+   * @param ServerRequestInterface $request
+   * @return void
+   */
+  public function setRequest (ServerRequestInterface $request);
 
 }
