@@ -4,6 +4,17 @@ namespace Electro\Interfaces\Views;
 
 use Electro\Exceptions\Fatal\FileNotFoundException;
 use Electro\Exceptions\FatalException;
+use Electro\Interfaces\EventEmitterInterface;
+
+/**
+ * Use this event to inspect or modify view models as they are created prior to the corresponding views being rendered.
+ */
+const CREATE_VIEW_MODEL = 0;
+
+/**
+ * Use this event to intercept the rendering of views right before it begins.
+ */
+const RENDER = 1;
 
 /**
  * The View service generates markup for displaying Graphical User Interfaces and web documents on web browsers.
@@ -11,7 +22,7 @@ use Electro\Exceptions\FatalException;
  * <p>It provides view template loading, compiling, caching and dynamic generation (rendering) capabilities.
  * <p>It can handle multiple templating engines via a single unified interface.
  */
-interface ViewServiceInterface
+interface ViewServiceInterface extends EventEmitterInterface
 {
   /**
    * Attempts to create a view model for the specified view.
@@ -44,6 +55,15 @@ interface ViewServiceInterface
   function getEngineFromFileName ($path, $options = []);
 
   /**
+   * Tries to find a View Model class name for the specified template.
+   *
+   * @param string $templatePath
+   * @return null|string NULL if a class name could not be determined, otherwise a fully qualified class name.
+   * @throws FileNotFoundException
+   */
+  function getViewModelClass ($templatePath);
+
+  /**
    * Retrieves the compiled template for the specified file from a template cache; if it's not cached, this method
    * loads the file, compiles it and caches it for future requests.
    *
@@ -71,6 +91,27 @@ interface ViewServiceInterface
   function loadFromString ($src, $engineOrClass, array $options = []);
 
   /**
+   * Registers an event handler for the `CREATE_VIEW_MODEL` event.
+   *
+   * <p>Use this event to inspect or modify view models as they are created prior to the corresponding views being
+   * rendered.
+   *
+   * @param callable $handler function (ViewInterface, ViewModelInterface)
+   * @return $this
+   */
+  function onCreateViewModel (callable $handler);
+
+  /**
+   * Registers an event handler for the `RENDER` event.
+   *
+   * <p>Use this event to intercept the rendering of views right before it begins.
+   *
+   * @param callable $handler function (ViewInterface, ViewModelInterface)
+   * @return $this
+   */
+  function onRenderView (callable $handler);
+
+  /**
    * Registes a view engine to be used for rendering files that match the given regular expression pattern.
    *
    * @param string $engineClass
@@ -96,14 +137,5 @@ interface ViewServiceInterface
    * @throws FileNotFoundException If the file was not found.
    */
   function resolveTemplatePath ($path, &$base = null, &$viewPath = null);
-
-  /**
-   * Tries to find a View Model class name for the specified template.
-   *
-   * @param string $templatePath
-   * @return null|string NULL if a class name could not be determined, otherwise a fully qualified class name.
-   * @throws FileNotFoundException
-   */
-  function getViewModelClass ($templatePath);
 
 }
