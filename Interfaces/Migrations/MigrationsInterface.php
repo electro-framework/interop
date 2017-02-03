@@ -1,4 +1,5 @@
 <?php
+
 namespace Electro\Interfaces\Migrations;
 
 /**
@@ -10,6 +11,13 @@ namespace Electro\Interfaces\Migrations;
 interface MigrationsInterface
 {
   /**
+   * Checks if migrations can be performed, for which a database connection must be available.
+   *
+   * @return bool
+   */
+  function databaseIsAvailable ();
+
+  /**
    * Runs all pending migrations of the current module, optionally up to a specific version.
    *
    * @param string $target  [optional] The version number to migrate to. If not specified, it runs up to the most
@@ -18,7 +26,7 @@ interface MigrationsInterface
    * @param bool   $pretend If true, the migration is not actually run and the SQL code that would be executed is
    *                        returned.
    * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of migrations
-   *                    executed.
+   *                        executed.
    */
   function migrate ($target = null, $pretend = false);
 
@@ -38,18 +46,18 @@ interface MigrationsInterface
    * @param bool   $pretend If true, the migration is not actually run and the SQL code that would be executed is
    *                        returned.
    * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of migrations
-   *                    executed.
+   *                        executed.
    */
   function rollBack ($target = null, $date = null, $pretend = false);
 
   /**
    * Runs all available seeders of the current module, or just a specific seeder.
    *
-   * @param string $seeder [optional] The name of the seeder (in camel case).
+   * @param string $seeder  [optional] The name of the seeder (in camel case).
    * @param bool   $pretend If true, the seeder is not actually run and the SQL code that would be executed is
    *                        returned.
    * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of seeders
-   *                    executed.
+   *                        executed.
    */
   function seed ($seeder = 'Seeder', $pretend = false);
 
