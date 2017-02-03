@@ -63,5 +63,5 @@ interface LoggerRegistryInterface
    * @return $this
    */
   function unregister ($name);
-  
+
 }
