@@ -2,23 +2,14 @@
 
 namespace Electro\Interfaces\Logging;
 
-use Electro\Logging\Services\Loggers;
 use Psr\Log\LoggerInterface;
 
 
 /**
  * Allows the creation, storage and retrieval of named logger instances.
  */
-interface LoggersInterface
+interface LoggerRegistryInterface
 {
-  /**
-   * Creates and registers a logger with a specific name.
-   *
-   * @param string $name The name to associated with the logger.
-   * @return LoggerInterface $logger The new logger instance.
-   */
-  function make ($name);
-
   /**
    * Retrieves a logger instance by name.
    *
@@ -38,6 +29,25 @@ interface LoggersInterface
   function has ($name);
 
   /**
+   * Creates and registers a new blank logger with a specific name.
+   *
+   * @param string $name The name to associate with the new logger.
+   * @return LoggerInterface $logger The new logger instance.
+   */
+  function make ($name);
+
+  /**
+   * Creates and registers a new channel with the given name, from the application's main logger.
+   *
+   * <p>The new logger instance will inherit the configuration of the main logger (handlers, processors, etc).
+   *
+   * @param string $name    The name to associated with the logger.
+   * @param bool   $enabled [optional] Set to FALSE to create a disabled logger, which may be enabled at later time.
+   * @return LoggerInterface $logger The new logger instance.
+   */
+  function makeChannel ($name, $enabled = true);
+
+  /**
    * Registers a logger with a specific name.
    *
    * @param string          $name   The name to associated with the logger.
@@ -53,4 +63,5 @@ interface LoggersInterface
    * @return $this
    */
   function unregister ($name);
+  
 }
