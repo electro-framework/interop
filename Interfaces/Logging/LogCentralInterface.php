@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Allows the creation, storage and retrieval of named logger instances.
  */
-interface LoggerRegistryInterface
+interface LogCentralInterface
 {
   /**
    * Retrieves a logger instance by name.
