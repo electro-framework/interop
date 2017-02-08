@@ -14,4 +14,14 @@ interface ContentRepositoryInterface
    */
   public function getImageUrl ($path, array $params = []);
 
+  /**
+   * Get the URL of a file in the content repository.
+   *
+   * <p>If `$path` is `null` or `''`, `''` is returned.
+   *
+   * @param  string $path   The virtual resource path.
+   * @return string The URL to retrieve the file.
+   */
+  public function getFileUrl ($path);
+
 }
