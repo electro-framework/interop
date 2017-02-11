@@ -62,6 +62,7 @@ interface ConsoleIOInterface
 
   /**
    * @param string $question
+   * @return bool
    */
   function confirm ($question);
 
