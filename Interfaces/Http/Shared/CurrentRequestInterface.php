@@ -2,7 +2,6 @@
 
 namespace Electro\Interfaces\Http\Shared;
 
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -17,7 +16,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * <p>Routers and middleware runners can set the current request by calling `set()`.
  */
-interface CurrentRequestInterface extends RequestInterface
+interface CurrentRequestInterface extends ServerRequestInterface
 {
   /**
    * Gets the current request instance.
