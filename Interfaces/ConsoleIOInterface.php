@@ -1,4 +1,5 @@
 <?php
+
 namespace Electro\Interfaces;
 
 use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
@@ -40,6 +41,15 @@ interface ConsoleIOInterface
   function banner ($text, $width = 0);
 
   /**
+   * Signals the beginning of running a command.
+   *
+   * <op>It increments an internal counter that is decremented by {@see done()}.
+   *
+   * @return $this Self, for chaining.
+   */
+  function begin ();
+
+  /**
    * Displays an operation cancelation message and aborts execution.
    * <p>If the input stream is not interactive, no message will be displayed.
    *
@@ -67,10 +77,13 @@ interface ConsoleIOInterface
   function confirm ($question);
 
   /**
-   * Prints a success message and stops execution with status code 0. Use only on commands, not on tasks.
+   * Signals the ending of running a command.
+   *
+   * <p>It decrements an internal nesting counter, which is incremented by {@see begin()}.
+   * When the counter reaches 0, it prints an optional message and stops execution with status code 0.
    *
    * @param string $text     [optional]
-   * @param bool   $dontExit Set to true to prevent an immediate program termination.
+   * @param bool   $dontExit Set to true to prevent an immediate program termination when the counter reaches 0.
    */
   function done ($text = '', $dontExit = false);
 
@@ -133,9 +146,12 @@ interface ConsoleIOInterface
   function mute ();
 
   /**
+   * Advances the cursor to the beginning of the next line, or outputs additional blank lines.
+   *
+   * @param int $count [optional] How many lines to move the cursor down.
    * @return $this
    */
-  function nl ();
+  function nl ($count = 1);
 
   /**
    * Alias of `writeln()`.
@@ -153,6 +169,14 @@ interface ConsoleIOInterface
    * @return $this
    */
   function setColor ($name, $style);
+
+  /**
+   * Sets the default message to be displayed by done when reaching nesting depth 0.
+   *
+   * @param string $message
+   * @return void
+   */
+  function setDoneMessage ($message);
 
   /**
    * @param OutputInterface $output
