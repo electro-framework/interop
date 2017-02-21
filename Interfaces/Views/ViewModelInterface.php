@@ -26,6 +26,8 @@ interface ViewModelInterface extends \IteratorAggregate, \ArrayAccess, \Serializ
    * request data or component properties), which is usually performed by the controller or component that owns the
    * view.
    *
+   * ><p>**Note:** you DO NOT need to call `parent::init()`.
+   *
    * @return void
    */
   function init ();
