@@ -27,11 +27,12 @@ class ViewModel extends \ArrayObject implements ViewModelInterface
     if (!is_array ($data)) {
       if (is_object ($data) && $data instanceof self) {
         $this->exchangeArray (array_merge ($this->getArrayCopy (), $data->getArrayCopy ()));
-        return;
+        return $this;
       }
       throw new \InvalidArgumentException ("Argument must be an array or a " . __CLASS__ . " instance");
     }
     $this->exchangeArray (array_merge ($this->getArrayCopy (), $data));
+    return $this;
   }
 
   function toArray ()

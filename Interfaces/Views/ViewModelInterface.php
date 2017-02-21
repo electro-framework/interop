@@ -34,7 +34,7 @@ interface ViewModelInterface extends \IteratorAggregate, \ArrayAccess, \Serializ
    * Merges the provided data with the current view model's data.
    *
    * @param array|self $data
-   * @return void
+   * @return $this
    */
   function set ($data);
 
