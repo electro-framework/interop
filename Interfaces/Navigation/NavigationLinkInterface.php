@@ -1,4 +1,5 @@
 <?php
+
 namespace Electro\Interfaces\Navigation;
 
 use Electro\Exceptions\Fault;
@@ -267,6 +268,22 @@ interface NavigationLinkInterface extends \IteratorAggregate
    *                             If null, the link is non-navigable (it has no URL).
    */
   function url ($url = null);
+
+  /**
+   * Generates an URL for the current link, replacing all URL parameters by the given argument values at the same
+   * ordinal position.
+   *
+   * ###### Ex:
+   * <kbd>
+   *   $link->url ('products/&#64;categoryId/&#64;typeId/&#64;prodId'); <br>
+   *   $url = $link->urlOf (32, 27, 5); <br>
+   *   // $url = 'products/32/27/5'
+   * </kbd>
+   *
+   * @param array ...$params
+   * @return mixed
+   */
+  function urlOf (...$params);
 
   /**
    * Are links to this location displayed?
