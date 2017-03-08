@@ -42,7 +42,7 @@ interface ViewServiceInterface extends EventEmitterInterface
    * @param ViewInterface|null $view
    * @return ViewInterface
    */
-  public function currentView (ViewInterface $view = null);
+  function currentView (ViewInterface $view = null);
 
   /**
    * Gets an engine instance with the specified class.
@@ -64,6 +64,14 @@ interface ViewServiceInterface extends EventEmitterInterface
    * @throws FatalException If no match was found.
    */
   function getEngineFromFileName ($path, $options = []);
+
+  /**
+   * Returns the name of the module that contains the template with a given relative path.
+   *
+   * @param string $path
+   * @return string
+   */
+  function getModuleOfPath ($path);
 
   /**
    * Tries to find a View Model class name for the specified template.
