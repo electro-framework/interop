@@ -34,6 +34,17 @@ interface ViewServiceInterface extends EventEmitterInterface
   function createViewModelFor (ViewInterface $view = null, $default = false);
 
   /**
+   * Gets or sets the current view being rendered.
+   *
+   * <p>This is meant for informational purposes only. For ex. it may be used during rendering to determine which
+   * module the view belongs to.
+   *
+   * @param ViewInterface|null $view
+   * @return ViewInterface
+   */
+  public function currentView (ViewInterface $view = null);
+
+  /**
    * Gets an engine instance with the specified class.
    *
    * @param string $class
@@ -137,5 +148,6 @@ interface ViewServiceInterface extends EventEmitterInterface
    * @throws FileNotFoundException If the file was not found.
    */
   function resolveTemplatePath ($path, &$base = null, &$viewPath = null);
+
 
 }
