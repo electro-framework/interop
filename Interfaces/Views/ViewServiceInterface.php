@@ -27,6 +27,8 @@ interface ViewServiceInterface extends EventEmitterInterface
   /**
    * Attempts to create a view model for the specified view.
    *
+   * <p>It also emits the `CREATE_VIEW_MODEL` event.
+   *
    * @param ViewInterface|null $view    The target view or NULL to return a generic view model (when $default=null).
    * @param bool               $default When TRUE, a default view model will be returned if no mapping was found.
    * @return ViewModelInterface|null NULL if a custom view model class could not be determined and $default is FALSE.
@@ -115,7 +117,7 @@ interface ViewServiceInterface extends EventEmitterInterface
    * <p>Use this event to inspect or modify view models as they are created prior to the corresponding views being
    * rendered.
    *
-   * @param callable $handler function (ViewInterface, ViewModelInterface)
+   * @param callable $handler function (ViewModelInterface, ViewInterface)
    * @return $this
    */
   function onCreateViewModel (callable $handler);
@@ -125,7 +127,7 @@ interface ViewServiceInterface extends EventEmitterInterface
    *
    * <p>Use this event to intercept the rendering of views right before it begins.
    *
-   * @param callable $handler function (ViewInterface, ViewModelInterface)
+   * @param callable $handler function (ViewModelInterface, ViewInterface)
    * @return $this
    */
   function onRenderView (callable $handler);
