@@ -54,12 +54,17 @@ interface MigrationsInterface
    * Runs all available seeders of the current module, or just a specific seeder.
    *
    * @param string $seeder  [optional] The name of the seeder (in camel case).
-   * @param bool   $pretend If true, the seeder is not actually run and the SQL code that would be executed is
-   *                        returned.
+   * @param array  $options Configuration options for the seeding process.<dl>
+   *                        <dt>'pretend' => bool
+   *                        <dd>If true, the seeder is not actually run and the SQL code that would
+   *                        be executed is returned.
+   *                        <dt>'clear' => bool
+   *                        <dd>if true, data is cleared from each target table before it's seeded.
+   *                        </dl>
    * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of seeders
    *                        executed.
    */
-  function seed ($seeder = 'Seeder', $pretend = false);
+  function seed ($seeder = 'Seeder', array $options = []);
 
   /**
    * Gets a list of all migrations of the current module, along with their current status.

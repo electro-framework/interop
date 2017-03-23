@@ -30,4 +30,17 @@ interface SeederInterface
    */
   function run ();
 
+  /**
+   * Configuration options for the seeding process.
+   *
+   * @param array $options <dl>
+   *                       <dt>'pretend' => bool
+   *                       <dd>If true, the seeder is not actually run and the SQL code that would be executed is
+   *                       returned.
+   *                       <dt>'clear' => bool
+   *                       <dd>if true, data is cleared from each target table before it's seeded.
+   *                       </dl>
+   */
+  function setOptions (array $options);
+
 }

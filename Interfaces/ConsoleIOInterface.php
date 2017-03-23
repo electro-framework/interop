@@ -80,12 +80,12 @@ interface ConsoleIOInterface
    * Signals the ending of running a command.
    *
    * <p>It decrements an internal nesting counter, which is incremented by {@see begin()}.
-   * When the counter reaches 0, it prints an optional message and stops execution with status code 0.
+   * <p>When the counter reaches 0, it prints an optional message.
+   * <p>If the counter goes below 0, all messages are shown.
    *
-   * @param string $text     [optional]
-   * @param bool   $dontExit Set to true to prevent an immediate program termination when the counter reaches 0.
+   * @param string $text [optional]
    */
-  function done ($text = '', $dontExit = false);
+  function done ($text = '');
 
   /**
    * Prints an error message and stops execution. Use only on commands, not on tasks.
@@ -148,6 +148,10 @@ interface ConsoleIOInterface
   /**
    * Advances the cursor to the beginning of the next line, or outputs additional blank lines.
    *
+   * <p>Multiple calls to this function, without any text being output in between, are collapsed.
+   * <p>Also, this will have no effect if no text has been output yet during the current execution context (i.e. this is
+   * the first line being output).
+   *
    * @param int $count [optional] How many lines to move the cursor down.
    * @return $this
    */
@@ -192,6 +196,7 @@ interface ConsoleIOInterface
    * @param int[]         $widths  Each width that is 0 will be assigned the remaining horizontal space on the terminal,
    *                               divided by the number of columns set to 0.
    * @param string[]|null $align   A list of column alignments; values: 'L'|'R'|'C'
+   * @return $this
    */
   function table (array $headers, array $data, array $widths, array $align = null);
 
@@ -230,6 +235,10 @@ interface ConsoleIOInterface
   /**
    * Writes text, with support for formatting tags.
    *
+   * ><p>**Note:** if the output stream supports formatting and this is the first text being output during the current
+   * execution context, a blank line is prepended to the output, aiming to separate the content from the command-line
+   * prompt.
+   *
    * @param string $text
    * @return $this
    */
@@ -237,6 +246,10 @@ interface ConsoleIOInterface
 
   /**
    * Like {@see write} but appends a line return to the output.
+   *
+   * ><p>**Note:** if the output stream supports formatting and this is the first text being output during the current
+   * execution context, a blank line is prepended to the output, aiming to separate the content from the command-line
+   * prompt.
    *
    * @param string $text
    * @return $this
