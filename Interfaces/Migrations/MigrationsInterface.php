@@ -20,9 +20,9 @@ interface MigrationsInterface
   /**
    * Runs all pending migrations of the current module, optionally up to a specific version.
    *
-   * @param string $target  [optional] The version number to migrate to. If not specified, it runs up to the most
-   *                        recent
-   *                        migration, either forward or backwards, depending on whether there are PENDING or
+   * @param string $target  [optional] The upper limit timestamp to migrate up to (ex: 20170314150049), inclusive;
+   *                        migrations with timestamps greater than it will be excluded; if not specified, it runs up
+   *                        to the most recent pending migration.
    * @param bool   $pretend If true, the migration is not actually run and the SQL code that would be executed is
    *                        returned.
    * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of migrations
@@ -41,14 +41,15 @@ interface MigrationsInterface
   /**
    * Reverts the last migration of the current module, or optionally up to a specific version or date.
    *
-   * @param string $target  [optional] The version number to migrate to. 0 = roll back all migrations.
-   * @param string $date    [optional] The date to rollback to. All migrations after that date will be rolled back.
+   * @param string $target  [optional] The lower limit timestamp to rollback to (ex: 20170314150049), inclusive;
+   *                        migrations with timestamps lower than it will be excluded; 0 = roll back all migrations.
+   *                        If not given, the last migration will be rolled back.
    * @param bool   $pretend If true, the migration is not actually run and the SQL code that would be executed is
    *                        returned.
-   * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of migrations
+   * @return int|string If $pretend==true, it returns the SQL code, otherwise it returns the number of migrations
    *                        executed.
    */
-  function rollBack ($target = null, $date = null, $pretend = false);
+  function rollBack ($target = null, $pretend = false);
 
   /**
    * Runs all available seeders of the current module, or just a specific seeder.
