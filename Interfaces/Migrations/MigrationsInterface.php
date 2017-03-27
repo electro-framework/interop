@@ -21,8 +21,8 @@ interface MigrationsInterface
    * Runs all pending migrations of the current module, optionally up to a specific version.
    *
    * @param string $target  [optional] The upper limit timestamp to migrate up to (ex: 20170314150049), inclusive;
-   *                        migrations with timestamps greater than it will be excluded; if not specified, it runs up
-   *                        to the most recent pending migration.
+   *                        migrations with timestamps greater than it will be excluded; if not specified, it runs all
+   *                        pending migrations.
    * @param bool   $pretend If true, the migration is not actually run and the SQL code that would be executed is
    *                        returned.
    * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of migrations
