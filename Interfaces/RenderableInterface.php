@@ -9,18 +9,18 @@ namespace Electro\Interfaces;
 interface RenderableInterface
 {
   /**
+   * Renders the component and returns the resulting markup.
+   *
+   * @return string
+   */
+  public function __toString ();
+
+  /**
    * Gets the class name of the context object that the component requires in order to be able to render itself.
    *
    * @return string
    */
   public function getContextClass ();
-
-  /**
-   * Renders the component and returns the resulting markup.
-   *
-   * @return string
-   */
-  public function getRendering ();
 
   /**
    * Sets the component's rendering context.

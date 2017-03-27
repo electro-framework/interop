@@ -55,7 +55,7 @@ trait DecoratorTrait
   function __isset ($n)
   {
     $c = new \ReflectionClass($this->decorated);
-    return $c->hasProperty ($n);
+    return $c->hasProperty ($n) && !is_null ($this->__get ($n));
   }
 
   /**
