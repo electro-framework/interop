@@ -23,7 +23,8 @@ trait DecoratorTrait
    */
   function __call ($n, $args)
   {
-    return call_method ([$this->decorated, $n], $this, ...$args);
+    // return call_method ([$this->decorated, $n], $this, ...$args);
+    return call_user_func_array ([$this->decorated, $n], $args);
   }
 
   /**
