@@ -322,7 +322,7 @@ interface NavigationLinkInterface extends \IteratorAggregate
    * The children of the `Authors` menu item will only become enabled when the user selects an author on the `Authors`
    * page and the corresponding author ID becomes available on the URL.
    *
-   * <p>Default: **`false`**
+   * <p>Default: **`true`**
    *
    * @param bool $visible [optional]
    * @return $this|bool $this if an argument is given, the property's value otherwise.

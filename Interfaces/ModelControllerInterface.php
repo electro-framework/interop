@@ -70,11 +70,13 @@ interface ModelControllerInterface
    * @param string     $collection    The database table name or collection name.
    * @param string     $subModelPath  A property name under which to save the loaded model on the controller's model.
    *                                  It is a dot-delimited path; if enpty it targets the controller's model itself.
-   * @param mixed|null $id            [optional] The primary key value of the record being sought.
+   * @param mixed|null $id            [optional] The primary key value of the record being sought. If not specified,
+   *                                  the value set by {@see withRequestedId} will be used.
    * @param string     $primaryKey    [optional] The table/collection's primary key name. Defaults to `id`.
+   *                                  If not specified, the name set by {@see withRequestedId} will be used.
    * @return mixed The loaded data as an array.
    */
-  function loadData ($collection, $subModelPath = '', $id = null, $primaryKey = 'id');
+  function loadData ($collection, $subModelPath = '', $id = null, $primaryKey = null);
 
   /**
    * Loads the whole model or a sub-model from the database using the specified id.
@@ -85,8 +87,9 @@ interface ModelControllerInterface
    *
    * @param string     $modelClass    The model's class name.
    * @param string     $subModelPath  A property name under which to save the loaded model on the controller's model.
-   *                                  It is a dot-delimited path; if enpty it targets the controller's model itself.
-   * @param mixed|null $id            The primary key value.
+   *                                  It is a dot-delimited path; if empty it targets the controller's model itself.
+   * @param mixed|null $id            The primary key value. If not specified, the value set by {@see withRequestedId}
+   *                                  will be used.
    * @return mixed The loaded model.
    */
   function loadModel ($modelClass, $subModelPath = '', $id = null);
@@ -144,6 +147,22 @@ interface ModelControllerInterface
   function onSave ($priority, callable $task);
 
   /**
+   * Sets a map/list hybrid of route parameter names to model fields, which will be used to automatically copy route
+   * parameter values from the current request to the model's fields.
+   *
+   * <p>Array items having a numeric key (explicit or implicit) will be interpreted the same way as if an item with both
+   * key and value having the same value was specified.
+   *
+   * ###### Ex:
+   *       $model->preset (['id', 'page_id' => 'pageId'])
+   * <p>On the previous example, `'id'` is equivalent to `'id' => 'id'`.
+   *
+   * @param array $presets
+   * @return $this The controller, for chaining.
+   */
+  function preset (array $presets);
+
+  /**
    * Registers an extension that will be called whenever {@see handleRequest()} is called.
    *
    * <p>Extensions usually register event handlers on the controller, so that they'll be invoked later at the
@@ -171,16 +190,6 @@ interface ModelControllerInterface
    * @param        $value
    */
   function set ($path, $value);
-
-  /**
-   * On composite models, it defines a dot-separated path to the main sub-model.
-   *
-   * <p>The main sub-model is the target for automatic route parameters merging.
-   * <p>If it's an empty string, the whole model is the target.
-   *
-   * @param string $path
-   */
-  public function setMainSubModelPath ($path);
 
   /**
    * Sets the model instance owned by the controller, or a sub-model on it.
@@ -226,9 +235,11 @@ interface ModelControllerInterface
    * <p>If the URL route parameter has an empty value, the corresponding empty id will trigger the creation of a new
    * record, for later insertion to the database.
    *
-   * @param string $routeParam [optional] The parameter name. If not specified, the usual `id` name is used.
+   * @param string|null $routeParam [optional] The parameter name. If not specified, the usual `id` name is used.
+   * @param string|null $primaryKey [optional] The table/model's primary key name. If not given, either the model's
+   *                                primary key name will be used or 'id' will be assumed for tables.
    * @return $this The controller, for chaining.
    */
-  function withRequestedId ($routeParam = 'id');
+  function withRequestedId ($routeParam = 'id', $primaryKey = null);
 
 }
