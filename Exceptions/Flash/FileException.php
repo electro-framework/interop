@@ -29,7 +29,7 @@ class FileException extends FlashMessageException
     self::FILE_IS_REQUIRED      => FlashType::WARNING,
     self::FILE_IS_INVALID       => FlashType::WARNING,
     self::CAN_NOT_SAVE_FILE     => FlashType::ERROR,
-    self::FIELD_NOT_FOUND       => FlashType::FATAL,
+    self::FIELD_NOT_FOUND       => FlashType::ERROR,
     self::CAN_NOT_DELETE_FILE   => FlashType::ERROR,
     self::CAN_NOT_SAVE_TMP_FILE => FlashType::ERROR,
     self::FILE_TOO_BIG          => FlashType::ERROR,
