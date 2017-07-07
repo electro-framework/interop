@@ -70,6 +70,13 @@ interface UserInterface
   function getRecord ();
 
   /**
+   * Retrieves a list of users with role level lesser or equal to the instance's user.
+   *
+   * @return UserInterface[]
+   */
+  function getUsers ();
+
+  /**
    * Gets or sets the user record's primary key.
    *
    * > Note: it may be the same as the username or it may be a numeric id.

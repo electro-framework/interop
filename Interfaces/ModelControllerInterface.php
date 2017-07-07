@@ -62,37 +62,21 @@ interface ModelControllerInterface
   /**
    * Loads the whole model or a sub-model from the database using the specified id.
    *
-   * <p>Unlike {@see loadModel()}, this does not require an ORM or model class; it simply loads a data array using a
-   * query builder or a low level SQL interface.
-   *
-   * <p>If the id is `''` or `null`, an empty array is created.
-   *
-   * @param string     $collection    The database table name or collection name.
-   * @param string     $subModelPath  A property name under which to save the loaded model on the controller's model.
-   *                                  It is a dot-delimited path; if enpty it targets the controller's model itself.
-   * @param mixed|null $id            [optional] The primary key value of the record being sought. If not specified,
-   *                                  the value set by {@see withRequestedId} will be used.
-   * @param string     $primaryKey    [optional] The table/collection's primary key name. Defaults to `id`.
-   *                                  If not specified, the name set by {@see withRequestedId} will be used.
-   * @return mixed The loaded data as an array.
-   */
-  function loadData ($collection, $subModelPath = '', $id = null, $primaryKey = null);
-
-  /**
-   * Loads the whole model or a sub-model from the database using the specified id.
-   *
-   * <p>Unlike {@see loadData()}, this requires a model class, which may be an ORM model.
-   *
    * <p>If the id is `''` or `null`, an empty model is created.
    *
-   * @param string     $modelClass    The model's class name.
-   * @param string     $subModelPath  A property name under which to save the loaded model on the controller's model.
-   *                                  It is a dot-delimited path; if empty it targets the controller's model itself.
-   * @param mixed|null $id            The primary key value. If not specified, the value set by {@see withRequestedId}
-   *                                  will be used.
-   * @return mixed The loaded model.
+   * @param string|array $collection   The database table name, a collection name or the model's class name or instance
+   *                                   (which one depends on the ModelController implementation).
+   * @param string       $subModelPath [optional] A property name under which to save the loaded model on the
+   *                                   controller's model. It is a dot-delimited path; if empty it targets the
+   *                                   controller's model itself.
+   * @param mixed|null   $id           [optional]  The primary key value. If not specified, the value set by
+   *                                   {@see withRequestedId} will be used.
+   * @param string|null  $primaryKey   [optional] The table's primary key field name. If not given,  the value set by
+   *                                   {@see withRequestedId} will be used, or the model's primary key name will be
+   *                                   used or 'id' will be assumed.
+   * @return object|array The loaded model.
    */
-  function loadModel ($modelClass, $subModelPath = '', $id = null);
+  function loadModel ($collection, $subModelPath = '', $id = null, $primaryKey = null);
 
   /**
    * Merges data into the model.
@@ -180,6 +164,7 @@ interface ModelControllerInterface
 
   /**
    * Saves the whole model on the database.
+   * <p>The arguments to a previous {@see loadModel}() call determine the collection(s) and other relevant settings.
    */
   function saveModel ();
 
@@ -224,7 +209,7 @@ interface ModelControllerInterface
    *
    * <p>Ex:
    * ```
-   *   $modelController->withRequestedId('pageId')->loadData('pages');
+   *   $modelController->withRequestedId('pageId', 'pkey')->loadModel('pages');
    *   // or
    *   $modelController->withRequestedId()->loadModel(Page::class);
    * ```
@@ -236,8 +221,9 @@ interface ModelControllerInterface
    * record, for later insertion to the database.
    *
    * @param string|null $routeParam [optional] The parameter name. If not specified, the usual `id` name is used.
-   * @param string|null $primaryKey [optional] The table/model's primary key name. If not given, either the model's
-   *                                primary key name will be used or 'id' will be assumed for tables.
+   * @param string|null $primaryKey [optional] The table's primary key field name. If not given,  the value set by
+   *                                {@see withRequestedId} will be used, or the model's primary key name will be used
+   *                                or 'id' will be assumed.
    * @return $this The controller, for chaining.
    */
   function withRequestedId ($routeParam = 'id', $primaryKey = null);
