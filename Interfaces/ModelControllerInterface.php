@@ -62,21 +62,24 @@ interface ModelControllerInterface
   /**
    * Loads the whole model or a sub-model from the database using the specified id.
    *
+   * <p>This does not require an ORM or model class; it may simply load a data array using a query builder or a low
+   * level SQL interface. In that case, the first argument should be the collection/table name.
+   *
    * <p>If the id is `''` or `null`, an empty model is created.
    *
-   * @param string|array $collection   The database table name, a collection name or the model's class name or instance
-   *                                   (which one depends on the ModelController implementation).
-   * @param string       $subModelPath [optional] A property name under which to save the loaded model on the
-   *                                   controller's model. It is a dot-delimited path; if empty it targets the
-   *                                   controller's model itself.
-   * @param mixed|null   $id           [optional]  The primary key value. If not specified, the value set by
-   *                                   {@see withRequestedId} will be used.
-   * @param string|null  $primaryKey   [optional] The table's primary key field name. If not given,  the value set by
-   *                                   {@see withRequestedId} will be used, or the model's primary key name will be
-   *                                   used or 'id' will be assumed.
-   * @return object|array The loaded model.
+   * @param string     $modelClassOrCollection The model's class name or, if not using an ORM, a collection/table name.
+   * @param string     $subModelPath           A property name under which to save the loaded model on the controller's
+   *                                           model. It is a dot-delimited path; if empty it targets the controller's
+   *                                           model itself.
+   * @param mixed|null $id                     The primary key value. If not specified, the value set by
+   *                                           {@see withRequestedId} will be used.
+   * @param string     $primaryKey             [optional] When not using a model class, this is the table/collection's
+   *                                           primary key name. If not specified, the name set by
+   *                                           {@see withRequestedId} will be used or, if not set that way, it will
+   *                                           default to `id`.
+   * @return mixed An instance of the loaded model or the loaded data as an array.
    */
-  function loadModel ($collection, $subModelPath = '', $id = null, $primaryKey = null);
+  function loadModel ($modelClassOrCollection, $subModelPath = '', $id = null, $primaryKey = null);
 
   /**
    * Merges data into the model.
@@ -91,7 +94,7 @@ interface ModelControllerInterface
    * At that point, the transaction has alread been commited, so no further database operations should be performed.
    * You can, though, do other kinds of cleanup operations, like deleting files, for instance.
    *
-   * @param callable $task
+   * @param callable $task A handler that receives a single argument of type {@see ModelControllerInterface}.
    */
   function onAfterSave (callable $task);
 
@@ -100,7 +103,7 @@ interface ModelControllerInterface
    * At that point, the transaction has not yet began, so no database operations should be performed yet.
    * You can, though, do other kinds of operations, like preparing uploaded files, for instance.
    *
-   * @param callable $task
+   * @param callable $task A handler that receives a single argument of type {@see ModelControllerInterface}.
    */
   function onBeforeSave (callable $task);
 
@@ -108,11 +111,10 @@ interface ModelControllerInterface
    * Register an event handler for saving the model.
    *
    * <p>A model may be a complex entity that requires multiple handlers for saving all of its parts.
-   * All handlers registered trough this method run inside the same database transaction and should be responsible for
-   * some part of the saving process, or for saving a part of the model.
+   * <p>All handlers registered trough this method run inside the same database transaction and should be responsible
+   * for some part of the saving process, or for saving a part of the model.
    * <p>The controller provides a built-in default handler, which tries to save the model automatically.
-   * It supports some types of composite models, where they are arrays that contain multiple simple sub-models, or
-   * where
+   * <p>It supports some types of composite models, whether they are arrays that contain multiple simple sub-models, or
    * each sub-model has relationships to other sub-models (for instance, a one-to-many relationship on an ORM model).
    * <p>Classes implementing this interface will provide varying levels of auto-save functionality, depending on the
    * ORM they support.
@@ -125,8 +127,7 @@ interface ModelControllerInterface
    * responsible for saving the model.
    *
    * @param int      $priority -1|0|1
-   * @param callable $task
-   * @return
+   * @param callable $task     A handler that receives a single argument of type {@see ModelControllerInterface}.
    */
   function onSave ($priority, callable $task);
 
