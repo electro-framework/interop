@@ -63,6 +63,22 @@ interface UserInterface
   function findByName ($username);
 
   /**
+   * Finds the user record searching by the email (which may or may not be the primary key).
+   *
+   * @param string $email
+   * @return bool True if the user was found.
+   */
+  function findByEmail ($email);
+
+  /**
+   * Finds the user record searching by the rememberToken.
+   *
+   * @param string $token
+   * @return bool True if the user was found.
+   */
+  function findByRememberToken ($token);
+
+  /**
    * Returns all fields.
    *
    * @return array
@@ -123,6 +139,16 @@ interface UserInterface
   function realNameField ($set = null);
 
   /**
+   * Gets or sets the user's email, which may be displayed on the application UI.
+   *
+   *
+   *
+   * @param string $set A setter value.
+   * @return string
+   */
+  function emailField ($set = null);
+
+  /**
    * Gets or sets the date and time when the user record was created.
    *
    * @param string $set A datetime in <kbd>'YYYY-MM-DD hh:mm:ss'</kbd> format.
@@ -168,4 +194,49 @@ interface UserInterface
    * @return bool True if the passwords match.
    */
   function verifyPassword ($password);
+
+  /**
+   * Removes the user record searching by the email (which may or may not be the primary key).
+   *
+   * @param string $email
+   */
+  function removeByEmail ($email);
+
+  /**
+   * Register new user record.
+   *
+   * @param array $data
+   */
+  function registerUser ($data);
+
+  /**
+   * Update user rememberToken record.
+   *
+   * @param string $token
+   * @param int $id
+   */
+  function updateRememberToken ($token, $id);
+
+  /**
+   * Update user password record.
+   *
+   * @param string $newPassword
+   * @param int $id
+   */
+  function resetPassword ($newPassword, $id);
+
+  /**
+   * Set user active to 1.
+   *
+   * @param string $token
+   */
+  function setActive ($token);
+
+  /**
+   * Get user object by RememberToken.
+   *
+   * @param string $token
+   * @return bool True if the user was found
+   */
+  function getUserByRememberToken($token);
 }
