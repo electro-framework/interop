@@ -196,48 +196,28 @@ interface UserInterface
   function verifyPassword ($password);
 
   /**
-   * Removes the user record searching by the email (which may or may not be the primary key).
+   * Removes the user record.
    *
-   * @param string $email
    */
-  function removeByEmail ($email);
+  function remove();
 
   /**
    * Register new user record.
    *
    * @param array $data
-   */
-  function registerUser ($data);
-
-  /**
-   * Update user rememberToken record.
-   *
    * @param string $token
-   * @param int $id
    */
-  function updateRememberToken ($token, $id);
+  function registerUser ($data, $token);
 
   /**
    * Update user password record.
    *
    * @param string $newPassword
-   * @param int $id
    */
-  function resetPassword ($newPassword, $id);
+  function resetPassword ($newPassword);
 
   /**
-   * Set user active to $activeValue
-   *
-   * @param string $token
-   * @param int $activeValue
+   * Save user record.
    */
-  function setActive ($token, $activeValue);
-
-  /**
-   * Get user object by RememberToken.
-   *
-   * @param string $token
-   * @return UserInterface if the user was found
-   */
-  function getUserByRememberToken($token);
+  function save();
 }
