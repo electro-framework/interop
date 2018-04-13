@@ -236,7 +236,7 @@ interface UserInterface
    * Get user object by RememberToken.
    *
    * @param string $token
-   * @return bool True if the user was found
+   * @return UserInterface if the user was found
    */
   function getUserByRememberToken($token);
 }
