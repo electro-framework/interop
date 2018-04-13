@@ -226,11 +226,12 @@ interface UserInterface
   function resetPassword ($newPassword, $id);
 
   /**
-   * Set user active to 1.
+   * Set user active to $activeValue
    *
    * @param string $token
+   * @param int $activeValue
    */
-  function setActive ($token);
+  function setActive ($token, $activeValue);
 
   /**
    * Get user object by RememberToken.
