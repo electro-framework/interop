@@ -25,6 +25,8 @@ interface MiddlewareStackInterface extends RequestHandlerInterface
    *                                                                added.
    * @param string|int|null                               $key      An ordinal index or an arbitrary identifier to
    *                                                                associate with the given handler.
+   *                                                                <p>This argument has no effect if $handlers is an
+   *                                                                array.
    *                                                                <p>If not specified, an auto-incrementing integer
    *                                                                index will be assigned.
    *                                                                <p>If an integer is specified, it may cause the
