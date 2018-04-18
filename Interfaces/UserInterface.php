@@ -71,12 +71,12 @@ interface UserInterface
   function findByEmail ($email);
 
   /**
-   * Finds the user record searching by the rememberToken.
+   * Finds the user record searching by the Token.
    *
    * @param string $token
    * @return bool True if the user was found.
    */
-  function findByRememberToken ($token);
+  function findByToken ($token);
 
   /**
    * Returns all fields.
@@ -186,6 +186,14 @@ interface UserInterface
    * @return string
    */
   function usernameField ($set = null);
+
+  /**
+   * Gets or sets the enabled field.
+   *
+   * @param string $set A setter value.
+   * @return string
+   */
+  function enabledField ($set = null);
 
   /**
    * Hashes the given password amd matches it against the user's previously hashed password.
