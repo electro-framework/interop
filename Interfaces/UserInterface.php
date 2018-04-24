@@ -34,17 +34,12 @@ interface UserInterface
   const USER_ROLE_STANDARD = 1;
 
   /**
-   * Gets or sets the active state of the user.
+   * Finds the user record searching by the email (which may or may not be the primary key).
    *
-   * > Only active users may log in.
-   *
-   * > If you're not using this feature on your app (and your database users have no `active` field) you should always
-   * return true.
-   *
-   * @param bool $set A setter value.
-   * @return string
+   * @param string $email
+   * @return bool True if the user was found.
    */
-  function activeField ($set = null);
+  function findByEmail ($email);
 
   /**
    * Finds the user record searching by its ID (which may or may not be the username).
@@ -63,11 +58,19 @@ interface UserInterface
   function findByName ($username);
 
   /**
-   * Returns all fields.
+   * Finds the user record searching by the Token.
+   *
+   * @param string $token
+   * @return bool True if the user was found.
+   */
+  function findByToken ($token);
+
+  /**
+   * Returns all fields. @see UserInterface::mergeFields () See name of fields
    *
    * @return array
    */
-  function getRecord ();
+  function getFields ();
 
   /**
    * Retrieves a list of users with role level lesser or equal to the instance's user.
@@ -77,22 +80,23 @@ interface UserInterface
   function getUsers ();
 
   /**
-   * Gets or sets the user record's primary key.
+   * Merge fields of user
    *
-   * > Note: it may be the same as the username or it may be a numeric id.
+   * Fields:
    *
-   * @param string $set A setter value.
-   * @return string
+   * active
+   * enabled
+   * password
+   * realName
+   * email
+   * token
+   * username
+   * role
+   *
+   * @param array $data
    */
-  function idField ($set = null);
 
-  /**
-   * Gets or sets the date and time of the user's last login.
-   *
-   * @param string $set A datetime in <kbd>'YYYY-MM-DD hh:mm:ss'</kbd> format.
-   * @return string
-   */
-  function lastLoginField ($set = null);
+  function mergeFields ($data);
 
   /**
    * Called whenever the user logs in.
@@ -103,66 +107,18 @@ interface UserInterface
   function onLogin ();
 
   /**
-   * Hashes the given argument and sets it as being the login password.
+   * Removes the user record.
    *
-   * @param string $set The original password as written by the user.
-   * @return string The hashed password.
-   *                    <p>This can be useful for checking if a user already as a password.
-   *                    <p>For checking if a password matches the user's, use {@see verifyPassword()} instead.
    */
-  function passwordField ($set = null);
+  function remove ();
 
   /**
-   * Gets or sets the user's "real" name, which may be displayed on the application UI.
-   *
-   * > This may be the same as the username.
-   *
-   * @param string $set A setter value.
-   * @return string
+   * Save user record.
    */
-  function realNameField ($set = null);
+  function submit ();
 
   /**
-   * Gets or sets the date and time when the user record was created.
-   *
-   * @param string $set A datetime in <kbd>'YYYY-MM-DD hh:mm:ss'</kbd> format.
-   * @return string
-   */
-  function registrationDateField ($set = null);
-
-  /**
-   * Gets or sets the user role.
-   *
-   * > The predefined roles are set as constants on {@see UserInterface}.
-   *
-   * @param string $set A setter value.
-   * @return string
-   */
-  function roleField ($set = null);
-
-  /**
-   * Gets or sets a unique identifier for the user that can be used to confirm its identity in:
-   * <li> password reset emails;
-   * <li> registration confirmation emails;
-   * <li> URL/header parameters for authenticationless access to the application.
-   *
-   * @param string $set A datetime in <kbd>'YYYY-MM-DD hh:mm:ss'</kbd> format.
-   * @return string
-   */
-  function tokenField ($set = null);
-
-  /**
-   * Gets or sets the login username.
-   *
-   * > This may actually be an email address, for instance.
-   *
-   * @param string $set A setter value.
-   * @return string
-   */
-  function usernameField ($set = null);
-
-  /**
-   * Hahses the given password amd matches it against the user's previously hashed password.
+   * Hashes the given password amd matches it against the user's previously hashed password.
    *
    * @param string $password The password as written by the user on the login form.
    * @return bool True if the passwords match.
