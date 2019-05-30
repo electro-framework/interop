@@ -270,20 +270,28 @@ interface NavigationLinkInterface extends \IteratorAggregate
   function url ($url = null);
 
   /**
-   * Generates an URL for the current link, replacing all URL parameters by the given argument values at the same
-   * ordinal position.
+   * Generates an URL for the current link, replacing all routing parameters specified on the given array by their
+   * corresponding values on that array.
+   * <p>Parameters on the URL that are not present on the given array will be fetched from the respective parameters on
+   * the current route.
+   * <p>The array may, alternatively, contain a list of unnamed parameter values. In that case, all parameters on the
+   * URL will be replaced by the given values, in the same order.
    *
-   * ###### Ex:
+   * ##### Example:
+   * Given the currently active link "`products/32/27`", we can generate an URL for a sublink:
+   *
    * <kbd>
    *   $link->url ('products/&#64;categoryId/&#64;typeId/&#64;prodId'); <br>
-   *   $url = $link->urlOf (32, 27, 5); <br>
+   *   $url = $link->urlOf (['&#64;prodId'=>5]); <br>
    *   // $url = 'products/32/27/5'
+   *   $url = $link->urlOf ([1,2]); <br>
+   *   // $url = 'products/1/2/'  // notice the missing parameter value
    * </kbd>
    *
-   * @param array ...$params
+   * @param array $params
    * @return mixed
    */
-  function urlOf (...$params);
+  function urlOf (array $params);
 
   /**
    * Are links to this location displayed?

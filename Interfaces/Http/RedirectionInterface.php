@@ -1,9 +1,9 @@
 <?php
 namespace Electro\Interfaces\Http;
 
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
-
 
 /**
  * A service that creates an HTTP redirection response.
@@ -17,7 +17,7 @@ interface RedirectionInterface
    * <p>If the previous location is not know, it redirects to the current URL.
    *
    * @param int $status
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return ResponseInterface
    */
   function back ($status = 302);
 
@@ -26,7 +26,7 @@ interface RedirectionInterface
    *
    * @param string|UriInterface $url    A relative or an absolute URL. If empty, it is equivalent to the current URL.
    * @param int                 $status HTTP status code.
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return ResponseInterface
    */
   function guest ($url, $status = 302);
 
@@ -34,7 +34,7 @@ interface RedirectionInterface
    * Creates a new redirection response to the application's root URL.
    *
    * @param int $status
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return ResponseInterface
    */
   function home ($status = 302);
 
@@ -45,7 +45,7 @@ interface RedirectionInterface
    * @param string|UriInterface $defaultUrl A relative or an absolute URL to be used when a saved URL is not found on
    *                                        the session. If empty, it is equivalent to the current URL.
    * @param int                 $status     HTTP status code.
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return ResponseInterface
    */
   function intended ($defaultUrl = '', $status = 302);
 
@@ -53,7 +53,7 @@ interface RedirectionInterface
    * Creates a new redirection response to the current URL.
    *
    * @param int $status
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return ResponseInterface
    */
   function refresh ($status = 302);
 
@@ -63,7 +63,7 @@ interface RedirectionInterface
    * @param string|UriInterface $url    A relative or an absolute URL. If empty, it is equivalent to the root URL.
    *                                    The protocol part is always replaced by 'https'.
    * @param int                 $status HTTP status code.
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return ResponseInterface
    */
   function secure ($url, $status = 302);
 
@@ -86,7 +86,18 @@ interface RedirectionInterface
    *
    * @param string|UriInterface $url    A relative or an absolute URL.
    * @param int                 $status HTTP status code.
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return ResponseInterface
    */
   function to ($url, $status = 302);
+
+  /**
+   * Creates a new redirection response to the given URL with the given query string parameters.
+   *
+   * See {@see to()} for more details.
+   * @param string $url         A relative or an absolute URL.
+   * @param array  $parameters  A map of parameter names to parameter values.
+   * @param int    $status      HTTP status code.
+   * @return ResponseInterface
+   */
+  function toUrlWithParams ($url, array $parameters, $status = 302);
 }
