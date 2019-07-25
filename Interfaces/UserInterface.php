@@ -118,7 +118,7 @@ interface UserInterface
   function submit ();
 
   /**
-   * Hashes the given password amd matches it against the user's previously hashed password.
+   * Hashes the given password and matches it against the user's previously hashed password.
    *
    * @param string $password The password as written by the user on the login form.
    * @return bool True if the passwords match.
