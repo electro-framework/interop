@@ -25,10 +25,11 @@ interface MigrationsInterface
    *                        pending migrations.
    * @param bool   $pretend If true, the migration is not actually run and the SQL code that would be executed is
    *                        returned.
+   * @param bool   $rollbackObsolete Rollback obsoletes migrations
    * @return int|string If $pretend==true, it returns the SQL code, otherwhise it returns the number of migrations
    *                        executed.
    */
-  function migrate ($target = null, $pretend = false);
+  function migrate ($target = null, $pretend = false, $rollbackObsolete = false);
 
   /**
    * Sets the target module for the subsequent migration operations.

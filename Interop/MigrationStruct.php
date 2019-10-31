@@ -41,6 +41,11 @@ class MigrationStruct
    */
   const status = 'status';
 
+  /**
+   * @var string The current migration connection.
+   */
+  const connection = 'connection';
+
   static public function classFromFilename ($path)
   {
     return ucfirst (str_dehyphenate (str_segmentsStripFirst (
