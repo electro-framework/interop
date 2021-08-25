@@ -8,6 +8,9 @@ interface MigrationInterface
 {
   /**
    * Reverses the migration.
+   * > DO NOT USE $schema->hasTable() because it will prevent the migration from being rolled back!
+   * > Remember: the rollback statements are recorded when the forward migration takes place. At that time, the table
+   * > does not yet exist.
    */
   function down ();
 
