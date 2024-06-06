@@ -17,8 +17,8 @@ class Registry implements \IteratorAggregate, \Countable
 {
   private $items = [];
 
-  public function count ()
-  {
+  public function count(): int
+	{
     return count ($this->items);
   }
 
@@ -38,8 +38,8 @@ class Registry implements \IteratorAggregate, \Countable
       static::class, PHP_EOL, $this->items ? implode (', ', array_keys ($this->items)) : '(empty)'));
   }
 
-  public function getIterator ()
-  {
+  public function getIterator(): \Traversable
+	{
     return new \ArrayIterator($this->items);
   }
 
