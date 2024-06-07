@@ -17,7 +17,7 @@
   "require": {
     "php": ">=5.6",
     "psr/http-message": "*",
-    "container-interop/container-interop" : "*"
+    "psr/container" : "*"
   },
   "autoload": {
     "psr-4": {
