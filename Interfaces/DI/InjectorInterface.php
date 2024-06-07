@@ -2,7 +2,7 @@
 namespace Electro\Interfaces\DI;
 
 use Auryn\InjectionException;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 interface InjectorInterface extends ContainerInterface
 {
