@@ -15,7 +15,7 @@ interface BootloaderInterface
    * @param InjectorInterface $injector Provide your favorite dependency injector, eventually with some
    *                                    pre-registered services to override some of the core framework services.
    */
-  function __construct (InjectorInterface $injector);
+  function __construct(InjectorInterface $injector);
 
   /**
    * Bootstraps the application
@@ -29,5 +29,5 @@ interface BootloaderInterface
    *                            for kernel events, similar to what {@see ModuleInterface::startUp} does for modules.
    * @return int Exit status code. Only meaningful for console applications.
    */
-  function boot ($rootDir, $urlDepth = 0, callable $onStartUp = null);
+  function boot($rootDir, $urlDepth = 0, callable|null $onStartUp = null);
 }
